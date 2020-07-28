@@ -5,7 +5,7 @@ const express = require('express'),
     session = require('express-session');
 
 const authCtrl = require('./controllers/authCtrl'),
-    profileCtrl = require('./controllers/vocabCtrl'),
+    profileCtrl = require('./controllers/profileCtrl'),
     vocabCtrl = require('./controllers/vocabCtrl');
 
 const {SERVER_PORT, CONNECTION_STRING, SESSION_SECRET} = process.env;
@@ -25,7 +25,8 @@ app.use(session({
 massive({
     connectionString: CONNECTION_STRING,
     ssl: {rejectUnauthorized: false}
-}).then(db => {
+})
+.then(db => {
     app.set('db', db); // db connection
     console.log('db connected');
 });

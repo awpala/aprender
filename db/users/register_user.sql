@@ -14,9 +14,9 @@ RETURNING user_id, first_name, username
 ;
 
 -- add user-words entries to profile table
-INSERT INTO profile (user_id, frequency_id)
+INSERT INTO profile (user_id, frequency_id) -- N.B. remaining fields initialized to DEFAULTs
 SELECT
     (SELECT user_id FROM users WHERE username=${username}), frequency_id
-    FROM word 
-    ORDER BY frequency_id
+FROM word 
+ORDER BY frequency_id
 ;
