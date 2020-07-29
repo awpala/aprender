@@ -43,7 +43,7 @@ app.get('/api/vocab/:id', vocabCtrl.getUserWords);
 app.post('/api/vocab/:id', vocabCtrl.updateWord);
 
 // profile endpoints
-// TO-DO
+app.get('/api/profile/:id', profileCtrl.getUserProfile);
 
 // -- server listening
 app.listen(SERVER_PORT, () => console.log('Listening on REDACTED SERVER PORT'));
