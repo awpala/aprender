@@ -43,16 +43,17 @@ const Vocab = () => {
         answers[j] = temp;
     }
 
-    const mappedAnswers = answers.map(answer => (
-        <button>{answer}</button>
+    const mappedAnswers = answers.map((answer, index) => (
+        <button key={index}>{answer}</button>
     ));
 
     return (
         <div>
             <h1>Vocab</h1>
             <h2>Spanish Word: {query}</h2>
-            <h3>Frequency Id: {freqId}/5000</h3>
+            <h3>Frequency ID: {freqId}/5000</h3>
             <h3>Part of Speech: {pOS}</h3>
+            <h2>English Translation?</h2>
             <div>
                 {mappedAnswers}
             </div>

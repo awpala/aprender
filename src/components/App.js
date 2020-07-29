@@ -1,11 +1,12 @@
 import React from 'react';
-import Vocab from './Vocab';
+import Header from './Header';
+import routes from '../routes';
 
 const App = () => {
     return (
         <div>
-            Hello World
-            <Vocab />
+            <Header/>
+            {routes}
         </div>
     );
 }
