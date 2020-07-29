@@ -40,9 +40,10 @@ app.get('/auth/logout', authCtrl.logout);
 
 // vocab endpoints
 app.get('/api/vocab/:id', vocabCtrl.getUserWords);
+app.post('/api/vocab/:id', vocabCtrl.updateWord);
 
 // profile endpoints
 // TO-DO
 
 // -- server listening
-app.listen(SERVER_PORT, () => console.log('Listening on SERVER_PORT'));
+app.listen(SERVER_PORT, () => console.log('Listening on REDACTED SERVER PORT'));
