@@ -2,6 +2,7 @@ SELECT
     w.word_es AS quiz_word_es,
     -- TODO: add part of speech (via INNER JOIN pos)
     w.frequency_id AS quiz_word_es_fid,
+    pos.pos_full AS part_of_speech_full,
     w.word_en AS correct_word_en,
     ARRAY(SELECT word_en
         FROM word
@@ -23,6 +24,8 @@ SELECT
 FROM word AS w
 INNER JOIN profile AS p
     ON w.frequency_id = p.frequency_id
+INNER JOIN part_of_speech AS pos
+    ON w.part_of_speech_id = pos.pos_id
 WHERE p.user_id = $1
 ORDER BY RANDOM()
 LIMIT 1

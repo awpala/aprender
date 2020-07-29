@@ -1,10 +1,62 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const Vocab = () => {
+    // user data
+    const [user, setUser] = useState(); // TO-DO: get user from store
+
+    // word data
+    const [query, setQuery] = useState('');
+    const [freqId, setFreqId] = useState();
+    const [pOS, setPOS] = useState();
+    const [correct, setCorrect] = useState('');
+    const [incorrect, setIncorrect] = useState([]);
+    const [phraseEs, setPhraseEs] = useState('');
+    const [phraseEn, setPhraseEn] = useState('');
+
+    // component state data
+    const [isAnswered, setIsAnswered] = useState(false);
+
+    // initial mount
+    useEffect(() => {
+        axios.get('/api/vocab/2') // TO-DO: set /:id to user value
+        .then(res => {
+            setQuery(res.data[0].quiz_word_es);
+            setFreqId(res.data[0].quiz_word_es_fid);
+            setPOS(res.data[0].part_of_speech_full);
+            setCorrect(res.data[0].correct_word_en);
+            setIncorrect(res.data[0].incorrect_words_en);
+            setPhraseEs(res.data[0].phrase_es);
+            setPhraseEn(res.data[0].phrase_en);
+        })
+        .catch(err => console.log(err));
+    }, [])
+
+    const answers = [...incorrect, correct];
+
+    // Randomize answers' order via Fisher-Yates algorithm
+    // (cf. https://medium.com/@nitinpatel_20236/how-to-shuffle-correctly-shuffle-an-array-in-javascript-15ea3f84bfb)
+    for(let i = answers.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const temp = answers[i];
+        answers[i] = answers[j];
+        answers[j] = temp;
+    }
+
+    const mappedAnswers = answers.map(answer => (
+        <button>{answer}</button>
+    ));
 
     return (
         <div>
-            Vocab
+            <h1>Vocab</h1>
+            <h2>Spanish Word: {query}</h2>
+            <h3>Frequency Id: {freqId}/5000</h3>
+            <h3>Part of Speech: {pOS}</h3>
+            <div>
+                {mappedAnswers}
+            </div>
+            <button>I don't know!</button>
         </div>
     );
 }
