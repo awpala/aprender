@@ -22,6 +22,16 @@ const Landing = (props) => {
         }
     }, [isLoggedIn])
 
+    // submit form using Enter key
+    const handleKeyPress = (e) => {
+        if(e.key === 'Enter') {
+            if (isRegistered) {
+                sessionActions.loginUser(username, password);
+            } else {
+                sessionActions.registerUser(firstName, lastName, username, password, verifiedPass);
+            }
+        }
+    }
 
     return(
         <div>
@@ -36,48 +46,59 @@ const Landing = (props) => {
                         ? (
                             <>
                                 <h3>Register Below</h3>
+                                <p>First Name:</p>
                                 <input
                                     value={firstName}
                                     type='text'
                                     name='firstName'
                                     placeholder='First name'
                                     onChange={e => setFirstName(e.target.value)}
+                                    onKeyPress={e => handleKeyPress(e)}
                                 />
+                                <p>Last Name:</p>
                                 <input
                                     value={lastName}
                                     type='text'
                                     name='lastName'
                                     placeholder='Last name'
                                     onChange={e => setLastName(e.target.value)}
+                                    onKeyPress={e => handleKeyPress(e)}
                                 />
                             </>
                         )
                         : <h3>Log in below</h3>
                     }
+                    <p>Username:</p>
                     <input
                         value={username}
                         type='text'
                         name='username'
                         placeholder='Username'
                         onChange={e => setUsername(e.target.value)}
+                        onKeyPress={e => handleKeyPress(e)}
                     />
+                    <p>Password:</p>
                     <input
                         value={password}
                         type='password'
                         name='password'
                         placeholder='Password'
                         onChange={e => setPassword(e.target.value)}
+                        onKeyPress={e => handleKeyPress(e)}
                     />
                     {!isRegistered
                         ? (
                             <>
+                                <p>Verify Password:</p>
                                 <input
                                     value={verifiedPass}
                                     type='password'
                                     name='verPass'
                                     placeholder='Verify Password'
                                     onChange={e => setVerifiedPass(e.target.value)}
+                                    onKeyPress={e => handleKeyPress(e)}
                                 />
+                                <p>Have an account? <span onClick={() => setIsRegistered(!isRegistered)}>Log in here</span></p>
                                 <button 
                                     onClick={() => {
                                         sessionActions.registerUser(firstName, lastName, username, password, verifiedPass);
@@ -85,11 +106,11 @@ const Landing = (props) => {
                                 >
                                     Register
                                 </button>
-                                <p>Have an account? <span onClick={() => setIsRegistered(!isRegistered)}>Log in here</span></p>
                             </>
                         )
                         : (
                             <>
+                                <p>Don't have an account? <span onClick={() => setIsRegistered(!isRegistered)}>Register here</span></p>
                                 <button 
                                     onClick={() => {
                                         sessionActions.loginUser(username, password);
@@ -97,7 +118,6 @@ const Landing = (props) => {
                                 >
                                     Log in
                                 </button>
-                                <p>Don't have an account? <span onClick={() => setIsRegistered(!isRegistered)}>Register here</span></p>
                                 {/* TO-DO: "Log in as guest" */}
                             </>
                         )
