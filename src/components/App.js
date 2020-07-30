@@ -3,7 +3,7 @@ import Header from './Header';
 import routes from '../routes';
 import { UserContext } from './context';
 
-const App = () => {
+const App = (props) => {
     const { isLoggedIn } = useContext(UserContext);
 
     return (

@@ -15,8 +15,7 @@ const Landing = (props) => {
     // actions from context: registerUser, loginUser
     const { isLoggedIn, sessionActions } = useContext(UserContext);
 
-    // TO-DO: initial mount via useEffect hook, props.history.push('/vocab') if user already logged in
-
+    // route to application if user is logged in
     useEffect(() => {
         if(isLoggedIn) {
             props.history.push('/vocab');
@@ -82,9 +81,6 @@ const Landing = (props) => {
                                 <button 
                                     onClick={() => {
                                         sessionActions.registerUser(firstName, lastName, username, password, verifiedPass);
-                                        // if(isLoggedIn) {
-                                        //     props.history.push('/vocab');
-                                        // }
                                     }}
                                 >
                                     Register
@@ -97,9 +93,6 @@ const Landing = (props) => {
                                 <button 
                                     onClick={() => {
                                         sessionActions.loginUser(username, password);
-                                        // if(isLoggedIn) {
-                                        //     props.history.push('/vocab');
-                                        // }
                                     }}
                                 >
                                     Log in

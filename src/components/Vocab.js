@@ -2,9 +2,9 @@ import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from './context';
 import axios from 'axios';
 
-const Vocab = () => {
+const Vocab = (props) => {
     // user data from context
-    const { userId } = useContext(UserContext);
+    const { userId, isLoggedIn } = useContext(UserContext);
 
     // word data
     const [query, setQuery] = useState('');
@@ -21,19 +21,28 @@ const Vocab = () => {
 
     // initial mount
     useEffect(() => {
-        axios.get(`/api/vocab/${userId}`)
-        .then(res => {
-            console.log(res.data[0]);
-            setQuery(res.data[0].quiz_word_es);
-            setFreqId(res.data[0].quiz_word_es_fid);
-            setPOS(res.data[0].part_of_speech_full);
-            setCorrect(res.data[0].correct_word_en);
-            setIncorrect(res.data[0].incorrect_words_en);
-            setPhraseEs(res.data[0].phrase_es);
-            setPhraseEn(res.data[0].phrase_en);
-        })
-        .catch(err => console.log(err));
-    }, [userId])
+        if(isLoggedIn) {
+            axios.get(`/api/vocab/${userId}`)
+            .then(res => {
+                // console.log(res.data[0]);
+                setQuery(res.data[0].quiz_word_es);
+                setFreqId(res.data[0].quiz_word_es_fid);
+                setPOS(res.data[0].part_of_speech_full);
+                setCorrect(res.data[0].correct_word_en);
+                setIncorrect(res.data[0].incorrect_words_en);
+                setPhraseEs(res.data[0].phrase_es);
+                setPhraseEn(res.data[0].phrase_en);
+            })
+            .catch(err => console.log(err));
+        }
+    }, [isLoggedIn, userId])
+
+    // route to landing if user logs out
+    useEffect(() => {
+        if(!isLoggedIn) {
+            props.history.push('/');
+        }
+    }, [isLoggedIn]);
 
     const answers = [...incorrect, correct];
 

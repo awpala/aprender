@@ -24,7 +24,7 @@ export const Provider = (props) => {
     const getUserProfile = (id) => {
         axios.get(`/api/profile/${id}`)
         .then(res => {
-            console.log(res.data);
+            // console.log(res.data);
             setWords(res.data);
         })
         .catch(err => console.log(err));
@@ -43,7 +43,7 @@ export const Provider = (props) => {
                 setFirstName(res.data.first_name);
                 setUsername(res.data.username);
                 
-                console.log(res.data.user_id, res.data.first_name, res.data.username);
+                // console.log(res.data.user_id, res.data.first_name, res.data.username);
 
                 getUserProfile(res.data.user_id);
             })
@@ -56,12 +56,12 @@ export const Provider = (props) => {
     const handleLogin = (username, password) => {
         axios.post('/auth/login', {username, password})
         .then(res => {
-            console.log(res.data);
+            // console.log(res.data);
             setUserId(res.data.user_id);
             setFirstName(res.data.first_name);
             setUsername(res.data.username);
             
-            console.log(res.data.user_id, res.data.first_name, res.data.username);
+            // console.log(res.data.user_id, res.data.first_name, res.data.username);
 
             getUserProfile(res.data.user_id);
 
