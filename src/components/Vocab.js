@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { UserContext } from './context';
 import axios from 'axios';
 
 const Vocab = () => {
-    // user data
-    const [user, setUser] = useState(); // TO-DO: get user from store
+    // user data from context
+    const { userId } = useContext(UserContext);
 
     // word data
     const [query, setQuery] = useState('');
@@ -19,8 +20,9 @@ const Vocab = () => {
 
     // initial mount
     useEffect(() => {
-        axios.get('/api/vocab/2') // TO-DO: set /:id to user value
+        axios.get(`/api/vocab/${userId}`) // TO-DO: set /:id to user value
         .then(res => {
+            console.log(res.data[0]);
             setQuery(res.data[0].quiz_word_es);
             setFreqId(res.data[0].quiz_word_es_fid);
             setPOS(res.data[0].part_of_speech_full);
@@ -30,7 +32,7 @@ const Vocab = () => {
             setPhraseEn(res.data[0].phrase_en);
         })
         .catch(err => console.log(err));
-    }, [])
+    }, [userId])
 
     const answers = [...incorrect, correct];
 

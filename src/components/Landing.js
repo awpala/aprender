@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { UserContext } from './context';
 
 const Landing = (props) => {
     // form status
@@ -11,7 +12,10 @@ const Landing = (props) => {
     const [password, setPassword] = useState('');
     const [verifiedPass, setVerifiedPass] = useState('');
 
-    // TO-DO: initial mount via useEffect hook, props.history.push('/vocab') after register or login
+    // actions from context: registerUser, loginUser
+    const { actions } = useContext(UserContext);
+
+    // TO-DO: initial mount via useEffect hook, props.history.push('/vocab') if user already logged in
 
     return(
         <div>
@@ -70,6 +74,11 @@ const Landing = (props) => {
                                 />
                                 <button 
                                 // TO-DO: onClick={ } -- user register event handler from store
+                                    onClick={() => {
+                                        actions.registerUser(firstName, lastName, username, password, verifiedPass);
+                                        props.history.push('/vocab');
+                                        }
+                                    }
                                 >
                                     Register
                                 </button>

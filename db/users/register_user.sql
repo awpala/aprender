@@ -10,7 +10,6 @@ INSERT INTO users (
     ${username},
     ${password}
 )
--- RETURNING user_id, first_name, username
 ;
 
 -- 2) add user-words entries to profile table
@@ -20,4 +19,10 @@ SELECT
     frequency_id
 FROM word 
 ORDER BY frequency_id
+;
+
+-- 3) return user info
+SELECT user_id, first_name, username
+FROM users
+WHERE username=${username}
 ;
