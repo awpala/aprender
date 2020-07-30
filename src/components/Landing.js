@@ -13,9 +13,16 @@ const Landing = (props) => {
     const [verifiedPass, setVerifiedPass] = useState('');
 
     // actions from context: registerUser, loginUser
-    const { actions } = useContext(UserContext);
+    const { isLoggedIn, sessionActions } = useContext(UserContext);
 
     // TO-DO: initial mount via useEffect hook, props.history.push('/vocab') if user already logged in
+
+    useEffect(() => {
+        if(isLoggedIn) {
+            props.history.push('/vocab');
+        }
+    }, [isLoggedIn])
+
 
     return(
         <div>
@@ -73,12 +80,12 @@ const Landing = (props) => {
                                     onChange={e => setVerifiedPass(e.target.value)}
                                 />
                                 <button 
-                                // TO-DO: onClick={ } -- user register event handler from store
                                     onClick={() => {
-                                        actions.registerUser(firstName, lastName, username, password, verifiedPass);
-                                        props.history.push('/vocab');
-                                        }
-                                    }
+                                        sessionActions.registerUser(firstName, lastName, username, password, verifiedPass);
+                                        // if(isLoggedIn) {
+                                        //     props.history.push('/vocab');
+                                        // }
+                                    }}
                                 >
                                     Register
                                 </button>
@@ -87,8 +94,13 @@ const Landing = (props) => {
                         )
                         : (
                             <>
-                                <button
-                                // TO-DO: onClick={ } -- user log in event handler from store
+                                <button 
+                                    onClick={() => {
+                                        sessionActions.loginUser(username, password);
+                                        // if(isLoggedIn) {
+                                        //     props.history.push('/vocab');
+                                        // }
+                                    }}
                                 >
                                     Log in
                                 </button>

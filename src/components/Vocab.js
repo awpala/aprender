@@ -20,7 +20,7 @@ const Vocab = () => {
 
     // initial mount
     useEffect(() => {
-        axios.get(`/api/vocab/${userId}`) // TO-DO: set /:id to user value
+        axios.get(`/api/vocab/${userId}`)
         .then(res => {
             console.log(res.data[0]);
             setQuery(res.data[0].quiz_word_es);

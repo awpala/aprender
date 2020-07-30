@@ -6,31 +6,38 @@ export const UserContext = React.createContext();
 export const Provider = (props) => {
     // -- state variables
 
-    // word data
-    const [ words, setWords ] = useState([]);
+    // session data
+    const [ isLoggedIn, setIsLoggedIn ] = useState(false);
 
     // user data
     const [ userId, setUserId ] = useState();
     const [ firstName, setFirstName ] = useState();
     const [ username, setUsername ] = useState();
 
-    // TO-DO: event handlers & actions
+    // user's words data
+    const [ words, setWords ] = useState([]);
+
+    // -- event handlers & actions
+
+    // auxiliary helpers
 
     const getUserProfile = (id) => {
         axios.get(`/api/profile/${id}`)
         .then(res => {
             console.log(res.data);
-            setWords(res.data)
+            setWords(res.data);
         })
         .catch(err => console.log(err));
     }
 
-    // -- session actions
+    // session actions
 
     const handleRegister = (firstName, lastName, username, password, verifiedPass) => {
         if(password && password === verifiedPass) {
             axios.post('/auth/register', {firstName, lastName, username, password})
             .then(res => {
+                setIsLoggedIn(true);
+
                 console.log(res.data);
                 setUserId(res.data.user_id);
                 setFirstName(res.data.first_name);
@@ -46,23 +53,45 @@ export const Provider = (props) => {
         }
     }
 
-    const handleLogin = () => {
-        // TO-DO
+    const handleLogin = (username, password) => {
+        axios.post('/auth/login', {username, password})
+        .then(res => {
+            console.log(res.data);
+            setUserId(res.data.user_id);
+            setFirstName(res.data.first_name);
+            setUsername(res.data.username);
+            
+            console.log(res.data.user_id, res.data.first_name, res.data.username);
+
+            getUserProfile(res.data.user_id);
+
+            setIsLoggedIn(true);
+        })
+        .catch(err => console.log(err));
     }
 
     const handleLogout = () => {
-        // TO-DO
+        axios.get('/auth/logout')
+        .then(() => {
+            setIsLoggedIn(false);
+            setUserId(null);
+            setFirstName('');
+            setUsername('');
+            setWords([]);
+        })
     }
 
-    // TO-DO: add state variables to value object
+    // -- return context object
     return (
         <UserContext.Provider
             value={
                 {
+                    isLoggedIn,
                     userId,
                     firstName,
                     username,
-                    actions: {
+                    words,
+                    sessionActions: {
                         registerUser: handleRegister,
                         loginUser: handleLogin,
                         logoutUser: handleLogout
