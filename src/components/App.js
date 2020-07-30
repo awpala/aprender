@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Header from './Header';
 import routes from '../routes';
+import { UserContext } from './context';
 
 const App = () => {
+    const { isLoggedIn } = useContext(UserContext);
+
     return (
         <div>
-            <Header/>
-            {routes}
+            {isLoggedIn
+            ? (
+                <>
+                    <Header/>
+                    {routes}
+                </>
+            )
+            : routes
+            }
         </div>
     );
 }

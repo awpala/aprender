@@ -1,8 +1,13 @@
 import React from 'react';
 
-const NotFound = () => {
+const NotFound = (props) => {
     return (
-        <p>Invalid page reached :(</p>
+        <div>
+            <p>Invalid page reached :(</p>
+            <button onClick={() => props.history.push('/')}>
+                Return to Home
+            </button>
+        </div>
     )
 }
 

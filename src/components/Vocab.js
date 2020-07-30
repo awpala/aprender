@@ -17,6 +17,7 @@ const Vocab = () => {
 
     // component state data
     const [isAnswered, setIsAnswered] = useState(false);
+    const [isCorrect, setIsCorrect] = useState(false);
 
     // initial mount
     useEffect(() => {
