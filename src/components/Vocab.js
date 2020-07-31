@@ -69,13 +69,7 @@ const Vocab = (props) => {
     // user reponse via button click
     const handleSelection = (choice) => {
         setIsAnswered(true);
-
-        if(answers[choice] === correct) {
-            // console.log(`${choice} accessed!`, answers[choice]);
-            setIsCorrect(true);
-        } else {
-            setIsCorrect(false);
-        }
+        setIsCorrect(answers[choice] === correct);
     }
 
     // user response via keypress
