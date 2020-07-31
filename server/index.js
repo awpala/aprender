@@ -36,6 +36,7 @@ massive({
 // auth endpoints
 app.post('/auth/register', authCtrl.register);
 app.post('/auth/login', authCtrl.login);
+app.get('/auth/session', authCtrl.getSession);
 app.get('/auth/logout', authCtrl.logout);
 
 // vocab endpoints

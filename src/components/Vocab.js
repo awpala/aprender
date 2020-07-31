@@ -9,8 +9,11 @@ const Vocab = (props) => {
 
     // word data
     const [query, setQuery] = useState('');
-    const [freqId, setFreqId] = useState();
+    const [freqId, setFreqId] = useState(null);
     const [pOS, setPOS] = useState();
+    const [isFamiliar, setIsFamiliar] = useState(false);
+    const [familiarityScore, setFamiliarityScore] = useState(null);
+    const [encounters, setEncounters] = useState(null);
     const [correct, setCorrect] = useState('');
     const [incorrect, setIncorrect] = useState([]);
     const [phraseEs, setPhraseEs] = useState('');
@@ -37,6 +40,9 @@ const Vocab = (props) => {
                 setFreqId(res.data[0].quiz_word_es_fid);
                 setPOS(res.data[0].part_of_speech_full);
                 setCorrect(res.data[0].correct_word_en);
+                setIsFamiliar(res.data[0].is_familiar);
+                setFamiliarityScore(res.data[0].familiarity_score);
+                setEncounters(res.data[0].encounters);
                 setIncorrect(res.data[0].incorrect_words_en);
                 setPhraseEs(res.data[0].phrase_es);
                 setPhraseEn(res.data[0].phrase_en);

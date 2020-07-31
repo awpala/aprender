@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
 import { UserContext } from '../context';
+import useKeyPress from '../hooks/useKeyPress'; // custom hook
 
 const Landing = (props) => {
     // form status
@@ -12,26 +14,68 @@ const Landing = (props) => {
     const [password, setPassword] = useState('');
     const [verifiedPass, setVerifiedPass] = useState('');
 
-    // actions from context: registerUser, loginUser
-    const { isLoggedIn, sessionActions } = useContext(UserContext);
+    // store data
+    const { actions, isLoggedIn, userId  } = useContext(UserContext);
 
-    // route to application if user is logged in
+    // form event handlers
+    const getUserProfile = (id) => {
+        axios.get(`/api/profile/${id}`)
+        .then(res => {
+            // console.log(res.data);
+            actions.setUserWords(res.data);
+        })
+        .catch(err => console.log(err));
+    }
+
+    const handleRegister = (firstName, lastName, username, password, verifiedPass) => {
+        if(password && password === verifiedPass) {
+            axios.post('/auth/register', {firstName, lastName, username, password})
+            .then(res => {
+                actions.loginUser(res.data.user_id, res.data.first_name, res.data.username);
+
+                getUserProfile(res.data.user_id);
+            })
+            .catch(err => console.log(err));
+        } else {
+            alert('Passwords do not match, please review.')
+        }
+    }
+
+    const handleLogin = (username, password) => {
+        axios.post('/auth/login', {username, password})
+        .then(res => {
+            // console.log(res.data);
+            actions.loginUser(res.data.user_id, res.data.first_name, res.data.username);
+
+            getUserProfile(res.data.user_id);
+        })
+        .catch(err => console.log(err));
+    }
+
+    // submit form using Enter key
+    const pressEnter = useKeyPress('Enter');
+
     useEffect(() => {
+        if(pressEnter) {
+            isRegistered
+            ? handleLogin(username, password)
+            : handleRegister(firstName, lastName, username, password, verifiedPass);
+        }
+    }, [pressEnter])
+
+    // redirect user to app if session active or logged in
+    useEffect(() => {
+        // set user back into session if not logged out (retains session if page refreshed)
+        if(!isLoggedIn && userId) {
+            getUserProfile(userId);
+            actions.setIsLoggedIn(true);
+        }
+
+        // redirect to vocab if logged in
         if(isLoggedIn) {
             props.history.push('/vocab');
         }
-    }, [isLoggedIn])
-
-    // submit form using Enter key
-    const handleKeyPress = (e) => {
-        if(e.key === 'Enter') {
-            if (isRegistered) {
-                sessionActions.loginUser(username, password);
-            } else {
-                sessionActions.registerUser(firstName, lastName, username, password, verifiedPass);
-            }
-        }
-    }
+    }, [isLoggedIn, userId])
 
     return(
         <div>
@@ -46,62 +90,57 @@ const Landing = (props) => {
                         ? (
                             <>
                                 <h3>Register Below</h3>
-                                <p>First Name:</p>
+                                <p>First Name</p>
                                 <input
                                     value={firstName}
                                     type='text'
                                     name='firstName'
                                     placeholder='First name'
                                     onChange={e => setFirstName(e.target.value)}
-                                    onKeyPress={e => handleKeyPress(e)}
                                 />
-                                <p>Last Name:</p>
+                                <p>Last Name</p>
                                 <input
                                     value={lastName}
                                     type='text'
                                     name='lastName'
                                     placeholder='Last name'
                                     onChange={e => setLastName(e.target.value)}
-                                    onKeyPress={e => handleKeyPress(e)}
                                 />
                             </>
                         )
                         : <h3>Log in below</h3>
                     }
-                    <p>Username:</p>
+                    <p>Username</p>
                     <input
                         value={username}
                         type='text'
                         name='username'
                         placeholder='Username'
                         onChange={e => setUsername(e.target.value)}
-                        onKeyPress={e => handleKeyPress(e)}
                     />
-                    <p>Password:</p>
+                    <p>Password</p>
                     <input
                         value={password}
                         type='password'
                         name='password'
                         placeholder='Password'
                         onChange={e => setPassword(e.target.value)}
-                        onKeyPress={e => handleKeyPress(e)}
                     />
                     {!isRegistered
                         ? (
                             <>
-                                <p>Verify Password:</p>
+                                <p>Verify Password</p>
                                 <input
                                     value={verifiedPass}
                                     type='password'
                                     name='verPass'
                                     placeholder='Verify Password'
                                     onChange={e => setVerifiedPass(e.target.value)}
-                                    onKeyPress={e => handleKeyPress(e)}
                                 />
                                 <p>Have an account? <span onClick={() => setIsRegistered(!isRegistered)}>Log in here</span></p>
                                 <button 
                                     onClick={() => {
-                                        sessionActions.registerUser(firstName, lastName, username, password, verifiedPass);
+                                        handleRegister(firstName, lastName, username, password, verifiedPass);
                                     }}
                                 >
                                     Register
@@ -113,7 +152,7 @@ const Landing = (props) => {
                                 <p>Don't have an account? <span onClick={() => setIsRegistered(!isRegistered)}>Register here</span></p>
                                 <button 
                                     onClick={() => {
-                                        sessionActions.loginUser(username, password);
+                                        handleLogin(username, password);
                                     }}
                                 >
                                     Log in

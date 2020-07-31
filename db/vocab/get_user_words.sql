@@ -4,6 +4,9 @@ SELECT
     w.frequency_id AS quiz_word_es_fid,
     pos.pos_full AS part_of_speech_full,
     w.word_en AS correct_word_en,
+    p.is_familiar,
+    p.familiarity_score,
+    p.encounters,
     ARRAY(SELECT word_en
         FROM word
         WHERE

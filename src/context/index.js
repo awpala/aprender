@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 export const UserContext = React.createContext();
 
@@ -17,68 +16,30 @@ export const Provider = (props) => {
     // user's words data
     const [ words, setWords ] = useState([]);
 
-    // -- event handlers & actions
-
-    // auxiliary helpers
-
-    const getUserProfile = (id) => {
-        axios.get(`/api/profile/${id}`)
-        .then(res => {
-            // console.log(res.data);
-            setWords(res.data);
-        })
-        .catch(err => console.log(err));
-    }
+    // -- actions
 
     // session actions
-
-    const handleRegister = (firstName, lastName, username, password, verifiedPass) => {
-        if(password && password === verifiedPass) {
-            axios.post('/auth/register', {firstName, lastName, username, password})
-            .then(res => {
-                setIsLoggedIn(true);
-
-                console.log(res.data);
-                setUserId(res.data.user_id);
-                setFirstName(res.data.first_name);
-                setUsername(res.data.username);
-                
-                // console.log(res.data.user_id, res.data.first_name, res.data.username);
-
-                getUserProfile(res.data.user_id);
-            })
-            .catch(err => console.log(err));
-        } else {
-            alert('Passwords do not match, please review.')
-        }
+    const handleUserSession = (userId, firstName, username) => {
+        setUserId(userId);
+        setFirstName(firstName);
+        setUsername(username);
+    }
+    
+    const handleLoginUser = (userId, firstName, username) => {
+        setIsLoggedIn(true);
+        handleUserSession(userId, firstName, username);
     }
 
-    const handleLogin = (username, password) => {
-        axios.post('/auth/login', {username, password})
-        .then(res => {
-            // console.log(res.data);
-            setUserId(res.data.user_id);
-            setFirstName(res.data.first_name);
-            setUsername(res.data.username);
-            
-            // console.log(res.data.user_id, res.data.first_name, res.data.username);
-
-            getUserProfile(res.data.user_id);
-
-            setIsLoggedIn(true);
-        })
-        .catch(err => console.log(err));
+    const handleSetWords = (words) => {
+        setWords(words); 
     }
 
-    const handleLogout = () => {
-        axios.get('/auth/logout')
-        .then(() => {
-            setIsLoggedIn(false);
-            setUserId(null);
-            setFirstName('');
-            setUsername('');
-            setWords([]);
-        })
+    const handleLogoutUser = () => {
+        setIsLoggedIn(false);
+        setUserId(null);
+        setFirstName('');
+        setUsername('');
+        setWords([]);
     }
 
     // vocab word actions
@@ -95,10 +56,12 @@ export const Provider = (props) => {
                     firstName,
                     username,
                     words,
-                    sessionActions: {
-                        registerUser: handleRegister,
-                        loginUser: handleLogin,
-                        logoutUser: handleLogout
+                    actions: {
+                        loginUser: handleLoginUser,
+                        setSession: handleUserSession,
+                        logoutUser: handleLogoutUser,
+                        setUserWords: handleSetWords,
+                        setIsLoggedIn
                     }
                 }
             }
