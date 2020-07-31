@@ -10,9 +10,9 @@ import NotFound from './components/NotFound';
 export default (
     <Switch>
         <Route exact path='/' component={Landing} />
-        <Route path='/vocab' component={Vocab} />
-        <Route path='/profile' component={Profile} />
-        <Route path='/about' component={About} />
+        <Route exact path='/vocab' component={Vocab} />
+        <Route exact path='/profile' component={Profile} />
+        <Route exact path='/about' component={About} />
         <Route component={NotFound} />
     </Switch>
 )

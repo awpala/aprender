@@ -9,7 +9,7 @@ const Profile = (props) => {
         if(!isLoggedIn) {
             props.history.push('/');
         }
-    }, [isLoggedIn]);
+    }, [isLoggedIn, props.history]);
 
     return(
         <div>Profile</div>

@@ -9,7 +9,7 @@ const About = (props) => {
         if(!isLoggedIn) {
             props.history.push('/');
         }
-    }, [isLoggedIn]);
+    }, [isLoggedIn, props.history]);
 
     return(
         <div>About</div>

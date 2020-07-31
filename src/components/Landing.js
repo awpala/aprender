@@ -4,6 +4,8 @@ import { UserContext } from '../context';
 import useKeyPress from '../hooks/useKeyPress'; // custom hook
 
 const Landing = (props) => {
+    // -- component data
+
     // form status
     const [isRegistered, setIsRegistered] = useState(false);
 
@@ -17,12 +19,28 @@ const Landing = (props) => {
     // store data
     const { actions, isLoggedIn, userId  } = useContext(UserContext);
 
+    // -- component actions
+
+    // redirect user to app if session active or logged in
+    useEffect(() => {
+        // set user back into session if not logged out (retains session if page refreshed)
+        if(!isLoggedIn && userId) {
+            getUserProfile(userId);
+            actions.setIsLoggedIn(true);
+        }
+
+        // redirect to vocab if logged in
+        if(isLoggedIn) {
+            props.history.push('/vocab');
+        }
+    }, [isLoggedIn, userId])
+
     // form event handlers
     const getUserProfile = (id) => {
         axios.get(`/api/profile/${id}`)
         .then(res => {
             // console.log(res.data);
-            actions.setUserWords(res.data);
+            actions.setWords(res.data);
         })
         .catch(err => console.log(err));
     }
@@ -63,20 +81,7 @@ const Landing = (props) => {
         }
     }, [pressEnter])
 
-    // redirect user to app if session active or logged in
-    useEffect(() => {
-        // set user back into session if not logged out (retains session if page refreshed)
-        if(!isLoggedIn && userId) {
-            getUserProfile(userId);
-            actions.setIsLoggedIn(true);
-        }
-
-        // redirect to vocab if logged in
-        if(isLoggedIn) {
-            props.history.push('/vocab');
-        }
-    }, [isLoggedIn, userId])
-
+    // -- render component UI
     return(
         <div>
             <header>

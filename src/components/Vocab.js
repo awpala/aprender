@@ -4,10 +4,12 @@ import axios from 'axios';
 import useKeyPress from '../hooks/useKeyPress'; // custom hook
 
 const Vocab = (props) => {
+    // -- component data
+
     // user data from context
     const { userId, isLoggedIn } = useContext(UserContext);
 
-    // word data
+    // word data from context
     const [query, setQuery] = useState('');
     const [freqId, setFreqId] = useState(null);
     const [pOS, setPOS] = useState();
@@ -30,12 +32,13 @@ const Vocab = (props) => {
     const pressF = useKeyPress('f');
     const pressSpace = useKeyPress(' ');
 
+    // -- component actions
+
     // initial mount
     useEffect(() => {
         if(isLoggedIn) {
             axios.get(`/api/vocab/${userId}`)
             .then(res => {
-                // console.log(res.data[0]);
                 setQuery(res.data[0].quiz_word_es);
                 setFreqId(res.data[0].quiz_word_es_fid);
                 setPOS(res.data[0].part_of_speech_full);
@@ -85,22 +88,15 @@ const Vocab = (props) => {
         {
             setIsAnswered(true);
 
-            if(answers[0] === correct && pressA) {
-                setIsCorrect(true);
-                // console.log('A accessed');
-            } else if (answers[1] === correct && pressS) {
-                setIsCorrect(true);
-                // console.log('S accessed');
-            } else if (answers[2] === correct && pressD) {
-                setIsCorrect(true);
-                // console.log('D accessed');
-            } else if (answers[3] === correct && pressF) {
-                setIsCorrect(true);
-                // console.log('F accessed');
-            } else {
-                setIsCorrect(false);
-                // console.log('incorrect response');
-            }
+            (
+                (answers[0] === correct && pressA) ||
+                (answers[1] === correct && pressS) ||
+                (answers[2] === correct && pressD) ||
+                (answers[3] === correct && pressF)
+            )
+            ? setIsCorrect(true)
+            : setIsCorrect(false);
+            
         }
     }, [isAnswered, pressA, pressS, pressD, pressF, pressSpace])
 
@@ -108,6 +104,7 @@ const Vocab = (props) => {
         // TO-DO
     }
 
+    // -- render component UI
     return (
         <div>
             <h3>Frequency ID: {freqId}/5000</h3>

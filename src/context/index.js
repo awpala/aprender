@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 export const UserContext = React.createContext();
 
 export const Provider = (props) => {
-    // -- state variables
+    // -- context state variables
 
     // session data
     const [ isLoggedIn, setIsLoggedIn ] = useState(false);
@@ -16,7 +16,7 @@ export const Provider = (props) => {
     // user's words data
     const [ words, setWords ] = useState([]);
 
-    // -- actions
+    // -- context actions
 
     // session actions
     const handleUserSession = (userId, firstName, username) => {
@@ -28,10 +28,6 @@ export const Provider = (props) => {
     const handleLoginUser = (userId, firstName, username) => {
         setIsLoggedIn(true);
         handleUserSession(userId, firstName, username);
-    }
-
-    const handleSetWords = (words) => {
-        setWords(words); 
     }
 
     const handleLogoutUser = () => {
@@ -57,11 +53,11 @@ export const Provider = (props) => {
                     username,
                     words,
                     actions: {
-                        loginUser: handleLoginUser,
+                        setIsLoggedIn,
+                        setWords,
                         setSession: handleUserSession,
-                        logoutUser: handleLogoutUser,
-                        setUserWords: handleSetWords,
-                        setIsLoggedIn
+                        loginUser: handleLoginUser,
+                        logoutUser: handleLogoutUser
                     }
                 }
             }
