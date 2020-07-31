@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { UserContext } from './context';
+import { UserContext } from '../context';
 
 const Landing = (props) => {
     // form status

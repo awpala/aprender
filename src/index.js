@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter } from 'react-router-dom';
-import { Provider } from './components/context';
+import { Provider } from './context';
 
 import App from './components/App';
 

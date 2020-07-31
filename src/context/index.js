@@ -10,9 +10,9 @@ export const Provider = (props) => {
     const [ isLoggedIn, setIsLoggedIn ] = useState(false);
 
     // user data
-    const [ userId, setUserId ] = useState();
-    const [ firstName, setFirstName ] = useState();
-    const [ username, setUsername ] = useState();
+    const [ userId, setUserId ] = useState(null);
+    const [ firstName, setFirstName ] = useState('');
+    const [ username, setUsername ] = useState('');
 
     // user's words data
     const [ words, setWords ] = useState([]);

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { withRouter, Link } from 'react-router-dom';
-import { UserContext } from './context';
+import { UserContext } from '../context';
 
 const Header = (props) => {
     const { isLoggedIn, sessionActions } = useContext(UserContext);

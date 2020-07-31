@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { UserContext } from './context';
+import { UserContext } from '../context';
 import axios from 'axios';
+import useKeyPress from '../hooks/useKeyPress'; // custom hook
 
 const Vocab = (props) => {
     // user data from context
@@ -19,6 +20,13 @@ const Vocab = (props) => {
     const [isAnswered, setIsAnswered] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false);
 
+    // component keypress event listeners
+    const pressA = useKeyPress('a');
+    const pressS = useKeyPress('s');
+    const pressD = useKeyPress('d');
+    const pressF = useKeyPress('f');
+    const pressSpace = useKeyPress(' ');
+
     // initial mount
     useEffect(() => {
         if(isLoggedIn) {
@@ -35,7 +43,7 @@ const Vocab = (props) => {
             })
             .catch(err => console.log(err));
         }
-    }, [isLoggedIn, userId])
+    }, [isLoggedIn, userId]);
 
     // route to landing if user logs out
     useEffect(() => {
@@ -44,32 +52,87 @@ const Vocab = (props) => {
         }
     }, [isLoggedIn]);
 
-    const answers = [...incorrect, correct];
-
-    // Randomize answers' order via Fisher-Yates algorithm
-    // (cf. https://medium.com/@nitinpatel_20236/how-to-shuffle-correctly-shuffle-an-array-in-javascript-15ea3f84bfb)
-    for(let i = answers.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        const temp = answers[i];
-        answers[i] = answers[j];
-        answers[j] = temp;
-    }
+    // create answers selections and assign to buttons in random order
+    const answers = [...incorrect, correct].sort(() => Math.random() - 0.5);
 
     const mappedAnswers = answers.map((answer, index) => (
-        <button key={index}>{answer}</button>
+        <button
+            key={index}
+            onClick={() => handleSelection(index)}
+        >
+            {answer}
+        </button>
     ));
+
+    // handle user's selection and then re-render a new query word
+
+    // user reponse via button click
+    const handleSelection = (choice) => {
+        setIsAnswered(true);
+
+        if(answers[choice] === correct) {
+            // console.log(`${choice} accessed!`, answers[choice]);
+            setIsCorrect(true);
+        } else {
+            setIsCorrect(false);
+        }
+    }
+
+    // user response via keypress
+    useEffect(() => {
+        if(!isAnswered && (
+            pressA || pressS || pressD || pressF || pressSpace))
+        {
+            setIsAnswered(true);
+
+            if(answers[0] === correct && pressA) {
+                setIsCorrect(true);
+                // console.log('A accessed');
+            } else if (answers[1] === correct && pressS) {
+                setIsCorrect(true);
+                // console.log('S accessed');
+            } else if (answers[2] === correct && pressD) {
+                setIsCorrect(true);
+                // console.log('D accessed');
+            } else if (answers[3] === correct && pressF) {
+                setIsCorrect(true);
+                // console.log('F accessed');
+            } else {
+                setIsCorrect(false);
+                // console.log('incorrect response');
+            }
+        }
+    }, [isAnswered, pressA, pressS, pressD, pressF, pressSpace])
+
+    const handleRefresh = () => {
+        // TO-DO
+    }
 
     return (
         <div>
-            <h1>Vocab</h1>
-            <h2>Spanish Word: {query}</h2>
             <h3>Frequency ID: {freqId}/5000</h3>
             <h3>Part of Speech: {pOS}</h3>
+            <h2>Spanish Word: {query}</h2>
             <h2>English Translation?</h2>
+            {
+                isAnswered
+                ? <p>{correct}</p>
+                : null
+            }
             <div>
-                {mappedAnswers}
+                {/* {mappedAnswers} */}
+                {!isAnswered ? mappedAnswers : null}
             </div>
-            <button>I don't know!</button>
+            {
+                (!isAnswered
+                ? <button onClick={() => handleSelection(null)}>I don't know! (SPACE key)</button>
+                : <div>
+                    <p>{phraseEs}</p>
+                    <p>{phraseEn}</p>
+                    <button onClick={() => handleRefresh()}>Next word (SPACE key)</button>
+                </div>
+                )
+            }
         </div>
     );
 }
