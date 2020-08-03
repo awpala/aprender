@@ -41,7 +41,7 @@ app.get('/auth/logout', authCtrl.logout);
 
 // vocab endpoints
 app.get('/api/vocab/:id', vocabCtrl.getUserWords);
-app.post('/api/vocab/:id', vocabCtrl.updateWord);
+app.put('/api/vocab/:id', vocabCtrl.updateWord);
 
 // profile endpoints
 app.get('/api/profile/:id', profileCtrl.getUserProfile);

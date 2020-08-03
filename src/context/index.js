@@ -39,8 +39,39 @@ export const Provider = (props) => {
     }
 
     // vocab word actions
-
-    // TO-DO
+    const handleUpdateWord = (freqId, isFamiliar, familiarityScore, encounters) => {
+        if(freqId <= words.length - 1) { // freqId in range 1...4999
+            setWords(prevState =>
+                [
+                    ...prevState.slice(0, freqId - 1), // N.B. offset by 1 (freqId indexed 1...5000)
+                    {
+                        frequency_id: freqId,
+                        is_familiar: isFamiliar,
+                        familiarity_score: familiarityScore,
+                        encounters: encounters,
+                        is_cognate: prevState[freqId].is_cognate,
+                        pos_standardized: prevState[freqId].pos_standardized
+                    },
+                    ...prevState.slice(freqId)
+                ]
+            );
+        } else { // update last word only (freqId === 5000)
+            setWords(prevState =>
+                [
+                    ...prevState.slice(0, freqId - 1), // N.B. offset by 1 (freqId indexed 1...5000)
+                    {
+                        frequency_id: freqId,
+                        is_familiar: isFamiliar,
+                        familiarity_score: familiarityScore,
+                        encounters: encounters,
+                        is_cognate: prevState[freqId].is_cognate,
+                        pos_standardized: prevState[freqId].pos_standardized
+                    }
+                ]
+            );
+        }
+        
+    }
 
     // -- return context object
     return (
@@ -57,7 +88,8 @@ export const Provider = (props) => {
                         setWords,
                         setSession: handleUserSession,
                         loginUser: handleLoginUser,
-                        logoutUser: handleLogoutUser
+                        logoutUser: handleLogoutUser,
+                        updateWord: handleUpdateWord
                     }
                 }
             }

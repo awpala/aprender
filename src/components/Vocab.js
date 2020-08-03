@@ -13,17 +13,17 @@ const Vocab = (props) => {
     const [query, setQuery] = useState('');
     const [freqId, setFreqId] = useState(null);
     const [pOS, setPOS] = useState();
-    const [isFamiliar, setIsFamiliar] = useState(false);
+    const [setIsFamiliar] = useState(false);
     const [familiarityScore, setFamiliarityScore] = useState(null);
     const [encounters, setEncounters] = useState(null);
     const [correct, setCorrect] = useState('');
-    const [incorrect, setIncorrect] = useState([]);
+    const [choices, setChoices] = useState([]);
     const [phraseEs, setPhraseEs] = useState('');
     const [phraseEn, setPhraseEn] = useState('');
 
     // component state data
     const [isAnswered, setIsAnswered] = useState(false);
-    const [isCorrect, setIsCorrect] = useState(false);
+    const [isCorrect, setIsCorrect] = useState(null);
 
     // component keypress event listeners
     const pressA = useKeyPress('a');
@@ -46,59 +46,94 @@ const Vocab = (props) => {
                 setIsFamiliar(res.data[0].is_familiar);
                 setFamiliarityScore(res.data[0].familiarity_score);
                 setEncounters(res.data[0].encounters);
-                setIncorrect(res.data[0].incorrect_words_en);
+                // set choices to appear in random order
+                setChoices([...res.data[0].incorrect_words_en, res.data[0].correct_word_en].sort(() => Math.random() - 0.5));
                 setPhraseEs(res.data[0].phrase_es);
                 setPhraseEn(res.data[0].phrase_en);
             })
             .catch(err => console.log(err));
         }
-    }, [isLoggedIn, userId]);
+    }, [isLoggedIn]);
 
     // route to landing if user logs out
     useEffect(() => {
         if(!isLoggedIn) {
             props.history.push('/');
         }
-    }, [isLoggedIn]);
+    }, [isLoggedIn, props.history]);
 
-    // create answers selections and assign to buttons in random order
-    const answers = [...incorrect, correct].sort(() => Math.random() - 0.5);
-
-    const mappedAnswers = answers.map((answer, index) => (
+    const mappedChoices = choices.map((choice, index) => (
         <button
             key={index}
             onClick={() => handleSelection(index)}
         >
-            {answer}
+            {choice}
         </button>
-    ));
+    ))
 
     // handle user's selection and then re-render a new query word
 
     // user reponse via button click
     const handleSelection = (choice) => {
         setIsAnswered(true);
-        setIsCorrect(answers[choice] === correct);
+        setIsCorrect(choices[choice] === correct);
     }
 
     // user response via keypress
     useEffect(() => {
-        if(!isAnswered && (
-            pressA || pressS || pressD || pressF || pressSpace))
+        if(!isAnswered && (pressA || pressS || pressD || pressF || pressSpace))
         {
             setIsAnswered(true);
 
             (
-                (answers[0] === correct && pressA) ||
-                (answers[1] === correct && pressS) ||
-                (answers[2] === correct && pressD) ||
-                (answers[3] === correct && pressF)
+                (choices[0] === correct && pressA) ||
+                (choices[1] === correct && pressS) ||
+                (choices[2] === correct && pressD) ||
+                (choices[3] === correct && pressF)
             )
             ? setIsCorrect(true)
             : setIsCorrect(false);
             
         }
     }, [isAnswered, pressA, pressS, pressD, pressF, pressSpace])
+
+    // update words data
+    const { actions } = useContext(UserContext);
+
+    // handleUpdateWord
+
+    useEffect(() => {
+        if(isAnswered && (isCorrect !== null)) {
+            // console.log('accessed isAnswered');
+            setEncounters(prevEncounters => prevEncounters + 1);
+
+            if(isCorrect) {
+                // console.log('accessed isCorrect');
+                setIsFamiliar(true);
+                setFamiliarityScore(prevScore => prevScore + 1);
+
+                axios.put(`/api/vocab/${userId}`, {freqId, isFamiliar: true, familiarityScore: familiarityScore + 1, encounters: encounters + 1})
+                .then(res => {
+                    // console.log('put correct');
+                    actions.updateWord(res.data[0].frequency_id, res.data[0].is_familiar, res.data[0].familiarity_score, res.data[0].encounters);
+                })
+                .catch(err => console.log(err));
+            } else if(!isCorrect) {
+                // console.log('accessed !isCorrect');
+                setIsFamiliar(false);
+                setFamiliarityScore(0);
+
+                axios.put(`/api/vocab/${userId}`, {freqId, isFamiliar: false, familiarityScore: 0, encounters: encounters + 1})
+                .then(res => {
+                    // console.log('put incorrect');
+                    actions.updateWord(res.data[0].frequency_id, res.data[0].is_familiar, res.data[0].familiarity_score, res.data[0].encounters);
+                })
+                .catch(err => console.log(err));
+            }
+
+            setIsCorrect(null);
+        }
+    }, [isAnswered, isCorrect])
 
     const handleRefresh = () => {
         // TO-DO
@@ -117,8 +152,7 @@ const Vocab = (props) => {
                 : null
             }
             <div>
-                {/* {mappedAnswers} */}
-                {!isAnswered ? mappedAnswers : null}
+                {!isAnswered ? mappedChoices : null}
             </div>
             {
                 (!isAnswered

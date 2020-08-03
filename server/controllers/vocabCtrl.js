@@ -9,15 +9,13 @@ module.exports = {
     },
     updateWord: (req, res) => {
         let { id } = req.params,
-            { frequencyId, isFamiliar, familiarityScore, encounters } = req.body,
+            { freqId, isFamiliar, familiarityScore, encounters } = req.body,
             db = req.app.get('db');
+        
+        // console.log(id, freqId, isFamiliar, familiarityScore, encounters);
 
-        // type corrections
-        id = +id;
-        isFamiliar = (isFamiliar === 'true') ? true : false;
-
-        db.vocab.update_word(id, frequencyId, isFamiliar, familiarityScore, encounters)
-        .then(() => res.sendStatus(204))
+        db.vocab.update_word(id, freqId, isFamiliar, familiarityScore, encounters)
+        .then(word => res.status(200).send(word))
         .catch(err => res.status(500).send(err));
     }
 }
