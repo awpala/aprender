@@ -13,7 +13,7 @@ const Vocab = (props) => {
     const [query, setQuery] = useState('');
     const [freqId, setFreqId] = useState(null);
     const [pOS, setPOS] = useState();
-    const [setIsFamiliar] = useState(false);
+    const [isFamiliar, setIsFamiliar] = useState(false);
     const [familiarityScore, setFamiliarityScore] = useState(null);
     const [encounters, setEncounters] = useState(null);
     const [correct, setCorrect] = useState('');
