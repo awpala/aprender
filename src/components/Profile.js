@@ -22,7 +22,7 @@ const Profile = (props) => {
 
     const accuracy = (
         (words.reduce((acc, word) => acc + word.encounters, 0) === 0)
-        ? 0
+        ? 0 // initialize to 0 if no words encountered yet
         : filteredWords.reduce((acc, word) => acc + word.familiarity_score, 0) /
         filteredWords.reduce((acc, word) => acc + word.encounters, 0)
         * 100

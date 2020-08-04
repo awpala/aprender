@@ -7,7 +7,7 @@ const Landing = (props) => {
     // -- component data
 
     // form status
-    const [isRegistered, setIsRegistered] = useState(false);
+    const [isRegistered, setIsRegistered] = useState(true);
 
     // form data
     const [firstName, setFirstName] = useState('');
@@ -145,7 +145,7 @@ const Landing = (props) => {
                                 <p>Have an account? <span onClick={() => setIsRegistered(!isRegistered)}>Log in here</span></p>
                                 <button 
                                     onClick={() => {
-                                        handleRegister(firstName, lastName, username, password, verifiedPass);
+                                        handleLogin(username, password);
                                     }}
                                 >
                                     Register
@@ -157,7 +157,7 @@ const Landing = (props) => {
                                 <p>Don't have an account? <span onClick={() => setIsRegistered(!isRegistered)}>Register here</span></p>
                                 <button 
                                     onClick={() => {
-                                        handleLogin(username, password);
+                                        handleRegister(firstName, lastName, username, password, verifiedPass);
                                     }}
                                 >
                                     Log in

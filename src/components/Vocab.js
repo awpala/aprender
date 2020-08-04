@@ -24,7 +24,6 @@ const Vocab = (props) => {
     // component state data
     const [isAnswered, setIsAnswered] = useState(false);
     const [isCorrect, setIsCorrect] = useState(null);
-    const [isSpaceReset, setIsSpaceReset] = useState(true);
 
     // component keypress event listeners (via custom hook useKeyPress)
     const pressA = useKeyPress('a');
@@ -32,6 +31,7 @@ const Vocab = (props) => {
     const pressD = useKeyPress('d');
     const pressF = useKeyPress('f');
     const pressSpace = useKeyPress(' ');
+    const pressW = useKeyPress('w');
 
     // -- component actions
 
@@ -44,9 +44,9 @@ const Vocab = (props) => {
 
     // render/re-render new vocabulary query word and choices
     useEffect(() => {
-        // if(isLoggedIn) {
-        // if(isLoggedIn && !isAnswered && (isCorrect === null)) {
-        if(isLoggedIn && !isAnswered && (isCorrect === null) && isSpaceReset) {
+        if(isLoggedIn && !isAnswered && (isCorrect === null)) {
+            console.log('1) access mount');
+
             axios.get(`/api/vocab/${userId}`)
             .then(res => {
                 const { 
@@ -71,28 +71,30 @@ const Vocab = (props) => {
                 setCorrect(correct_word_en);
 
                 // set choices to appear in random order
-                setChoices(
-                    [...incorrect_words_en, correct_word_en]
-                    .sort(() => Math.random() - 0.5)
-                );
+                
+                // initialize choicesArray 
+                const choicesArray = [...incorrect_words_en, correct_word_en];
+
+                // Randomize choices' order via Fisher-Yates algorithm	
+                // (cf. https://medium.com/@nitinpatel_20236/how-to-shuffle-correctly-shuffle-an-array-in-javascript-15ea3f84bfb)
+                for(let i = choicesArray.length - 1; i > 0; i--) {	
+                    const j = Math.floor(Math.random() * (i + 1));	
+                    const temp = choicesArray[i];	
+                    choicesArray[i] = choicesArray[j];	
+                    choicesArray[j] = temp;	
+                }
+
+                setChoices(choicesArray);
 
                 // user's word data to be updated following user response
                 setIsFamiliar(is_familiar);
                 setFamiliarityScore(familiarity_score);
                 setEncounters(encounters);
 
-                // setIsSpaceReset(false);
             })
             .catch(err => console.log(err));
-
-            setIsSpaceReset(false);
         }
-    // }, [isLoggedIn]);
-    // }, [isLoggedIn, isAnswered, isCorrect]);
-    }, [isLoggedIn, isAnswered, isCorrect, isSpaceReset]);
-    // }, [isLoggedIn, isCorrect]);
-
-
+    }, [isLoggedIn, isAnswered, isCorrect]);
 
     const mappedChoices = choices.map((choice, index) => (
         <button
@@ -107,25 +109,20 @@ const Vocab = (props) => {
 
     // user reponse via button click
     const handleSelection = (choice) => {
-        setIsAnswered(true);
+        console.log('2A) selection via click');
+
         setIsCorrect(choices[choice] === correct);
     }
 
     // user response via keypress
     useEffect(() => {
-        // if(pressSpace && (isAnswered && (isCorrect === null) && !isSpaceReset)) {
-        //     setIsSpaceReset(true);
-        //     setIsAnswered(false);
-        // }
-
-        // if(!isAnswered && (pressA || pressS || pressD || pressF || pressSpace))
         if(!isAnswered &&
-            (pressA || pressS || pressD || pressF || (pressSpace && isSpaceReset)) && 
-            (isCorrect === null))
+            (isCorrect === null) &&
+            (pressA || pressS || pressD || pressF || pressSpace)
+        )
         {
-            console.log('accessed answer selectors');
-            setIsAnswered(true);
-
+            console.log('2B) selection via keypress');
+            
             (
                 (choices[0] === correct && pressA) ||
                 (choices[1] === correct && pressS) ||
@@ -135,40 +132,35 @@ const Vocab = (props) => {
             ? setIsCorrect(true)
             : setIsCorrect(false);
 
-            setIsSpaceReset(false);
         }
-    // }, [isAnswered, pressA, pressS, pressD, pressF, pressSpace]);
-    }, [isAnswered, isCorrect, isSpaceReset, pressA, pressS, pressD, pressF, pressSpace]);
+    }, [isAnswered, isCorrect, pressA, pressS, pressD, pressF, pressSpace]);
 
-    // update words data upon user response via method actions.updateWord()
+    // update words data upon user response via context method actions.updateWord()
     const { actions } = useContext(UserContext);
 
     useEffect(() => {
-        if(isAnswered && (isCorrect !== null)) {
-            // console.log('accessed isAnswered');
+        if(!isAnswered && (isCorrect !== null)) {    
+            console.log('3) update word entries');
+
             setEncounters(prevEncounters => prevEncounters + 1);
 
             if(isCorrect) {
-                // console.log('accessed isCorrect');
                 setIsFamiliar(true);
                 setFamiliarityScore(prevScore => prevScore + 1);
 
                 axios.put(`/api/vocab/${userId}`, {freqId, isFamiliar: true, familiarityScore: familiarityScore + 1, encounters: encounters + 1})
                 .then(res => {
-                    // console.log('put correct');
                     const { frequency_id, is_familiar, familiarity_score, encounters } = res.data[0];
 
                     actions.updateWord(frequency_id, is_familiar, familiarity_score, encounters);
                 })
                 .catch(err => console.log(err));
             } else if(!isCorrect) {
-                // console.log('accessed !isCorrect');
                 setIsFamiliar(false);
                 setFamiliarityScore(0);
 
                 axios.put(`/api/vocab/${userId}`, {freqId, isFamiliar: false, familiarityScore: 0, encounters: encounters + 1})
                 .then(res => {
-                    // console.log('put incorrect');
                     const { frequency_id, is_familiar, familiarity_score, encounters } = res.data[0];
 
                     actions.updateWord(frequency_id, is_familiar, familiarity_score, encounters);
@@ -176,36 +168,27 @@ const Vocab = (props) => {
                 .catch(err => console.log(err));
             }
 
-            setIsCorrect(null);
-            setIsSpaceReset(false);
-            // setIsAnswered(false);
+            setIsAnswered(true);
         }
-    // }, [isAnswered, isCorrect]);
-    }, [isAnswered, isCorrect, isSpaceReset]);
-
+    }, [isAnswered, isCorrect]);
 
     // reset to next word via button click
     const handleReset = () => {
-        if(isAnswered && (isCorrect === null)) {
+        if(isAnswered) {
+            console.log('4A) reset via click');
+
             setIsAnswered(false);
-            // setIsCorrect(null);
-            // console.log(isCorrect);
-            setIsSpaceReset(true);
+            setIsCorrect(null);
         }
     }
 
-    // reset to next word via keypress (Space)
+    // reset to next word via keypress (W)
     useEffect(() => {
-        if(pressSpace && isAnswered && (isCorrect === null) && !isSpaceReset) {
-            console.log('accessed space');
-            // setIsAnswered(false);
-            // console.log(isAnswered);
-            console.log(pressSpace, isAnswered, isCorrect, isSpaceReset);
+        if(pressW && isAnswered && (isCorrect !== null)) {
+            console.log('4B) reset via W');
             handleReset();
-            // setIsSpaceReset(true);
         }
-    // }, [pressSpace, isAnswered, isCorrect, isSpaceReset]);
-    }, [pressSpace, isCorrect, isAnswered]);
+    }, [pressW]);
 
     // -- render component UI
     return (
@@ -228,7 +211,7 @@ const Vocab = (props) => {
                 : <div>
                     <p>{phraseEs}</p>
                     <p>{phraseEn}</p>
-                    <button onClick={() => handleReset()}>Next word (SPACE key)</button>
+                    <button onClick={() => handleReset()}>Next word (W key)</button>
                 </div>
                 )
             }
