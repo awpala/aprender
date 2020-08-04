@@ -28,6 +28,8 @@ INNER JOIN profile AS p
     ON w.frequency_id = p.frequency_id
 INNER JOIN part_of_speech AS pos
     ON w.part_of_speech_id = pos.pos_id
+
+-- main WHERE clause to create dynamic freq_id ranges
 WHERE 
     p.user_id = $1 AND
     CASE
@@ -50,7 +52,7 @@ WHERE
                     GROUP BY familiarity_score
                     ORDER BY 1
                     LIMIT 1)
-        -- Case 2) randomly select from top 500 if any freq_id <= 500 are unfamiliar and freq_id <= 100 are familiar
+        -- Case 2) randomly select from top 500 if any freq_id <= 500 are unfamiliar and all freq_id <= 100 are familiar
         WHEN
             EXISTS (
                 SELECT * 
@@ -71,7 +73,7 @@ WHERE
                         LIMIT 1)
                 OR
                     p.frequency_id BETWEEN 1 AND 100
-        -- Case 3) randomly select from top 1000 if any freq_id <= 1000 are unfamiliar and freq_id <= 500 are familiar
+        -- Case 3) randomly select from top 1000 if any freq_id <= 1000 are unfamiliar and all freq_id <= 500 are familiar
         WHEN
             EXISTS (
                 SELECT * 
@@ -92,7 +94,7 @@ WHERE
                         LIMIT 1)
                 OR
                     p.frequency_id BETWEEN 1 AND 500                
-        -- Case 4) randomly select from top 5000 if any freq_id <= 5000 are unfamiliar and freq_id <= 1000 are familiar
+        -- Case 4) randomly select from top 5000 if any freq_id <= 5000 are unfamiliar and all freq_id <= 1000 are familiar
         WHEN
             EXISTS (
                 SELECT * 
@@ -117,7 +119,8 @@ WHERE
         ELSE
             p.frequency_id BETWEEN 1 AND 5000
     END
--- select one random query word (w.word_es) to return from filtered-range subset produced by WHERE clause
+    
+-- select one random query word (w.word_es) to return from filtered-range subset produced by main WHERE clause
 ORDER BY RANDOM()
 LIMIT 1
 ;
