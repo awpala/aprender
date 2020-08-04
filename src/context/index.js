@@ -40,37 +40,23 @@ export const Provider = (props) => {
 
     // vocab word actions
     const handleUpdateWord = (freqId, isFamiliar, familiarityScore, encounters) => {
-        if(freqId <= words.length - 1) { // freqId in range 1...4999
-            setWords(prevState =>
-                [
-                    ...prevState.slice(0, freqId - 1), // N.B. offset by 1 (freqId indexed 1...5000)
-                    {
-                        frequency_id: freqId,
-                        is_familiar: isFamiliar,
-                        familiarity_score: familiarityScore,
-                        encounters: encounters,
-                        is_cognate: prevState[freqId].is_cognate,
-                        pos_standardized: prevState[freqId].pos_standardized
-                    },
-                    ...prevState.slice(freqId)
-                ]
-            );
-        } else { // update last word only (freqId === 5000)
-            setWords(prevState =>
-                [
-                    ...prevState.slice(0, freqId - 1), // N.B. offset by 1 (freqId indexed 1...5000)
-                    {
-                        frequency_id: freqId,
-                        is_familiar: isFamiliar,
-                        familiarity_score: familiarityScore,
-                        encounters: encounters,
-                        is_cognate: prevState[freqId].is_cognate,
-                        pos_standardized: prevState[freqId].pos_standardized
-                    }
-                ]
-            );
-        }
-        
+        // N.B. offset index by 1 ("freqId" indexed 1...5000 vs. array "words" indexed 0...4999)
+        const offset = freqId - 1;
+
+        setWords(prevWords =>
+            [
+                ...prevWords.slice(0, offset), 
+                {
+                    frequency_id: freqId,
+                    is_familiar: isFamiliar,
+                    familiarity_score: familiarityScore,
+                    encounters: encounters,
+                    is_cognate: prevWords[offset].is_cognate,
+                    pos_standardized: prevWords[offset].pos_standardized
+                },
+                ...prevWords.slice(offset + 1)
+            ]
+        );
     }
 
     // -- return context object
