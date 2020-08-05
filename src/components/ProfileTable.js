@@ -3,7 +3,7 @@ import React from 'react';
 const ProfileTable = ({ wordsTotal, wordsCognates, wordsNonCognates }) => {
     return (
         <div>
-            <h2>Familiarity By Counts</h2>
+            <h2>Familiarity by Counts</h2>
             <table>
                 <thead>
                     <tr>

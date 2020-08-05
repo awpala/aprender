@@ -74,10 +74,11 @@ const ProfileChart = ({ words, wordsCognates, wordsNonCognates }) => {
 
     return(
         <div>
+            <h2>Familiarity by Percentages</h2>
             <Bar
                 data={chartData}
                 width={400}
-                height={400}
+                height={250}
                 options={
                     { 
                         maintainAspectRatio: false,
@@ -88,6 +89,10 @@ const ProfileChart = ({ words, wordsCognates, wordsNonCognates }) => {
                                     scaleLabel: {
                                         display: true,
                                         labelString: 'Familiarity (%)'
+                                    },
+                                    ticks: {
+                                        min: 0,
+                                        max: 100
                                     }
                                 }
                             ]
