@@ -33,16 +33,16 @@ const ProfileChart = ({ words, wordsCognates, wordsNonCognates }) => {
             (wordsNonCognates.top100/baselines.top100[1]*100).toFixed(2)
         ],
         top500: [
-            (wordsCognates.top100/baselines.top500[0]*100).toFixed(2),
-            (wordsNonCognates.top100/baselines.top500[1]*100).toFixed(2)
+            (wordsCognates.top500/baselines.top500[0]*100).toFixed(2),
+            (wordsNonCognates.top500/baselines.top500[1]*100).toFixed(2)
         ],
         top1000: [
-            (wordsCognates.top100/baselines.top1000[0]*100).toFixed(2),
-            (wordsNonCognates.top100/baselines.top1000[1]*100).toFixed(2)
+            (wordsCognates.top1000/baselines.top1000[0]*100).toFixed(2),
+            (wordsNonCognates.top1000/baselines.top1000[1]*100).toFixed(2)
         ],
         top5000: [
-            (wordsCognates.top100/baselines.top5000[0]*100).toFixed(2),
-            (wordsNonCognates.top100/baselines.top5000[1]*100).toFixed(2)
+            (wordsCognates.top5000/baselines.top5000[0]*100).toFixed(2),
+            (wordsNonCognates.top5000/baselines.top5000[1]*100).toFixed(2)
         ],
     }
 

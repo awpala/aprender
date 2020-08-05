@@ -45,7 +45,7 @@ const Vocab = (props) => {
     // render/re-render new vocabulary query word and choices
     useEffect(() => {
         if(isLoggedIn && !isAnswered && (isCorrect === null)) {
-            console.log('1) access mount');
+            // console.log('1) access mount');
 
             axios.get(`/api/vocab/${userId}`)
             .then(res => {
@@ -109,7 +109,7 @@ const Vocab = (props) => {
 
     // user reponse via button click
     const handleSelection = (choice) => {
-        console.log('2A) selection via click');
+        // console.log('2A) selection via click');
 
         setIsCorrect(choices[choice] === correct);
     }
@@ -121,7 +121,7 @@ const Vocab = (props) => {
             (pressA || pressS || pressD || pressF || pressSpace)
         )
         {
-            console.log('2B) selection via keypress');
+            // console.log('2B) selection via keypress');
             
             (
                 (choices[0] === correct && pressA) ||
@@ -140,7 +140,7 @@ const Vocab = (props) => {
 
     useEffect(() => {
         if(!isAnswered && (isCorrect !== null)) {    
-            console.log('3) update word entries');
+            // console.log('3) update word entries');
 
             setEncounters(prevEncounters => prevEncounters + 1);
 
@@ -175,7 +175,7 @@ const Vocab = (props) => {
     // reset to next word via button click
     const handleReset = () => {
         if(isAnswered) {
-            console.log('4A) reset via click');
+            // console.log('4A) reset via click');
 
             setIsAnswered(false);
             setIsCorrect(null);
@@ -185,7 +185,7 @@ const Vocab = (props) => {
     // reset to next word via keypress (W)
     useEffect(() => {
         if(pressW && isAnswered && (isCorrect !== null)) {
-            console.log('4B) reset via W');
+            // console.log('4B) reset via W');
             handleReset();
         }
     }, [pressW]);
@@ -197,11 +197,7 @@ const Vocab = (props) => {
             <h3>Part of Speech: {pOS}</h3>
             <h2>Spanish Word: {query}</h2>
             <h2>English Translation?</h2>
-            {
-                isAnswered
-                ? <p>{correct}</p>
-                : null
-            }
+            {isAnswered ? <p>{correct}</p> : null}
             <div>
                 {!isAnswered ? mappedChoices : null}
             </div>
@@ -215,6 +211,7 @@ const Vocab = (props) => {
                 </div>
                 )
             }
+            <p>Note: Keypresses "A", "S", "D", "F" can be used to enter your selection.</p>
         </div>
     );
 }
