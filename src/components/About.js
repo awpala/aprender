@@ -46,9 +46,9 @@ const About = (props) => {
             <p>
                 Additionally, the "Profile" page will summarize progress on
                 gaining familiarity with the 5000 words. Summaries are provided
-                with respect to <emphasis>cognates</emphasis> (words that share 
+                with respect to <strong>cognates</strong> (words that share 
                 a resemblance between Spanish and English, i.e., via common 
-                etymology) and <emphasis>non-cognates</emphasis> (unresembling
+                etymology) and <strong>non-cognates</strong> (unresembling
                 words).
             </p>
         </section>
