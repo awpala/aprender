@@ -18,7 +18,8 @@ const About = (props) => {
                 The purpose of this application is to train the user's 
                 familiarity with Spanish vocabulary. The set of words included
                 in this application are the top 5000 Spanish words in common
-                usage, based on linguistic analysis of spoken and written word. The frequency ID identifies a given word's ranking by this
+                usage, based on linguistic analysis of spoken and written word. 
+                The frequency ID identifies a given word's ranking by this
                 methodology (i.e., ID 1 is the most frequently used Spanish
                 word, whereas ID 5000 is the 5000th most frequently used
                 Spanish word).
