@@ -91,7 +91,7 @@ const Profile = (props) => {
                         View Table
                     </button>
                     <ProfileChart
-                        wordsTotal={wordsTotal}
+                        words={words}
                         wordsCognates={wordsCognates}
                         wordsNonCognates={wordsNonCognates}
                     />
