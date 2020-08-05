@@ -142,7 +142,7 @@ const Landing = (props) => {
                                     placeholder='Verify Password'
                                     onChange={e => setVerifiedPass(e.target.value)}
                                 />
-                                <p>Have an account? <span onClick={() => setIsRegistered(!isRegistered)}>Log in here</span></p>
+                                <p>Have an account? <span onClick={() => setIsRegistered(true)}>Log in here</span></p>
                                 <button 
                                     onClick={() => {
                                         handleLogin(username, password);
@@ -154,7 +154,7 @@ const Landing = (props) => {
                         )
                         : (
                             <>
-                                <p>Don't have an account? <span onClick={() => setIsRegistered(!isRegistered)}>Register here</span></p>
+                                <p>Don't have an account? <span onClick={() => setIsRegistered(false)}>Register here</span></p>
                                 <button 
                                     onClick={() => {
                                         handleRegister(firstName, lastName, username, password, verifiedPass);

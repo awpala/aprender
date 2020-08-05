@@ -135,7 +135,7 @@ const Vocab = (props) => {
         }
     }, [isAnswered, isCorrect, pressA, pressS, pressD, pressF, pressSpace]);
 
-    // update words data upon user response via context method actions.updateWord()
+    // update words data upon user response via function actions.updateWord() from context
     const { actions } = useContext(UserContext);
 
     useEffect(() => {
@@ -205,13 +205,17 @@ const Vocab = (props) => {
                 (!isAnswered
                 ? <button onClick={() => handleSelection(null)}>I don't know! (SPACE key)</button>
                 : <div>
-                    <p>{phraseEs}</p>
-                    <p>{phraseEn}</p>
+                    <p><strong>Ejemplo:</strong> {phraseEs}</p>
+                    <p><strong>Example:</strong> {phraseEn}</p>
                     <button onClick={() => handleReset()}>Next word (W key)</button>
                 </div>
                 )
             }
-            <p>Note: Keypresses "A", "S", "D", "F" can be used to enter your selection.</p>
+            <p>
+                Note: Keypresses <strong>A</strong>, <strong>S</strong>,
+                <strong> D</strong>, <strong>F</strong> can be used to 
+                enter your selection.
+            </p>
         </div>
     );
 }

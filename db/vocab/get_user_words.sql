@@ -1,11 +1,15 @@
 SELECT
+    -- query word
     w.word_es AS quiz_word_es,
+    -- query word metadata
     w.frequency_id AS quiz_word_es_fid,
     pos.pos_full AS part_of_speech_full,
     w.word_en AS correct_word_en,
+    -- user metadata for query word
     p.is_familiar,
     p.familiarity_score,
     p.encounters,
+    -- array of 3 random incorrect choices from same part of speech as query word
     ARRAY(SELECT word_en
         FROM word
         WHERE
@@ -21,8 +25,11 @@ SELECT
                 LIMIT 3
             )
     ) AS incorrect_words_en,
+    -- query word usage example phrase (Spanish and English)
     w.phrase_es,
     w.phrase_en
+
+-- source tables JOINs
 FROM word AS w
 INNER JOIN profile AS p
     ON w.frequency_id = p.frequency_id
@@ -119,7 +126,7 @@ WHERE
         ELSE
             p.frequency_id BETWEEN 1 AND 5000
     END
-    
+
 -- select one random query word (w.word_es) to return from filtered-range subset produced by main WHERE clause
 ORDER BY RANDOM()
 LIMIT 1
