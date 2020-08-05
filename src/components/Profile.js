@@ -63,15 +63,16 @@ const Profile = (props) => {
     // TO-DO: add data by part of speech
 
     return(
-        <div>
+        <div className="profile">
             <h1>Here is your progress, {firstName}!</h1>
-            <h2>Total Words Reviewed: {totalEncounters}</h2>
-            <h2>Unique Words Reviewed: {uniqueEncounters}</h2>
-            <h2>Overall Accuracy: {accuracy}%</h2>
+            <h2>Total Words Reviewed: <span className="profile-stats">{totalEncounters}</span></h2>
+            <h2>Unique Words Reviewed: <span className="profile-stats">{uniqueEncounters}</span></h2>
+            <h2>Overall Accuracy: <span className="profile-stats">{accuracy}%</span></h2>
             {!isChartView
             ? (
                 <section>
                     <button
+                        className="profile-btn"
                         onClick={() => setIsChartView(prevView => !prevView)}
                     >
                         View Chart
@@ -86,6 +87,7 @@ const Profile = (props) => {
             : (
                 <section>
                     <button
+                        className="profile-btn"
                         onClick={() => setIsChartView(prevView => !prevView)}
                     >
                         View Table

@@ -4,7 +4,7 @@ const ProfileTable = ({ wordsTotal, wordsCognates, wordsNonCognates }) => {
     return (
         <div>
             <h2>Familiarity by Counts</h2>
-            <table>
+            <table className="profile-table">
                 <thead>
                     <tr>
                         <th>Frequency Range</th>
