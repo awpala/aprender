@@ -72,6 +72,25 @@ const ProfileChart = ({ words, wordsCognates, wordsNonCognates }) => {
         ]
     }
 
+    const chartOptions = { 
+        maintainAspectRatio: false,
+        responsive: false,
+        scales: {
+            yAxes: [
+                {
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Familiarity (%)'
+                    },
+                    ticks: {
+                        min: 0,
+                        max: 100
+                    }
+                }
+            ]
+        } 
+    }
+
     return(
         <div>
             <h2>Familiarity by Percentages</h2>
@@ -79,26 +98,7 @@ const ProfileChart = ({ words, wordsCognates, wordsNonCognates }) => {
                 data={chartData}
                 width={400}
                 height={250}
-                options={
-                    { 
-                        maintainAspectRatio: false,
-                        responsive: false,
-                        scales: {
-                            yAxes: [
-                                {
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: 'Familiarity (%)'
-                                    },
-                                    ticks: {
-                                        min: 0,
-                                        max: 100
-                                    }
-                                }
-                            ]
-                        } 
-                    }
-                }
+                options={chartOptions}
             />
         </div>
     )
