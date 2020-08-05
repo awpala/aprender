@@ -21,7 +21,7 @@ const App = () => {
     }, [isLoggedIn])
 
     return (
-        <div>
+        <div className="app">
             {isLoggedIn
             ? (
                 <>

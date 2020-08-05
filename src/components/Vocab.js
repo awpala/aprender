@@ -98,6 +98,7 @@ const Vocab = (props) => {
 
     const mappedChoices = choices.map((choice, index) => (
         <button
+            className="vocab-btn"
             key={index}
             onClick={() => handleSelection(index)}
         >
@@ -192,29 +193,42 @@ const Vocab = (props) => {
 
     // -- render component UI
     return (
-        <div>
-            <h3>Frequency ID: {freqId}/5000</h3>
-            <h3>Part of Speech: {pOS}</h3>
-            <h2>Spanish Word: {query}</h2>
-            <h2>English Translation?</h2>
-            {isAnswered ? <p>{correct}</p> : null}
-            <div>
+        <div className="vocab">
+            <p className="vocab-metadata"><span>Frequency ID:</span> {freqId}<span>/5000</span></p>
+            <p className="vocab-metadata"><span>Part of Speech:</span> {pOS}</p>
+            <p className="vocab-word"><span>Spanish Word:</span> {query}</p>
+            <p className="vocab-word"><span>English Translation?</span></p>
+            <div className="vocab-choices">
                 {!isAnswered ? mappedChoices : null}
             </div>
             {
                 (!isAnswered
-                ? <button onClick={() => handleSelection(null)}>I don't know! (SPACE key)</button>
-                : <div>
-                    <p><strong>Ejemplo:</strong> {phraseEs}</p>
-                    <p><strong>Example:</strong> {phraseEn}</p>
-                    <button onClick={() => handleReset()}>Next word (W key)</button>
+                ? <button
+                    className="vocab-btn"
+                    onClick={() => handleSelection(null)}
+                    >
+                    I don't know! (SPACE key)
+                </button>
+                : <div className="vocab-answered">
+                    {isCorrect
+                        ? <p className="vocab-correct">{correct}</p>
+                        : <p className="vocab-incorrect">{correct}</p>
+                    }
+                    <p className="vocab-metadata"><strong>Ejemplo:</strong> {phraseEs}</p>
+                    <p className="vocab-metadata"><strong>Example:</strong> {phraseEn}</p>
+                    <button
+                        className="vocab-btn"
+                        onClick={() => handleReset()}
+                        >
+                        Next word (W key)
+                    </button>
                 </div>
                 )
             }
-            <p>
-                Note: Keypresses <strong>A</strong>, <strong>S</strong>,
-                <strong> D</strong>, <strong>F</strong> can be used to 
-                enter your selection.
+            <p className="vocab-tip">
+                <strong>Note:</strong> Keypresses <strong>A</strong>,
+                <strong> S</strong>, <strong> D</strong>, <strong>F</strong> can
+                be used to enter your selection.
             </p>
         </div>
     );

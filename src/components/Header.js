@@ -21,21 +21,24 @@ const Header = (props) => {
     }, [isLoggedIn, props.history])
 
     return(
-        <div>
+        <header className="app-header">
             {
                 props.location.pathname !== '/'
                 ? (<nav>
                         <Link to='/vocab'>Vocab</Link>
                         <Link to='/profile'>Profile</Link>
                         <Link to='/about'>About</Link>
-                        <button onClick={() => handleLogout()}>
+                        <button
+                            className="app-header-btn"
+                            onClick={() => handleLogout()}
+                        >
                             Logout
                         </button>
                     </nav>
                 )
                 : null
             }
-        </div>
+        </header>
     );
 }
 

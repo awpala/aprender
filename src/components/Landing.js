@@ -83,28 +83,30 @@ const Landing = (props) => {
 
     // -- render component UI
     return(
-        <div>
+        <div className="landing">
             <header>
                 <h1>
                     ¡Aprender!
                 </h1>
             </header>
             <div>
-                <section>
+                <section className="landing-form">
                     {!isRegistered
                         ? (
                             <>
                                 <h3>Register Below</h3>
-                                <p>First Name</p>
+                                <p className="landing-fieldname">First Name</p>
                                 <input
+                                    className="landing-fieldform"
                                     value={firstName}
                                     type='text'
                                     name='firstName'
                                     placeholder='First name'
                                     onChange={e => setFirstName(e.target.value)}
                                 />
-                                <p>Last Name</p>
+                                <p className="landing-fieldname">Last Name</p>
                                 <input
+                                    className="landing-fieldform"
                                     value={lastName}
                                     type='text'
                                     name='lastName'
@@ -115,16 +117,18 @@ const Landing = (props) => {
                         )
                         : <h3>Log in below</h3>
                     }
-                    <p>Username</p>
+                    <p className="landing-fieldname">Username</p>
                     <input
+                        className="landing-fieldform"
                         value={username}
                         type='text'
                         name='username'
                         placeholder='Username'
                         onChange={e => setUsername(e.target.value)}
                     />
-                    <p>Password</p>
+                    <p className="landing-fieldname">Password</p>
                     <input
+                        className="landing-fieldform"
                         value={password}
                         type='password'
                         name='password'
@@ -134,16 +138,20 @@ const Landing = (props) => {
                     {!isRegistered
                         ? (
                             <>
-                                <p>Verify Password</p>
+                                <p className="landing-fieldname">Verify Password</p>
                                 <input
+                                    className="landing-fieldform"
                                     value={verifiedPass}
                                     type='password'
                                     name='verPass'
                                     placeholder='Verify Password'
                                     onChange={e => setVerifiedPass(e.target.value)}
                                 />
-                                <p>Have an account? <span onClick={() => setIsRegistered(true)}>Log in here</span></p>
-                                <button 
+                                <p className="landing-view">Have an account?
+                                    <span onClick={() => setIsRegistered(true)}> Log in here</span>
+                                </p>
+                                <button
+                                    className="landing-btn"
                                     onClick={() => {
                                         handleLogin(username, password);
                                     }}
@@ -154,8 +162,11 @@ const Landing = (props) => {
                         )
                         : (
                             <>
-                                <p>Don't have an account? <span onClick={() => setIsRegistered(false)}>Register here</span></p>
-                                <button 
+                                <p className="landing-view">Don't have an account?
+                                    <span onClick={() => setIsRegistered(false)}> Register here</span>
+                                </p>
+                                <button
+                                    className="landing-btn"
                                     onClick={() => {
                                         handleRegister(firstName, lastName, username, password, verifiedPass);
                                     }}
@@ -167,6 +178,7 @@ const Landing = (props) => {
                         )
                     }
                     <button
+                        className="landing-btn"
                         onClick={() => {
                             setFirstName('');
                             setLastName('');

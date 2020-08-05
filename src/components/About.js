@@ -12,7 +12,7 @@ const About = (props) => {
     }, [isLoggedIn, props.history]);
 
     return(
-        <section>
+        <section className="about">
             <h2>Purpose and Methodology</h2>
             <p>
                 The purpose of this application is to train the user's 
