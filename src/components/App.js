@@ -4,6 +4,8 @@ import routes from '../routes';
 import { UserContext } from '../context';
 import axios from 'axios';
 
+import "../sass/style.scss";
+
 const App = () => {
     const { actions, isLoggedIn } = useContext(UserContext);
 

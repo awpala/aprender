@@ -51,7 +51,7 @@ const ProfileChart = ({ words, wordsCognates, wordsNonCognates }) => {
         datasets: [
             {
                 label: 'Cognates',
-                backgroundColor: 'red',
+                backgroundColor: '#45A29E',
                 data: [
                     percentages.top100[0],
                     percentages.top500[0],
@@ -61,7 +61,7 @@ const ProfileChart = ({ words, wordsCognates, wordsNonCognates }) => {
             },
             {
                 label: 'Non-Cognates',
-                backgroundColor: 'blue',
+                backgroundColor: '#0B0C10',
                 data: [
                     percentages.top100[1],
                     percentages.top500[1],
@@ -72,23 +72,58 @@ const ProfileChart = ({ words, wordsCognates, wordsNonCognates }) => {
         ]
     }
 
+    const chartProps = {
+        color: '#C5C6C7',
+        family: 'Raleway',
+        size: 14
+    };
+
     const chartOptions = { 
         maintainAspectRatio: false,
         responsive: false,
+        legend: {
+            labels: {
+                fontColor: chartProps.color,
+                fontFamily: chartProps.family,
+                fontSize: chartProps.size
+            }
+        },
         scales: {
+            xAxes: [
+                {
+                    ticks: {
+                        fontColor: chartProps.color,
+                        fontFamily: chartProps.family,
+                        fontSize: chartProps.size
+                    },
+                    gridLines: {
+                        color: chartProps.color
+                    }
+                }
+            ],
             yAxes: [
                 {
                     scaleLabel: {
                         display: true,
-                        labelString: 'Familiarity (%)'
+                        labelString: 'Familiarity (%)',
+                        fontColor: chartProps.color,
+                        fontFamily: chartProps.family,
+                        fontSize: chartProps.size
                     },
                     ticks: {
                         min: 0,
-                        max: 100
+                        max: 100,
+                        stepSize: 25,
+                        fontColor: chartProps.color,
+                        fontFamily: chartProps.family,
+                        fontSize: chartProps.size
+                    },
+                    gridLines: {
+                        color: chartProps.color
                     }
                 }
             ]
-        } 
+        }
     }
 
     return(

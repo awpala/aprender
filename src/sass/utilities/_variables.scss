@@ -1,0 +1,26 @@
+// ======================================
+//  Variables
+// ======================================
+
+// Colors
+// cf. color palette #12: https://visme.co/blog/website-color-schemes/
+$color-primary: #66FCF1;
+$color-secondary: #0B0C10;
+$color-accent: #45A29E;
+$color-text: #C5C6C7;
+$color-bg: #1F2833;
+
+// Fonts
+$font-stack-primary: 'Raleway', sans-serif;
+$font-stack-secondary: 'Bree Serif', serif;
+
+// Layout
+$max-width: 1000px;
+
+// Media Query Breakpoints
+$breakpoints: (
+    'xs': 575px,
+    'sm': 576px,
+    'med': 768px,
+    'lg': 992px,
+);
