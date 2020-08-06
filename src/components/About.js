@@ -14,7 +14,7 @@ const About = (props) => {
     return(
         <div className="about">
             <section className="about-card">
-                <h1>Purpose and Methodology</h1>
+                <h2>Purpose and Methodology</h2>
                 <p>
                     The purpose of this application is to train the user's 
                     familiarity with Spanish vocabulary. The set of words 
@@ -27,7 +27,7 @@ const About = (props) => {
                 </p>
             </section>
             <section className="about-card">
-                <h1>Usage</h1>
+                <h2>Usage</h2>
                 <p>
                     The "Vocab" page randomly queries a word from a dynamically
                     generated range, starting with the top 100 words. Once these

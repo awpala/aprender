@@ -1,0 +1,31 @@
+// ======================================
+//  Landing Styles & Layout
+// ======================================
+
+.landing {
+    &-header {
+        h1 {
+            @include center;
+            padding-top: ($header-offset/6);
+        }
+    }
+    &-form {
+        @include center(40%);
+    }
+    &-heading {
+        margin: $gutter;
+    }
+    &-form {
+        margin-top: $gutter;
+    }
+    &-card {
+        width: 30vw;
+        margin-bottom: $gutter;
+        p {
+            margin-top: $gutter/2;
+        }
+        input {
+            margin-bottom: $gutter/2;
+        }
+    }
+}
