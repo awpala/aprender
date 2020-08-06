@@ -194,25 +194,29 @@ const Vocab = (props) => {
     // -- render component UI
     return (
         <div className="vocab">
+            <h1>Vocab Drills</h1>
             <div className="vocab-card">
-                <p className="vocab-metadata">
-                    <span>Frequency ID: </span>
-                    <span className="query-word">{freqId}</span>
-                    <span>/5000</span>
-                </p>
-                <p className="vocab-metadata">
-                    <span>Part of Speech: </span>
-                    <span className="query-word">{pOS}</span>
-                </p>
+                <div clasName="vocab-metadata">
+                    <p>
+                        <span>Frequency ID: </span>
+                        <span className="query-word">{freqId}</span>
+                        <span>/5000</span>
+                    </p>
+                    <p>
+                        <span>Part of Speech: </span>
+                        <span className="query-word">{pOS}</span>
+                    </p>
+                </div>
                 <p className="vocab-word">
                     <span>Spanish Word: </span>
                     <span className="query-word">{query}</span>
                 </p>
+                <p><br/></p>
             </div>
             <div className="user-response">
-                <p className="vocab-word">
+                <h2 className="vocab-word">
                     <span>English Translation?</span>
-                </p>
+                </h2>
                 <div className="vocab-choices">
                     {!isAnswered ? mappedChoices : null}
                 </div>

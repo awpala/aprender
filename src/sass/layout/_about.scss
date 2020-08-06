@@ -5,7 +5,7 @@
 .about {
     @include flexer($dir: row, $just: center, $ai: baseline);
     &-card {
-        width: 45vw;
+        width: $card-width;
         margin: $gutter;
     }
     p {

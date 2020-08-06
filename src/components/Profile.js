@@ -88,9 +88,9 @@ const Profile = (props) => {
                 )}
             <div className="profile-data">
                 <div className="profile-card view-stats">
-                    <p>
-                        Here is your progress, <span className="profile-stats">{firstName}</span>!
-                    </p>
+                    <h2>
+                        <span className="profile-stats">{firstName}</span>'s Progress
+                    </h2>
                     <p>
                         Total Words Reviewed: <span className="profile-stats">{totalEncounters}</span>
                     </p>

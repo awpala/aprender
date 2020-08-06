@@ -3,13 +3,17 @@
 // ======================================
 
 // Vocab Button Styles
+$choices-width: 600px;
+
 .choice {
-    width: 150px;
+    width: ($choices-width/4);
+    max-width: ($choices-width/4);
     height: 50px;
 }
 
 .unknown {
-    width: 600px; // TO-DO: perform calculation off of .choice
+    width: $choices-width; // TO-DO: perform calculation off of .choice
+    max-width: $choices-width;
     height: 50px;
     // background-color: $color-accent;
     background-color: $color-secondary;
@@ -32,3 +36,50 @@
     color: $color-primary;
     font-weight: bold;
 }
+
+.user-response {
+    height: 25vh;
+}
+
+.vocab {
+    h1 {
+        margin: $gutter;
+    }
+    &-card {
+        width: $card-width;
+        height: 20vh;
+    }
+    &-answered {
+        height: 20vh;
+    }
+    &-word {
+        margin: $gutter;
+    }
+    @include flexer($dir: column, $just: center);
+    &-card {
+        p {
+            margin: $gutter;
+        }
+        @include flexer($dir: column, $just: space-between);
+        // &-metadata {
+        //     // padding-top: $gutter;
+        //     @include flexer($as: flex-start);
+        //     p {
+        //         margin: $gutter;
+        //     }
+        // }
+    }
+    &-choices {
+        @include flexer($dir: row, $just: center);
+    }
+    &-answered {
+        // @include flexer($dir: column, $just: space-between);
+        p {
+            margin: $gutter;
+        }
+    }
+}
+
+// .user-response {
+//     @include flexer($dir: column, $just: space-between);
+// }

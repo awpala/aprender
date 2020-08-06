@@ -34,7 +34,7 @@ canvas {
         margin: $gutter;
     }
     &-card {
-        width: 35vw;
+        width: $card-width;
     }
     &-summary {
         width: 36.5vw;
@@ -49,6 +49,8 @@ canvas {
     &-btn {
         margin-top: $gutter;
         width: 15vw;
+        min-width: 100px;
+        max-width: 150px;
     }
     &-data {
         @include flexer($dir: row, $just: center);
