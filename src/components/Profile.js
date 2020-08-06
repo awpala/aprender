@@ -63,55 +63,67 @@ const Profile = (props) => {
     // TO-DO: add data by part of speech
 
     return(
-        <div className="profile">
-            <div className="profile-card">
-                <p>
-                    Here is your progress, <span className="profile-stats">{firstName}</span>!
-                </p>
-                <p>
-                    Total Words Reviewed: <span className="profile-stats">{totalEncounters}</span>
-                </p>
-                <p>
-                    Unique Words Reviewed: <span className="profile-stats">{uniqueEncounters}</span>/5000
-                </p>
-                <p>
-                    Overall Accuracy: <span className="profile-stats">{accuracy}%</span>
-                </p>
-            </div>
-            <div className="profile-summary">
-                {!isChartView
+        <section className="profile">
+            <h1>User Profile</h1>
+            {!isChartView
                 ? (
-                    <section>
+                    <>
                         <button
-                            className="profile-btn"
+                            className="profile-btn select-view"
                             onClick={() => setIsChartView(prevView => !prevView)}
                         >
                             View Chart<br/>(Percentages)
                         </button>
-                        <ProfileTable
-                            wordsTotal={wordsTotal}
-                            wordsCognates={wordsCognates}
-                            wordsNonCognates={wordsNonCognates}
-                        />
-                    </section>
+                    </>
                 )
                 : (
-                    <section>
+                    <>
                         <button
-                            className="profile-btn"
+                            className="profile-btn select-view"
                             onClick={() => setIsChartView(prevView => !prevView)}
                         >
                             View Table<br/>(Counts)
                         </button>
-                        <ProfileChart
-                            words={words}
-                            wordsCognates={wordsCognates}
-                            wordsNonCognates={wordsNonCognates}
-                        />
-                    </section>
+                    </>
                 )}
+            <div className="profile-data">
+                <div className="profile-card view-stats">
+                    <p>
+                        Here is your progress, <span className="profile-stats">{firstName}</span>!
+                    </p>
+                    <p>
+                        Total Words Reviewed: <span className="profile-stats">{totalEncounters}</span>
+                    </p>
+                    <p>
+                        Unique Words Reviewed: <span className="profile-stats">{uniqueEncounters}</span>/5000
+                    </p>
+                    <p>
+                        Overall Accuracy: <span className="profile-stats">{accuracy}%</span>
+                    </p>
+                </div>
+                <div className="profile-summary">
+                    {!isChartView
+                    ? (
+                        <>
+                            <ProfileTable
+                                wordsTotal={wordsTotal}
+                                wordsCognates={wordsCognates}
+                                wordsNonCognates={wordsNonCognates}
+                            />
+                        </>
+                    )
+                    : (
+                        <>
+                            <ProfileChart
+                                words={words}
+                                wordsCognates={wordsCognates}
+                                wordsNonCognates={wordsNonCognates}
+                            />
+                        </>
+                    )}
+                </div>
             </div>
-        </div>
+        </section>
     );
 }
 

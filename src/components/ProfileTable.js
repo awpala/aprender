@@ -2,8 +2,8 @@ import React from 'react';
 
 const ProfileTable = ({ wordsTotal, wordsCognates, wordsNonCognates }) => {
     return (
-        <div className="profile-card">
-            <h1>Familiarity by Counts</h1>
+        <div className="profile-card view-table">
+            <h2>Familiarity by Counts</h2>
             <table className="profile-table">
                 <thead>
                     <tr>

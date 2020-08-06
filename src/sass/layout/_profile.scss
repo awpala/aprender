@@ -16,38 +16,49 @@
     .profile-total {
         color: $color-primary;
     }
-    margin: 1em;
+    margin-bottom: 1em;
+    margin-top: 0.5em;
+    // @include flexer($dir: column, $as: center, $just: space-evenly)
 }
 
 canvas {
     @include center(75%);
+    max-width: 20vw;
+    max-height: 25vh;
 }
-
-// Profile Button Styles
-
 
 // Layout
 .profile {
-    @include flexer($dir: column, $just: center);
+    @include flexer($dir: column, $just: center, $ai: center);
     &-card, &-summary {
         margin: $gutter;
     }
     &-card {
-        width: 45vw;
+        width: 35vw;
     }
     &-summary {
-        width: 47.5vw;
+        width: 36.5vw;
         margin: 0;
     }
-    h1 {
-        margin: 1em;
+    h2 {
+        margin: 5px;
     }
     &-btn {
-        margin-top: 10px;
+        margin-top: $gutter;
+        width: 10vw;
+    }
+    &-data {
+        @include flexer($dir: row, $just: center);
+        height: 32vh;
+    }
+    &-card, &-summary {
+        @include flexer($dir: column, $just: center, $as: flex-start);
+    }
+    .view-stats {
+        // width: 20vw;
+        @include center;
+        p {
+            margin: 5px;
+        }
     }
 }
-
-.profile-card, .profile-summary {
-    @include flexer($dir: column, $just: center, $as: center);
-}
-
