@@ -8,7 +8,7 @@
 }
 
 .profile-table {
-    @include center(80%);
+    @include center(85%);
     th {
         color: $color-accent;
         font-weight: bold;
@@ -16,4 +16,38 @@
     .profile-total {
         color: $color-primary;
     }
+    margin: 1em;
 }
+
+canvas {
+    @include center(75%);
+}
+
+// Profile Button Styles
+
+
+// Layout
+.profile {
+    @include flexer($dir: column, $just: center);
+    &-card, &-summary {
+        margin: $gutter;
+    }
+    &-card {
+        width: 45vw;
+    }
+    &-summary {
+        width: 47.5vw;
+        margin: 0;
+    }
+    h1 {
+        margin: 1em;
+    }
+    &-btn {
+        margin-top: 10px;
+    }
+}
+
+.profile-card, .profile-summary {
+    @include flexer($dir: column, $just: center, $as: center);
+}
+

@@ -11,11 +11,21 @@
 }
 
 // Flexbox containers
-@mixin flexer($disp: flex, $dir: null, $wrap: null, $just: null) {
+@mixin flexer(
+    $disp: flex,
+    $dir: null,
+    $wrap: null,
+    $just: null,
+    $ai: null,
+    $ac: null,
+    $as: null) {
     display: $disp;
     flex-direction: $dir;
     flex-wrap: $wrap;
     justify-content: $just;
+    align-items: $ai;
+    align-content: $ac;
+    align-self: $as;
 }
 
 // Media queries

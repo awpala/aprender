@@ -1,0 +1,14 @@
+// ======================================
+//  About Styles & Layout
+// ======================================
+
+.about {
+    @include flexer($dir: row, $just: center, $ai: baseline);
+    &-card {
+        width: 45vw;
+        margin: $gutter;
+    }
+    p, h1 {
+        margin: 1em;
+    }
+}

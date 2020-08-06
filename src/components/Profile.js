@@ -78,37 +78,39 @@ const Profile = (props) => {
                     Overall Accuracy: <span className="profile-stats">{accuracy}%</span>
                 </p>
             </div>
-            {!isChartView
-            ? (
-                <section>
-                    <button
-                        className="profile-btn"
-                        onClick={() => setIsChartView(prevView => !prevView)}
-                    >
-                        View Chart<br/>(Percentages)
-                    </button>
-                    <ProfileTable
-                        wordsTotal={wordsTotal}
-                        wordsCognates={wordsCognates}
-                        wordsNonCognates={wordsNonCognates}
-                    />
-                </section>
-            )
-            : (
-                <section>
-                    <button
-                        className="profile-btn"
-                        onClick={() => setIsChartView(prevView => !prevView)}
-                    >
-                        View Table<br/>(Counts)
-                    </button>
-                    <ProfileChart
-                        words={words}
-                        wordsCognates={wordsCognates}
-                        wordsNonCognates={wordsNonCognates}
-                    />
-                </section>
-            )}
+            <div className="profile-summary">
+                {!isChartView
+                ? (
+                    <section>
+                        <button
+                            className="profile-btn"
+                            onClick={() => setIsChartView(prevView => !prevView)}
+                        >
+                            View Chart<br/>(Percentages)
+                        </button>
+                        <ProfileTable
+                            wordsTotal={wordsTotal}
+                            wordsCognates={wordsCognates}
+                            wordsNonCognates={wordsNonCognates}
+                        />
+                    </section>
+                )
+                : (
+                    <section>
+                        <button
+                            className="profile-btn"
+                            onClick={() => setIsChartView(prevView => !prevView)}
+                        >
+                            View Table<br/>(Counts)
+                        </button>
+                        <ProfileChart
+                            words={words}
+                            wordsCognates={wordsCognates}
+                            wordsNonCognates={wordsNonCognates}
+                        />
+                    </section>
+                )}
+            </div>
         </div>
     );
 }

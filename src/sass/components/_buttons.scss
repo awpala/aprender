@@ -6,7 +6,6 @@
 @each $section in $sections {
     .#{$section}-btn {
         font-family: $font-stack-primary;
-        // background-color: $color-primary;
         background-color: $color-accent;
         color: $color-secondary;
         text-align: center;
@@ -15,18 +14,4 @@
         overflow-wrap: break-word;
         border-color: $color-text;
     }
-}
-
-// Vocab Button Styles
-.choice {
-    width: 150px;
-    height: 50px;
-}
-
-.unknown {
-    width: 600px; // TO-DO: perform calculation off of .choice
-    height: 50px;
-    // background-color: $color-accent;
-    background-color: $color-secondary;
-    color: $color-primary;
 }

@@ -131,7 +131,7 @@ const ProfileChart = ({ words, wordsCognates, wordsNonCognates }) => {
             <h1>Familiarity by Percentages</h1>
             <Bar
                 data={chartData}
-                width={400}
+                width={300}
                 height={250}
                 options={chartOptions}
             />

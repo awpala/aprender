@@ -19,6 +19,8 @@ body {
 h1, h2 {
     font-family: $font-stack-secondary;
     color: $color-primary;
+    font-weight: bold;
+    font-size: 16pt;
 }
 
 // p {
@@ -42,5 +44,5 @@ strong {
 
 header {
     background-color: $color-secondary;
-    height: 5vh;
+    height: $header-offset;
 }
