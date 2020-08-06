@@ -1,0 +1,18 @@
+// ======================================
+//  App Header Styles & Layout
+// ======================================
+
+.app-header {
+    @include flexer($dir: column, $just: center, $ai: center)
+}
+
+.header-contents {
+    height: $header-offset;
+    width: 75vw;
+    @include flexer($dir: row, $just: space-between, $ai: center, $as: center);
+}
+
+nav {
+    width: 50vw;
+    @include flexer($just: space-between)
+}

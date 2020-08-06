@@ -24,18 +24,19 @@ const Header = (props) => {
         <header className="app-header">
             {
                 props.location.pathname !== '/'
-                ? (<nav>
+                ? (<div className="header-contents">
+                    <nav>
                         <Link to='/vocab'>Vocab</Link>
                         <Link to='/profile'>Profile</Link>
                         <Link to='/about'>About</Link>
-                        <button
+                    </nav>
+                    <button
                             className="header-btn"
                             onClick={() => handleLogout()}
                         >
                             Logout
-                        </button>
-                    </nav>
-                )
+                    </button>
+                </div>)
                 : null
             }
         </header>
