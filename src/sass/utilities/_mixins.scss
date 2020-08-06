@@ -29,18 +29,36 @@
 }
 
 // Media queries
+// @mixin mq($break) {
+//     $value: map-get($breakpoints, $break);
+//     $sm: map-get($breakpoints, 'sm');
+
+//     @if $value < $sm {
+//         @media (max-width: $value) {
+//             @content;
+//         }
+//     }
+//     @else {
+//         @media (min-width: $value) {
+//             @content;
+//         }
+//     }
+// }
+
+// Media queries
 @mixin mq($break) {
     $value: map-get($breakpoints, $break);
-    $sm: map-get($breakpoints, 'sm');
+    $med: map-get($breakpoints, 'med');
 
-    @if $value < $sm {
-        @media (max-width: $value) {
-            @content;
-        }
-    }
-    @else {
+    @if $value > $med {
         @media (min-width: $value) {
             @content;
         }
     }
+    @else {
+        @media (max-width: $value) {
+            @content;
+        }
+    }
 }
+

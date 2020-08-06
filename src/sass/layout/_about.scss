@@ -7,11 +7,17 @@
     &-card {
         width: $card-width;
         margin: $gutter;
+        @include mq('med') {
+            width: 50vw;
+        }
     }
     p {
         margin: 1em;
     }
     h2 {
         padding-top: 0.75em;
+    }
+    @include mq('med') {
+        @include flexer($dir: column, $just: center, $ai: center);
     }
 }
