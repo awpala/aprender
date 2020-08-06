@@ -1,0 +1,19 @@
+// ======================================
+//  Profile Styles & Layout
+// ======================================
+
+.profile-stats {
+    color: $color-primary;
+    font-weight: bold;
+}
+
+.profile-table {
+    @include center(80%);
+    th {
+        color: $color-accent;
+        font-weight: bold;
+    }
+    .profile-total {
+        color: $color-primary;
+    }
+}

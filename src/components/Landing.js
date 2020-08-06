@@ -89,12 +89,35 @@ const Landing = (props) => {
                     ¡Aprender!
                 </h1>
             </header>
-            <div>
-                <section className="landing-form">
+            <section className="landing-form">
+                {!isRegistered 
+                    ? (
+                        <>
+                            <h2>Register Below</h2>
+                            <p className="landing-view">Have an account?
+                                <strong
+                                    onClick={() => setIsRegistered(true)}
+                                > Log in here
+                                </strong>
+                            </p>
+                        </>
+                    )
+                    : (
+                        <>
+                            <h2>Log in below</h2>
+                            <p className="landing-view">Don't have an account?
+                                <strong
+                                    onClick={() => setIsRegistered(false)}> Register here
+                                </strong>
+                            </p>
+                        </>
+                    )
+                }
+                {/* TO-DO: "Log in as guest" */}
+                <div className="landing-card">
                     {!isRegistered
                         ? (
                             <>
-                                <h3>Register Below</h3>
                                 <p className="landing-fieldname">First Name</p>
                                 <input
                                     className="landing-fieldform"
@@ -115,7 +138,7 @@ const Landing = (props) => {
                                 />
                             </>
                         )
-                        : <h3>Log in below</h3>
+                        : null
                     }
                     <p className="landing-fieldname">Username</p>
                     <input
@@ -135,7 +158,7 @@ const Landing = (props) => {
                         placeholder='Password'
                         onChange={e => setPassword(e.target.value)}
                     />
-                    {!isRegistered
+                        {!isRegistered
                         ? (
                             <>
                                 <p className="landing-fieldname">Verify Password</p>
@@ -147,50 +170,50 @@ const Landing = (props) => {
                                     placeholder='Verify Password'
                                     onChange={e => setVerifiedPass(e.target.value)}
                                 />
-                                <p className="landing-view">Have an account?
-                                    <span onClick={() => setIsRegistered(true)}> Log in here</span>
-                                </p>
-                                <button
-                                    className="landing-btn"
-                                    onClick={() => {
-                                        handleRegister(firstName, lastName, username, password, verifiedPass);
-                                    }}
-                                >
-                                    Register
-                                </button>
                             </>
                         )
-                        : (
-                            <>
-                                <p className="landing-view">Don't have an account?
-                                    <span onClick={() => setIsRegistered(false)}> Register here</span>
-                                </p>
-                                <button
-                                    className="landing-btn"
-                                    onClick={() => {
-                                        handleLogin(username, password);
-                                    }}
-                                >
-                                    Log in
-                                </button>
-                                {/* TO-DO: "Log in as guest" */}
-                            </>
-                        )
+                        : null
                     }
-                    <button
-                        className="landing-btn"
-                        onClick={() => {
-                            setFirstName('');
-                            setLastName('');
-                            setUsername('');
-                            setPassword('');
-                            setVerifiedPass('');
-                        }}
-                    >
-                        Clear Fields
-                    </button>
-                </section>
-            </div>
+                </div>
+                {!isRegistered
+                    ? (
+                        <>
+                            <button
+                                className="landing-btn"
+                                onClick={() => {
+                                    handleRegister(firstName, lastName, username, password, verifiedPass);
+                                }}
+                            >
+                                Register
+                            </button>
+                        </>
+                    )
+                    : (
+                        <>
+                            <button
+                                className="landing-btn"
+                                onClick={() => {
+                                    handleLogin(username, password);
+                                }}
+                            >
+                                Log in
+                            </button>
+                        </>
+                    )
+                }
+                <button
+                    className="landing-btn"
+                    onClick={() => {
+                        setFirstName('');
+                        setLastName('');
+                        setUsername('');
+                        setPassword('');
+                        setVerifiedPass('');
+                    }}
+                >
+                    Clear Fields
+                </button>
+            </section>
         </div>
     );
 }

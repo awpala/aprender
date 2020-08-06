@@ -3,7 +3,7 @@
 // =========================================
 
 // Centered containers
-@mixin center($w) {
+@mixin center($w: 90%) {
     width: $w;
     max-width: $max-width;
     margin-left: auto;

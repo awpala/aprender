@@ -11,4 +11,9 @@
         'base/base';
 
 // Component Styles
-@import 'components/buttons';
+@import 'components/buttons',
+        'components/cards';
+
+// Page & Layout Styles
+@import 'layout/vocab',
+        'layout/profile';

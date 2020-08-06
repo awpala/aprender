@@ -127,8 +127,8 @@ const ProfileChart = ({ words, wordsCognates, wordsNonCognates }) => {
     }
 
     return(
-        <div className="profile-chart">
-            <h2>Familiarity by Percentages</h2>
+        <div className="profile-card">
+            <h1>Familiarity by Percentages</h1>
             <Bar
                 data={chartData}
                 width={400}

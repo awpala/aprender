@@ -64,10 +64,20 @@ const Profile = (props) => {
 
     return(
         <div className="profile">
-            <h1>Here is your progress, {firstName}!</h1>
-            <h2>Total Words Reviewed: <span className="profile-stats">{totalEncounters}</span></h2>
-            <h2>Unique Words Reviewed: <span className="profile-stats">{uniqueEncounters}</span>/5000</h2>
-            <h2>Overall Accuracy: <span className="profile-stats">{accuracy}%</span></h2>
+            <div className="profile-card">
+                <p>
+                    Here is your progress, <span className="profile-stats">{firstName}</span>!
+                </p>
+                <p>
+                    Total Words Reviewed: <span className="profile-stats">{totalEncounters}</span>
+                </p>
+                <p>
+                    Unique Words Reviewed: <span className="profile-stats">{uniqueEncounters}</span>/5000
+                </p>
+                <p>
+                    Overall Accuracy: <span className="profile-stats">{accuracy}%</span>
+                </p>
+            </div>
             {!isChartView
             ? (
                 <section>
@@ -75,7 +85,7 @@ const Profile = (props) => {
                         className="profile-btn"
                         onClick={() => setIsChartView(prevView => !prevView)}
                     >
-                        View Chart
+                        View Chart<br/>(Percentages)
                     </button>
                     <ProfileTable
                         wordsTotal={wordsTotal}
@@ -90,7 +100,7 @@ const Profile = (props) => {
                         className="profile-btn"
                         onClick={() => setIsChartView(prevView => !prevView)}
                     >
-                        View Table
+                        View Table<br/>(Counts)
                     </button>
                     <ProfileChart
                         words={words}

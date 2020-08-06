@@ -1,0 +1,19 @@
+// ======================================
+//  Vocab Styles & Layout
+// ======================================
+
+.vocab-answered {
+    .vocab-correct {
+        font-weight: bold;
+        color: green;
+    }
+    .vocab-incorrect {
+        font-weight: bold;
+        color: red;
+    }
+}
+
+.query-word {
+    color: $color-primary;
+    font-weight: bold;
+}

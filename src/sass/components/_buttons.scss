@@ -2,6 +2,7 @@
 //  Button Styles
 // ======================================
 
+// General Button Styles
 @each $section in $sections {
     .#{$section}-btn {
         font-family: $font-stack-primary;
@@ -16,6 +17,7 @@
     }
 }
 
+// Vocab Button Styles
 .choice {
     width: 150px;
     height: 50px;

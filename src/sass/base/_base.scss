@@ -18,16 +18,18 @@ body {
 
 h1, h2 {
     font-family: $font-stack-secondary;
+    color: $color-primary;
 }
 
-p {
-    margin-bottom: 1.25em;
-}
+// p {
+//     margin-bottom: 1.25em;
+// }
 
 a {
     color: $color-primary;
     text-decoration: none;
     font-family: $font-stack-secondary;
+    font-weight: bold;
     &:hover {
         color: $color-accent;  
     }
@@ -42,7 +44,3 @@ header {
     background-color: $color-secondary;
     height: 5vh;
 }
-
-// div {
-//     @include center(100vw);
-// }

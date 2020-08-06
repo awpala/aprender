@@ -1,0 +1,11 @@
+// ======================================
+//  Card Styles
+// ======================================
+
+@each $section in $sections {
+    .#{$section}-card {
+        background-color: $color-card;
+        @include center;
+        border-radius: 5px;
+    }
+}
