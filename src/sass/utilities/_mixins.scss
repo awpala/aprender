@@ -2,12 +2,20 @@
 //  Mixins
 // =========================================
 
-// Center containers
-@mixin center {
-    width: 90%;
+// Centered containers
+@mixin center($w) {
+    width: $w;
     max-width: $max-width;
     margin-left: auto;
     margin-right: auto;
+}
+
+// Flexbox containers
+@mixin flexer($disp: flex, $dir: null, $wrap: null, $just: null) {
+    display: $disp;
+    flex-direction: $dir;
+    flex-wrap: $wrap;
+    justify-content: $just;
 }
 
 // Media queries

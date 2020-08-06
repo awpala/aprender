@@ -98,7 +98,7 @@ const Vocab = (props) => {
 
     const mappedChoices = choices.map((choice, index) => (
         <button
-            className="vocab-btn"
+            className="vocab-btn choice"
             key={index}
             onClick={() => handleSelection(index)}
         >
@@ -204,10 +204,10 @@ const Vocab = (props) => {
             {
                 (!isAnswered
                 ? <button
-                    className="vocab-btn"
+                    className="vocab-btn unknown"
                     onClick={() => handleSelection(null)}
                     >
-                    I don't know! (SPACE key)
+                    I don't know!<br/>(SPACE key)
                 </button>
                 : <div className="vocab-answered">
                     {isCorrect
@@ -217,10 +217,10 @@ const Vocab = (props) => {
                     <p className="vocab-metadata"><strong>Ejemplo:</strong> {phraseEs}</p>
                     <p className="vocab-metadata"><strong>Example:</strong> {phraseEn}</p>
                     <button
-                        className="vocab-btn"
+                        className="vocab-btn choice"
                         onClick={() => handleReset()}
                         >
-                        Next word (W key)
+                        Next word<br/>(W key)
                     </button>
                 </div>
                 )

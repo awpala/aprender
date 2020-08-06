@@ -27,6 +27,7 @@ p {
 a {
     color: $color-primary;
     text-decoration: none;
+    font-family: $font-stack-secondary;
     &:hover {
         color: $color-accent;  
     }
@@ -34,4 +35,14 @@ a {
 
 strong {
     font-weight: bold;
+    color: $color-accent;
 }
+
+header {
+    background-color: $color-secondary;
+    height: 5vh;
+}
+
+// div {
+//     @include center(100vw);
+// }

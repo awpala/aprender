@@ -153,7 +153,7 @@ const Landing = (props) => {
                                 <button
                                     className="landing-btn"
                                     onClick={() => {
-                                        handleLogin(username, password);
+                                        handleRegister(firstName, lastName, username, password, verifiedPass);
                                     }}
                                 >
                                     Register
@@ -168,7 +168,7 @@ const Landing = (props) => {
                                 <button
                                     className="landing-btn"
                                     onClick={() => {
-                                        handleRegister(firstName, lastName, username, password, verifiedPass);
+                                        handleLogin(username, password);
                                     }}
                                 >
                                     Log in

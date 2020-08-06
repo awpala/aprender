@@ -1,5 +1,5 @@
 // ======================================
-//  Partial Imports
+//  Partials Imports
 // ======================================
 
 // Utilities
@@ -9,3 +9,6 @@
 // Base Styles     
 @import 'base/reset',
         'base/base';
+
+// Component Styles
+@import 'components/buttons';

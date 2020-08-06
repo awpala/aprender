@@ -29,7 +29,7 @@ const Header = (props) => {
                         <Link to='/profile'>Profile</Link>
                         <Link to='/about'>About</Link>
                         <button
-                            className="app-header-btn"
+                            className="header-btn"
                             onClick={() => handleLogout()}
                         >
                             Logout

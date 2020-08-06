@@ -66,7 +66,7 @@ const Profile = (props) => {
         <div className="profile">
             <h1>Here is your progress, {firstName}!</h1>
             <h2>Total Words Reviewed: <span className="profile-stats">{totalEncounters}</span></h2>
-            <h2>Unique Words Reviewed: <span className="profile-stats">{uniqueEncounters}</span></h2>
+            <h2>Unique Words Reviewed: <span className="profile-stats">{uniqueEncounters}</span>/5000</h2>
             <h2>Overall Accuracy: <span className="profile-stats">{accuracy}%</span></h2>
             {!isChartView
             ? (

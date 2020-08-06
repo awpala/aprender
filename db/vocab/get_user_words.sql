@@ -13,9 +13,6 @@ SELECT
     ARRAY(SELECT word_en
         FROM word
         WHERE
-            -- TODO: 
-                -- case: part of speech is article, then all 3 results only
-            -- else:
             frequency_id != w.frequency_id
             AND frequency_id IN (
                 SELECT frequency_id 

@@ -4,7 +4,10 @@ const NotFound = (props) => {
     return (
         <div>
             <p>Invalid page reached :(</p>
-            <button onClick={() => props.history.push('/')}>
+            <button
+                className="invalid-btn"
+                onClick={() => props.history.push('/')}
+            >
                 Return to Home
             </button>
         </div>
