@@ -3,6 +3,7 @@
 // ======================================
 
 .app-header {
+    width: 100vw;
     @include flexer($dir: column, $just: center, $ai: center)
 }
 

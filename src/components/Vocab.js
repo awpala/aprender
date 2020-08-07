@@ -223,7 +223,7 @@ const Vocab = (props) => {
                 {
                     (!isAnswered
                     ? <button
-                        className="vocab-btn unknown"
+                        className="vocab-btn action"
                         onClick={() => handleSelection(null)}
                     >
                         I don't know!<br/>(SPACE key)
@@ -240,7 +240,7 @@ const Vocab = (props) => {
                             <strong>Example:</strong> {phraseEn}
                         </p>
                         <button
-                            className="vocab-btn choice"
+                            className="vocab-btn action"
                             onClick={() => handleReset()}
                         >
                             Next word<br/>(W key)

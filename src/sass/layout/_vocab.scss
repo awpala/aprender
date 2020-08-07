@@ -4,20 +4,27 @@
 
 // Vocab Button Styles
 $choices-width: 600px;
+$choices-width-mq: 70vw;
+$choices-height-mq: 80px;
 
 .choice {
     width: ($choices-width/4);
-    max-width: ($choices-width/4);
     height: 50px;
+    @include mq('med') {
+        width: $choices-width-mq;
+        height: $choices-height-mq;
+    }
 }
 
-.unknown {
-    width: $choices-width; // TO-DO: perform calculation off of .choice
-    max-width: $choices-width;
+.action {
+    width: $choices-width;
     height: 50px;
-    // background-color: $color-accent;
     background-color: $color-secondary;
     color: $color-primary;
+    @include mq('med') {
+        width: $choices-width-mq;
+        height: $choices-height-mq;
+    }
 }
 
 // Vocab Text Styles
@@ -39,8 +46,12 @@ $choices-width: 600px;
 
 .user-response {
     height: 25vh;
+    @include mq('med') {
+        height: 460px;
+    }
 }
 
+// Vocab Layout
 .vocab {
     h1 {
         margin: $gutter;
@@ -48,6 +59,9 @@ $choices-width: 600px;
     &-card {
         width: $card-width;
         height: 20vh;
+        @include mq('med') {
+            height: 250px;
+        }
     }
     &-answered {
         height: 20vh;
@@ -61,25 +75,16 @@ $choices-width: 600px;
             margin: $gutter;
         }
         @include flexer($dir: column, $just: space-between);
-        // &-metadata {
-        //     // padding-top: $gutter;
-        //     @include flexer($as: flex-start);
-        //     p {
-        //         margin: $gutter;
-        //     }
-        // }
     }
     &-choices {
         @include flexer($dir: row, $just: center);
+        @include mq('med') {
+            @include flexer($dir: column, $just: center, $ai: center)
+        }
     }
     &-answered {
-        // @include flexer($dir: column, $just: space-between);
         p {
             margin: $gutter;
         }
     }
 }
-
-// .user-response {
-//     @include flexer($dir: column, $just: space-between);
-// }

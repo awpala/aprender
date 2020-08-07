@@ -4,6 +4,7 @@
 
 .landing {
     &-header {
+        width: 100vw;
         h1 {
             @include center;
             padding-top: ($header-offset/6);
@@ -20,12 +21,14 @@
     }
     &-card {
         width: 30vw;
+        min-width: 200px;
         margin-bottom: $gutter;
         p {
             margin-top: $gutter/2;
         }
         input {
             margin-bottom: $gutter/2;
+            // max-width: 120px;
         }
     }
 }
