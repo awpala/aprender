@@ -8,6 +8,7 @@
         h1 {
             @include center;
             padding-top: ($header-offset/6);
+            width: 100vw;
         }
     }
     &-form {

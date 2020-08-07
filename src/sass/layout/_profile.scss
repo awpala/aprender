@@ -27,18 +27,50 @@ canvas {
     max-height: 25vh;
 }
 
+$admin-width: 200px;
+$admin-height: 50px;
+
+.administration, .admin-affirm, .admin-negate {
+    width: $admin-width;
+    height: $admin-height;
+}
+
+.admin-affirm {
+    background-color: red;
+}
+
+.admin-negate {
+    background-color: green;
+}
+
+.warning {
+    color: red;
+    font-weight: bold;
+}
+
+$mq-width: 70vw;
+
 // Layout
 .profile {
     @include flexer($dir: column, $just: center, $ai: center);
+    &-admin {
+        height: 230px;
+    }
     &-card, &-summary {
         margin: $gutter;
     }
     &-card {
         width: $card-width;
+        @include mq('med') {
+            width: 500px;
+        }
     }
     &-summary {
         width: 36.5vw;
         margin: 0;
+        @include mq('med') {
+            width: $mq-width;
+        }
     }
     h2 {
         margin: 5px;
@@ -54,7 +86,12 @@ canvas {
     }
     &-data {
         @include flexer($dir: row, $just: center);
-        height: 32vh;
+        height: 30vh;
+        @include mq('med') {
+            width: $mq-width;
+            height: 530px;
+            @include flexer($dir: column, $just: center);
+        }
     }
     &-card, &-summary {
         @include flexer($dir: column, $just: center, $as: flex-start);
@@ -66,5 +103,21 @@ canvas {
             margin: 5px;
             width: 35vw;
         }
+        @include mq('med') {
+            @include flexer($dir: column, $just: center, $ai: center);
+        }
+    }
+}
+
+.view-table, .view-chart {
+    @include mq('med') {
+        width: 600px;
+        @include flexer($as: center);
+    }
+}
+
+.profile-table {
+    @include mq('sm') {
+        margin-left: -18vw;
     }
 }

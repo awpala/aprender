@@ -187,45 +187,48 @@ const Profile = (props) => {
                     )}
                 </div>
             </div>
-            <h1>Profile Administration</h1>
-            <div>
-                <button
-                    className="profile-btn administration"
-                    onClick={() => handleAdminRequest(1)}
-                >
-                    Reset Profile
-                </button>
-                <button
-                    className="profile-btn administration"
-                    onClick={() => handleAdminRequest(2)}
-                >
-                    Delete User Account
-                </button>
-            </div>
-            {isAdminView
-                ? (<div>
-                    <p>
-                        Okay to proceed? <span className="warning">WARNING: </span>
-                        action is <span className="warning">NOT</span> reversible!
-                    </p>
-                    <div>
-                        <button
-                            className="profile-btn admin-affirm"
-                            onClick={() => handleAdminRequest(null)}
-                        >
-                            Proceed
-                        </button>
-                        <button
-                            className="profile-btn admin-negate"
-                            onClick={() => handleAdminRequest(0)}
-                        >
-                            Cancel Action
-                        </button>
-                    </div>
+            <div className="profile-admin">
+                <h1>Profile Administration</h1>
+                <div>
+                    <button
+                        className="profile-btn administration"
+                        onClick={() => handleAdminRequest(1)}
+                    >
+                        Reset<br/>Profile
+                    </button>
+                    <button
+                        className="profile-btn administration"
+                        onClick={() => handleAdminRequest(2)}
+                    >
+                        Delete User<br/>Account
+                    </button>
                 </div>
-                )
-                : null
-            }
+                {isAdminView
+                    ? (<div>
+                        <p>
+                            Okay to proceed? <span className="warning">WARNING: </span>
+                            {adminMode === 1 ? 'reset' : 'delete'} action is
+                            <span className="warning"> NOT</span> reversible!
+                        </p>
+                        <div>
+                            <button
+                                className="profile-btn admin-affirm"
+                                onClick={() => handleAdminRequest(null)}
+                            >
+                                Proceed
+                            </button>
+                            <button
+                                className="profile-btn admin-negate"
+                                onClick={() => handleAdminRequest(0)}
+                            >
+                                Cancel Action
+                            </button>
+                        </div>
+                    </div>
+                    )
+                    : null
+                }
+            </div>
         </section>
     );
 }
