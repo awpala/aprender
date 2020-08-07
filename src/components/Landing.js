@@ -175,44 +175,46 @@ const Landing = (props) => {
                         : null
                     }
                 </div>
-                {!isRegistered
-                    ? (
-                        <>
-                            <button
-                                className="landing-btn"
-                                onClick={() => {
-                                    handleRegister(firstName, lastName, username, password, verifiedPass);
-                                }}
-                            >
-                                Register
-                            </button>
-                        </>
-                    )
-                    : (
-                        <>
-                            <button
-                                className="landing-btn"
-                                onClick={() => {
-                                    handleLogin(username, password);
-                                }}
-                            >
-                                Log in
-                            </button>
-                        </>
-                    )
-                }
-                <button
-                    className="landing-btn"
-                    onClick={() => {
-                        setFirstName('');
-                        setLastName('');
-                        setUsername('');
-                        setPassword('');
-                        setVerifiedPass('');
-                    }}
-                >
-                    Clear Fields
-                </button>
+                <div className="form-actions">
+                    {!isRegistered
+                        ? (
+                            <>
+                                <button
+                                    className="landing-btn"
+                                    onClick={() => {
+                                        handleRegister(firstName, lastName, username, password, verifiedPass);
+                                    }}
+                                >
+                                    Register
+                                </button>
+                            </>
+                        )
+                        : (
+                            <>
+                                <button
+                                    className="landing-btn"
+                                    onClick={() => {
+                                        handleLogin(username, password);
+                                    }}
+                                >
+                                    Log in
+                                </button>
+                            </>
+                        )
+                    }
+                    <button
+                        className="landing-btn"
+                        onClick={() => {
+                            setFirstName('');
+                            setLastName('');
+                            setUsername('');
+                            setPassword('');
+                            setVerifiedPass('');
+                        }}
+                    >
+                        Clear Fields
+                    </button>
+                </div>
             </section>
         </div>
     );

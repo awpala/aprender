@@ -3,6 +3,7 @@
 // ======================================
 
 .landing {
+    @include flexer($dir: column, $just: center, $ai: center);
     &-header {
         width: 100vw;
         h1 {
@@ -11,14 +12,13 @@
             width: 100vw;
         }
     }
-    &-form {
-        @include center(40%);
-    }
     &-heading {
         margin: $gutter;
     }
     &-form {
+        @include center(40%);
         margin-top: $gutter;
+        @include flexer($dir: column, $just: center, $ai: center, $as: center);
     }
     &-card {
         width: 30vw;
@@ -29,7 +29,18 @@
         }
         input {
             margin-bottom: $gutter/2;
-            // max-width: 120px;
+        }
+        @include mq('sm') {
+            margin-left: -5vw;
         }
     }
+    &-btn {
+        width: 100px;
+        height: 30px;
+    }
+}
+
+.form-actions {
+    width: 250px;
+    @include flexer($dir: row, $just: space-evenly);
 }
