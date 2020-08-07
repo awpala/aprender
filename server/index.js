@@ -8,6 +8,8 @@ const authCtrl = require('./controllers/authCtrl'),
     profileCtrl = require('./controllers/profileCtrl'),
     vocabCtrl = require('./controllers/vocabCtrl');
 
+const path = require('path');
+
 const {SERVER_PORT, CONNECTION_STRING, SESSION_SECRET} = process.env;
 
 const app = express();
@@ -29,6 +31,13 @@ massive({
 .then(db => {
     app.set('db', db); // db connection
     console.log('db connected');
+});
+
+// build configuration (client redirect)
+app.use(express.static(__dirname + '/../build'));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../build/index.html'))
 });
 
 // -- route-level middleware
