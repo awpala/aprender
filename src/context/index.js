@@ -59,13 +59,6 @@ export const Provider = (props) => {
         );
     }
 
-    // profile actions
-    const handleDeleteUser = (isDeleted) => {
-        if(isDeleted) {
-            handleLogoutUser();
-        }
-    }
-
     // -- return context object
     return (
         <UserContext.Provider
@@ -82,8 +75,7 @@ export const Provider = (props) => {
                         setSession: handleUserSession,
                         loginUser: handleLoginUser,
                         logoutUser: handleLogoutUser,
-                        updateWord: handleUpdateWord,
-                        deleteUser: handleDeleteUser
+                        updateWord: handleUpdateWord
                     }
                 }
             }
