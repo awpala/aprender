@@ -33,13 +33,6 @@ massive({
     console.log('db connected');
 });
 
-// build configuration (client redirect)
-app.use(express.static(__dirname + '/../build'));
-
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../build/index.html'))
-});
-
 // -- route-level middleware
 
 // auth endpoints
@@ -56,6 +49,13 @@ app.put('/api/vocab/:id', vocabCtrl.updateWord);
 app.get('/api/profile/:id', profileCtrl.getUserProfile);
 app.put('/api/profile/:id', profileCtrl.resetUserProfile);
 app.delete('/api/profile/:id', profileCtrl.deleteUserProfile);
+
+// build configuration (client redirect)
+app.use(express.static(__dirname + '/../build'));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../build/index.html'))
+});
 
 // -- server listening
 app.listen(SERVER_PORT, () => console.log('Listening on REDACTED SERVER PORT'));
