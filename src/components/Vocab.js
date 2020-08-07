@@ -196,7 +196,7 @@ const Vocab = (props) => {
         <div className="vocab">
             <h1>Vocab Drills</h1>
             <div className="vocab-card">
-                <div clasName="vocab-metadata">
+                <div className="vocab-metadata">
                     <p>
                         <span>Frequency ID: </span>
                         <span className="query-word">{freqId}</span>

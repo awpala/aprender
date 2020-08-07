@@ -1,12 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
+import axios from 'axios';
 import { UserContext } from '../context';
 import ProfileTable from './ProfileTable';
 import ProfileChart from './ProfileChart';
 
 const Profile = (props) => {
     const [isChartView, setIsChartView] = useState(false);
+    const [isAdminView, setIsAdminView] = useState(false);
+    const [adminMode, setAdminMode] = useState(0);
 
-    const { isLoggedIn, firstName } = useContext(UserContext);
+    const { isLoggedIn, firstName, userId } = useContext(UserContext);
 
     // route to landing if user logs out
     useEffect(() => {
@@ -59,6 +62,67 @@ const Profile = (props) => {
         top1000: wordsTotal.top1000 - wordsCognates.top1000,
         top5000: wordsTotal.top5000 - wordsCognates.top5000
     };
+
+    // profile administration actions
+
+    const { actions } = useContext(UserContext);
+
+    const resetProfile = () => {
+        // console.log('accessed reset');
+        axios.put(`/api/profile/${userId}`)
+        .then(res => {
+            actions.setWords(res.data);
+        })
+        .catch(err => console.log(err));
+    }
+
+    const deleteProfile = () => {
+        // console.log('accessed delete');
+        axios.delete(`/api/profile/${userId}`)
+        .catch(err => console.log(err));
+
+        axios.get('/auth/logout')
+        .then(() => {
+            actions.logoutUser();
+        })
+        .catch(err => console.log(err));
+    }
+
+    const handleAdminRequest = (mode) => {
+        if((!isAdminView || adminMode !== 0) && mode !== null) {
+            switch (mode) {
+                case 1:
+                    setIsAdminView(true);
+                    setAdminMode(1);
+                    break;
+                case 2:
+                    setIsAdminView(true);
+                    setAdminMode(2);
+                    break;
+                default:
+                    setIsAdminView(false);
+                    setAdminMode(0);
+                    break;
+            }
+        } else if (isAdminView && adminMode !== 0 && mode === null) {
+            switch (adminMode) {
+                case 1:
+                    setIsAdminView(false);
+                    setAdminMode(0);
+                    resetProfile();
+                    break;
+                case 2:
+                    setIsAdminView(false);
+                    setAdminMode(0);
+                    deleteProfile();
+                    break;
+                default:
+                    setIsAdminView(false);
+                    setAdminMode(0);
+                    break;
+            }
+        }
+    }
 
     // TO-DO: add data by part of speech
 
@@ -123,6 +187,45 @@ const Profile = (props) => {
                     )}
                 </div>
             </div>
+            <h1>Profile Administration</h1>
+            <div>
+                <button
+                    className="profile-btn administration"
+                    onClick={() => handleAdminRequest(1)}
+                >
+                    Reset Profile
+                </button>
+                <button
+                    className="profile-btn administration"
+                    onClick={() => handleAdminRequest(2)}
+                >
+                    Delete User Account
+                </button>
+            </div>
+            {isAdminView
+                ? (<div>
+                    <p>
+                        Okay to proceed? <span className="warning">WARNING: </span>
+                        action is <span className="warning">NOT</span> reversible!
+                    </p>
+                    <div>
+                        <button
+                            className="profile-btn admin-affirm"
+                            onClick={() => handleAdminRequest(null)}
+                        >
+                            Proceed
+                        </button>
+                        <button
+                            className="profile-btn admin-negate"
+                            onClick={() => handleAdminRequest(0)}
+                        >
+                            Cancel Action
+                        </button>
+                    </div>
+                </div>
+                )
+                : null
+            }
         </section>
     );
 }

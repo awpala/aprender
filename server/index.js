@@ -45,6 +45,8 @@ app.put('/api/vocab/:id', vocabCtrl.updateWord);
 
 // profile endpoints
 app.get('/api/profile/:id', profileCtrl.getUserProfile);
+app.put('/api/profile/:id', profileCtrl.resetUserProfile);
+app.delete('/api/profile/:id', profileCtrl.deleteUserProfile);
 
 // -- server listening
 app.listen(SERVER_PORT, () => console.log('Listening on REDACTED SERVER PORT'));
