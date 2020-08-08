@@ -124,15 +124,12 @@ const Vocab = (props) => {
         {
             // console.log('2B) selection via keypress');
             
-            (
+            setIsCorrect(
                 (choices[0] === correct && pressA) ||
                 (choices[1] === correct && pressS) ||
                 (choices[2] === correct && pressD) ||
                 (choices[3] === correct && pressF)
             )
-            ? setIsCorrect(true)
-            : setIsCorrect(false);
-
         }
     }, [isAnswered, isCorrect, pressA, pressS, pressD, pressF, pressSpace]);
 
