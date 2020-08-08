@@ -42,7 +42,7 @@ const Profile = (props) => {
         : filteredWords.filter(word => word.frequency_id <= threshold && !word.is_cognate && word.is_familiar).length
     }
 
-    const wordsTotal = {
+    const wordsNonCognates = {
         top100: wordCounts(100, false),
         top500: wordCounts(500, false),
         top1000: wordCounts(1000, false),
@@ -56,11 +56,11 @@ const Profile = (props) => {
         top5000: wordCounts(5000, true)
     };
 
-    const wordsNonCognates = {
-        top100: wordsTotal.top100 - wordsCognates.top100,
-        top500: wordsTotal.top500 - wordsCognates.top500,
-        top1000: wordsTotal.top1000 - wordsCognates.top1000,
-        top5000: wordsTotal.top5000 - wordsCognates.top5000
+    const wordsTotal = {
+        top100: wordsNonCognates.top100 + wordsCognates.top100,
+        top500: wordsNonCognates.top500 + wordsCognates.top500,
+        top1000: wordsNonCognates.top1000 + wordsCognates.top1000,
+        top5000: wordsNonCognates.top5000 + wordsCognates.top5000
     };
 
     // profile administration actions
