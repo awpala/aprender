@@ -39,7 +39,7 @@ const Profile = (props) => {
     const wordCounts = (threshold, areCognates) => {
         return (areCognates)
         ? filteredWords.filter(word => word.frequency_id <= threshold && word.is_cognate && word.is_familiar).length
-        : filteredWords.filter(word => word.frequency_id <= threshold && word.is_familiar).length
+        : filteredWords.filter(word => word.frequency_id <= threshold && !word.is_cognate && word.is_familiar).length
     }
 
     const wordsTotal = {
