@@ -33,6 +33,9 @@ massive({
     console.log('db connected');
 });
 
+// build configuration (client redirect)
+app.use(express.static(__dirname + '/../build'));
+
 // -- route-level middleware
 
 // auth endpoints
@@ -51,8 +54,6 @@ app.put('/api/profile/:id', profileCtrl.resetUserProfile);
 app.delete('/api/profile/:id', profileCtrl.deleteUserProfile);
 
 // build configuration (client redirect)
-app.use(express.static(__dirname + '/../build'));
-
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../build/index.html'))
 });
