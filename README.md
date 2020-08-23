@@ -2,7 +2,7 @@
 
 ## Dependencies and Usage
 
-To deploy locally, clone repository and issue shell command `npm install` to install dependencies. (N.B. Requires `node.js` v.12 or higher.)
+To deploy locally, clone repository and issue terminal command `npm install` from root directory to install dependencies. (N.B. Requires `node`.js v.12 or higher and `npm` v.6 or higher.)
 
 **Live version**: [aprender.tech](http://aprender.tech)
 
