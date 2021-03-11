@@ -1,5 +1,7 @@
 # ¡Aprender!
 
+**NOTE**: This branch contains the original version completed ca. August 2020 using React Context API for state management. The project will be refactored to perform state management via Redux moving forward.
+
 ## Dependencies and Usage
 
 To deploy locally, clone repository and issue terminal command `npm install` from root directory to install dependencies. (N.B. Requires `node`.js v.12 or higher and `npm` v.6 or higher.)
