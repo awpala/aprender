@@ -1,12 +1,12 @@
 require('dotenv').config();
 
-const express = require('express'),
-    massive = require('massive'),
-    session = require('express-session');
+const express = require('express');
+const massive = require('massive');
+const session = require('express-session');
 
-const authCtrl = require('./controllers/authCtrl'),
-    profileCtrl = require('./controllers/profileCtrl'),
-    vocabCtrl = require('./controllers/vocabCtrl');
+const authCtrl = require('./controllers/authCtrl');
+const profileCtrl = require('./controllers/profileCtrl');
+const vocabCtrl = require('./controllers/vocabCtrl');
 
 const path = require('path');
 
@@ -18,19 +18,19 @@ const app = express();
 app.use(express.json());
 
 app.use(session({
-    resave: false,
-    saveUninitialized: true,
-    secret: SESSION_SECRET,
-    cookie: {maxAge: 1000 * 60 * 60 * 24 * 365}
+  resave: false,
+  saveUninitialized: true,
+  secret: SESSION_SECRET,
+  cookie: {maxAge: 1000 * 60 * 60 * 24 * 365}
 }));
 
 massive({
-    connectionString: CONNECTION_STRING,
-    ssl: {rejectUnauthorized: false}
+  connectionString: CONNECTION_STRING,
+  ssl: {rejectUnauthorized: false}
 })
 .then(db => {
-    app.set('db', db); // db connection
-    console.log('db connected');
+  app.set('db', db); // db connection
+  console.log('db connected');
 });
 
 // build configuration (client redirect)
@@ -55,7 +55,7 @@ app.delete('/api/profile/:id', profileCtrl.deleteUserProfile);
 
 // build configuration (client redirect)
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../build/index.html'))
+  res.sendFile(path.join(__dirname, '../build/index.html'))
 });
 
 // -- server listening
