@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import useKeyPress from '../../hooks/useKeyPress'; // custom hook
 
 const Landing = ({ history, getUser }) => {
@@ -192,6 +193,11 @@ const Landing = ({ history, getUser }) => {
       </section>
     </div>
   );
+}
+
+Landing.propTypes = {
+  history: PropTypes.func.isRequired,
+  getUser: PropTypes.func.isRequired,
 }
 
 export default Landing;
