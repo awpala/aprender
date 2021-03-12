@@ -49,9 +49,9 @@ const Landing = ({ history, getUser }) => {
 
   useEffect(() => {
       if(pressEnter) {
-          isRegistered
-          ? handleLogin(username, password)
-          : handleRegister(firstName, lastName, username, password, verifiedPass);
+        isRegistered
+        ? handleLogin(username, password)
+        : handleRegister(firstName, lastName, username, password, verifiedPass);
       }
   // eslint-disable-next-line
   }, [pressEnter])

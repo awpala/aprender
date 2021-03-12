@@ -45,8 +45,8 @@ app.get('/auth/session', authCtrl.getSession);
 app.get('/auth/logout', authCtrl.logout);
 
 // vocab endpoints
-app.get('/api/vocab/:id', vocabCtrl.getUserWords);
-app.put('/api/vocab/:id', vocabCtrl.updateWord);
+app.get('/api/vocab/:userId', vocabCtrl.getUserWord);
+app.put('/api/vocab/:userId', vocabCtrl.updateWord);
 
 // profile endpoints
 app.get('/api/profile/:id', profileCtrl.getUserProfile);
@@ -59,4 +59,4 @@ app.get('*', (req, res) => {
 });
 
 // -- server listening
-app.listen(SERVER_PORT, () => console.log('Listening on REDACTED SERVER PORT'));
+app.listen(SERVER_PORT, () => console.log(`Listening on ${SERVER_PORT}`));
