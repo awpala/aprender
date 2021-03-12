@@ -1,14 +1,14 @@
 -- 1) add user entry to users table
 INSERT INTO users (
-    first_name,
-    last_name,
-    username,
-    password
+  first_name,
+  last_name,
+  username,
+  password
 ) VALUES (
-    ${firstName},
-    ${lastName},
-    ${username},
-    ${hashedPassword}
+  ${firstName},
+  ${lastName},
+  ${username},
+  ${hashedPassword}
 )
 ;
 

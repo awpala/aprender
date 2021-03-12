@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 export const UserContext = React.createContext();
 
-export const Provider = (props) => {
+export const ContextProvider = (props) => {
     // -- context state variables
 
     // session data
