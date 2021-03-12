@@ -3,7 +3,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import useKeyPress from '../../hooks/useKeyPress'; // custom hook
 
-const Vocab = ({ history, userId }) => {
+const Vocab = ({ userId }) => {
   // -- component data
 
   // word data from database/API

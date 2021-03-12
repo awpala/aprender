@@ -5,7 +5,6 @@ import { HashRouter, BrowserRouter } from 'react-router-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import rootReducer from './reducers';
-import { ContextProvider } from './context';
 import App from './App';
 
 const Router = process.env.NODE_ENV === 'development' ? HashRouter : BrowserRouter;
@@ -18,11 +17,9 @@ const store = createStore(
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ContextProvider>
-        <Router>
-          <App />
-        </Router>
-      </ContextProvider>
+      <Router>
+        <App />
+      </Router>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

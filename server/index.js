@@ -49,7 +49,7 @@ app.get('/api/vocab/:userId', vocabCtrl.getUserWord);
 app.put('/api/vocab/:userId', vocabCtrl.updateWord);
 
 // profile endpoints
-app.get('/api/profile/:id', profileCtrl.getUserProfile);
+app.get('/api/profile/:userId', profileCtrl.getUserProfile);
 app.put('/api/profile/:id', profileCtrl.resetUserProfile);
 app.delete('/api/profile/:id', profileCtrl.deleteUserProfile);
 
