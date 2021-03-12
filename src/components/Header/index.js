@@ -4,7 +4,7 @@ import Header from './Header';
 
 const mapStateToProps = (state) => ({
   userId: state.user.userId,
-})
+});
 
 const mapDispatchToProps = (dispatch) => ({
   logOutUser: () => dispatch(logOutUser()),

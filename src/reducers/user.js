@@ -5,7 +5,7 @@ const initialState = {
 }
 
 export const REGISTER_USER = 'REGISTER_USER';
-export const GET_USER = 'LOGIN_USER';
+export const GET_USER = 'GET_USER';
 export const LOG_OUT_USER = 'LOGOUT_USER';
 
 export const registerUser = (firstName, lastName, username, password) => ({

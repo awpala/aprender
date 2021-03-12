@@ -6,7 +6,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import rootReducer from './reducers';
 import { ContextProvider } from './context';
-import App from './components/App';
+import App from './App';
 
 const Router = process.env.NODE_ENV === 'development' ? HashRouter : BrowserRouter;
 

@@ -19,7 +19,7 @@ const Landing = ({ history, getUser }) => {
   // -- component actions
 
   // form event handlers
-  const loginUser = (username, userId, firstName) => {
+  const logInUser = (username, userId, firstName) => {
     getUser(username, userId, firstName);
     history.push('/vocab');
   }
@@ -28,7 +28,7 @@ const Landing = ({ history, getUser }) => {
     if(password && password === verifiedPass) {
       const userData = await axios.post('/auth/register', {firstName, lastName, username, password});
       const { data } = userData;
-      loginUser(data.username, data.user_id, data.first_name);
+      logInUser(data.username, data.user_id, data.first_name);
     } else {
       alert('Passwords do not match, please review.');
     }
@@ -38,7 +38,7 @@ const Landing = ({ history, getUser }) => {
     if (username && password) {
       const userData = await axios.post('/auth/login', {username, password});
       const { data } = userData;
-      loginUser(data.username, data.user_id, data.first_name, data.last_name);
+      logInUser(data.username, data.user_id, data.first_name, data.last_name);
     } else {
       alert('Enter username and password.');
     }
