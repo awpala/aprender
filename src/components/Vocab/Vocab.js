@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import useKeyPress from '../../hooks/useKeyPress'; // custom hook
 
-const Vocab = ({ userId }) => {
+const Vocab = ({ history, userId, getUser }) => {
   // -- component data
 
   // word data from database/API
@@ -27,6 +28,22 @@ const Vocab = ({ userId }) => {
   const pressW = useKeyPress('w');
 
   // -- component actions
+
+  const getSession = async () => {
+    const user = await axios.get('/auth/session');
+
+    if (user) {
+      const { username, user_id, first_name } = user.data;
+      getUser(username, user_id, first_name);
+    } else {
+      history.push('/');
+    }
+  }
+
+  useEffect(() => {
+    if (!userId) getSession();
+  // eslint-disable-next-line
+  }, [userId])
 
   const getWord = async () => {
    // console.log('1) access mount');
@@ -211,5 +228,9 @@ const Vocab = ({ userId }) => {
     </div>
   );
 }
+
+Vocab.propTypes = {
+  userId: PropTypes.number.isRequired,
+};
 
 export default Vocab;

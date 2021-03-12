@@ -1,40 +1,25 @@
-import React, { useContext, useEffect } from 'react';
-import Header from './Header';
+import React from 'react';
+import { connect } from 'react-redux';
+import Header from './Header/';
 import routes from '../routes';
-import { UserContext } from '../context';
-import axios from 'axios';
-
 import "../sass/style.scss";
 
-const App = () => {
-    const { actions, isLoggedIn } = useContext(UserContext);
+const App = ({ userId }) => (
+  <div className="app">
+    {userId
+      ? (
+        <>
+          <Header/>
+          {routes}
+        </>
+      )
+      : routes
+    }
+  </div>
+);
 
-    // retain session information if page is refreshed
-    useEffect(() => {
-        if(!isLoggedIn) {
-            axios.get('/auth/session')
-            .then(res => {
-                // console.log(res.data);
-                if(res.data){
-                    actions.setSession(res.data.user_id, res.data.first_name, res.data.username);
-                }
-            })
-        }
-    }, [isLoggedIn])
+const mapStateToProps = (state) => ({
+  userId: state.user.userId,
+});
 
-    return (
-        <div className="app">
-            {isLoggedIn
-            ? (
-                <>
-                    <Header/>
-                    {routes}
-                </>
-            )
-            : routes
-            }
-        </div>
-    );
-}
-
-export default App;
+export default connect(mapStateToProps)(App);
