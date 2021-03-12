@@ -60,38 +60,37 @@ const Landing = ({ history, getUser }) => {
   return(
     <div className="landing">
       <header className="landing-header">
-          <h1>
-            ¡Aprender!
-          </h1>
+        <h1>¡Aprender!</h1>
       </header>
       <section className="landing-form">
         {!isRegistered 
-            ? (
-                <div className="landing-heading">
-                    <h2>Register below</h2>
-                    <p className="landing-view">Have an account?
-                        <strong
-                            onClick={() => setIsRegistered(true)}
-                        > Log in here
-                        </strong>
-                    </p>
-                </div>
-            )
-            : (
-                <div className="landing-heading">
-                    <h2>Log in below</h2>
-                    <p className="landing-view">Don't have an account?
-                        <strong
-                          onClick={() => setIsRegistered(false)}> Register here
-                        </strong>
-                    </p>
-                </div>
-            )
+          ? (
+            <div className="landing-heading">
+              <h2>Register below</h2>
+              <p className="landing-view">Have an account?
+                <strong
+                  onClick={() => setIsRegistered(true)}
+                >
+                  Log in here
+                </strong>
+              </p>
+            </div>
+          )
+          : (
+            <div className="landing-heading">
+                <h2>Log in below</h2>
+                <p className="landing-view">Don't have an account?
+                    <strong
+                      onClick={() => setIsRegistered(false)}> Register here
+                    </strong>
+                </p>
+            </div>
+          )
         }
         {/* TO-DO: "Log in as guest" */}
         <div className="landing-card">
           {!isRegistered
-            ? (
+            && (
               <>
                 <p className="landing-fieldname">First Name</p>
                 <input
@@ -113,7 +112,6 @@ const Landing = ({ history, getUser }) => {
                 />
               </>
             )
-            : null
           }
           <p className="landing-fieldname">Username</p>
           <input
@@ -134,7 +132,7 @@ const Landing = ({ history, getUser }) => {
             onChange={e => setPassword(e.target.value)}
           />
           {!isRegistered
-            ? (
+            && (
               <>
                 <p className="landing-fieldname">Verify Password</p>
                 <input
@@ -147,7 +145,6 @@ const Landing = ({ history, getUser }) => {
                 />
               </>
             )
-            : null
           }
         </div>
         <div className="form-actions">
