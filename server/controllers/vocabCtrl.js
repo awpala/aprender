@@ -3,7 +3,13 @@ module.exports = {
     const { userId } = req.params;
     const db = req.app.get('db');
 
-    const wordData = await db.vocab.get_user_word({ userId: +userId });
+    const userEncountersData = await db.vocab.get_user_encounters({ userId: +userId });
+    const totalUniqueEncounters = +userEncountersData[0].encounters_count;
+
+    const wordData = await db.vocab.get_user_word({
+      userId: +userId,
+      totalUniqueEncounters
+    });
 
     res.status(200).send(wordData[0]);
   },
