@@ -41,6 +41,7 @@ app.use(express.static(__dirname + '/../build'));
 // auth endpoints
 app.post('/auth/register', authCtrl.register);
 app.post('/auth/login', authCtrl.login);
+app.post('/auth/guest', authCtrl.loginGuest);
 app.get('/auth/session', authCtrl.getSession);
 app.post('/auth/logout', authCtrl.logout);
 

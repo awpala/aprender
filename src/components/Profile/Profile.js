@@ -3,7 +3,7 @@ import axios from 'axios';
 import ProfileTable from './ProfileTable';
 import ProfileChart from './ProfileChart';
 
-const Profile = ({ history, userId, firstName, logOutUser }) => {
+const Profile = ({ history, userId, firstName, username, logOutUser }) => {
   const [isChartView, setIsChartView] = useState(false);
   const [isAdminView, setIsAdminView] = useState(false);
   const [words, setWords] = useState(null);
@@ -199,12 +199,16 @@ const Profile = ({ history, userId, firstName, logOutUser }) => {
           >
             Reset<br/>Profile
           </button>
-          <button
-            className="profile-btn administration"
-            onClick={() => handleAdminRequest(2)}
-          >
-            Delete User<br/>Account
-          </button>
+          {(username !== 'guest')
+            && (
+              <button
+                className="profile-btn administration"
+                onClick={() => handleAdminRequest(2)}
+              >
+                Delete User<br/>Account
+              </button>
+            )
+          }
         </div>
         {isAdminView
           && (

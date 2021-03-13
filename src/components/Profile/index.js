@@ -5,6 +5,7 @@ import Profile from './Profile';
 const mapStateToProps = (state) => ({
   userId: state.user.userId,
   firstName: state.user.firstName,
+  username: state.user.username,
 });
 
 const mapDispatchToProps = (dispatch) => ({

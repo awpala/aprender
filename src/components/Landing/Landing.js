@@ -38,10 +38,16 @@ const Landing = ({ history, getUser }) => {
     if (username && password) {
       const userData = await axios.post('/auth/login', {username, password});
       const { data } = userData;
-      logInUser(data.username, data.user_id, data.first_name, data.last_name);
+      logInUser(data.username, data.user_id, data.first_name);
     } else {
       alert('Enter username and password.');
     }
+  }
+
+  const handleGuest = async () => {
+    const guestData = await axios.post('/auth/guest');
+    const { data } = guestData;
+    logInUser(data.username, data.user_id, data.first_name);
   }
 
   // submit form using Enter key
@@ -87,7 +93,6 @@ const Landing = ({ history, getUser }) => {
             </div>
           )
         }
-        {/* TO-DO: "Log in as guest" */}
         <div className="landing-card">
           {!isRegistered
             && (
@@ -187,6 +192,11 @@ const Landing = ({ history, getUser }) => {
             Clear Fields
           </button>
         </div>
+        <p className="landing-view">
+            <strong
+              onClick={() => handleGuest()}>Log in as guest
+            </strong>
+        </p>
       </section>
     </div>
   );

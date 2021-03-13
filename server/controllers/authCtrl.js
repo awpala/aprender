@@ -35,6 +35,13 @@ module.exports = {
     req.session.user = foundUser[0];
     res.status(202).send(req.session.user);
   },
+  loginGuest: async (req, res) => {
+    const db = req.app.get('db');
+    const guestUser = await db.users.check_user({ username: 'guest' });
+    delete guestUser[0].password;
+    req.session.user = guestUser[0];
+    res.status(202).send(req.session.user);
+  },
   getSession: (req, res) => {
     req.session.user
     ? res.status(200).send(req.session.user)

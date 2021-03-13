@@ -38,6 +38,11 @@
         width: 100px;
         height: 30px;
     }
+    &-view {
+        strong {
+            cursor: pointer;
+        }
+    }
 }
 
 .form-actions {
