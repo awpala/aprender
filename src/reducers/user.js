@@ -4,19 +4,8 @@ const initialState = {
   userId: null,
 }
 
-export const REGISTER_USER = 'REGISTER_USER';
 export const GET_USER = 'GET_USER';
 export const LOG_OUT_USER = 'LOGOUT_USER';
-
-export const registerUser = (firstName, lastName, username, password) => ({
-  type: REGISTER_USER,
-  payload: {
-    firstName,
-    lastName,
-    username,
-    password,
-  },
-});
 
 export const getUser = (username, userId, firstName, lastName) => ({
   type: GET_USER,
