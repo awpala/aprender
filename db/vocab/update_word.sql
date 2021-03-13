@@ -1,12 +1,12 @@
 UPDATE profile
 SET
-    is_familiar = $3,
-    familiarity_score = $4,
-    encounters = $5
-WHERE user_id = $1 AND frequency_id = $2
+  is_familiar = ${isFamiliar},
+  familiarity_score = ${familiarityScore},
+  encounters = ${encounters}
+WHERE user_id = ${userId} AND frequency_id = ${freqId}
 ;
 
 SELECT frequency_id, is_familiar, familiarity_score, encounters
 FROM profile
-WHERE user_id = $1 AND frequency_id = $2
+WHERE user_id = ${userId} AND frequency_id = ${freqId}
 ;
