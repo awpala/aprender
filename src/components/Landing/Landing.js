@@ -193,8 +193,10 @@ const Landing = ({ history, getUser }) => {
 }
 
 Landing.propTypes = {
-  history: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
   getUser: PropTypes.func.isRequired,
-}
+};
 
 export default Landing;

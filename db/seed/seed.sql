@@ -1,18 +1,18 @@
 CREATE TABLE part_of_speech (
-    pos_id INTEGER PRIMARY KEY UNIQUE NOT NULL,
+  pos_id INTEGER PRIMARY KEY UNIQUE NOT NULL,
 	pos_abbreviated TEXT,
 	pos_full TEXT,
 	pos_standardized TEXT
 );
 
 CREATE TABLE word (
-    frequency_id INTEGER PRIMARY KEY UNIQUE NOT NULL,
-    word_es TEXT,
-    part_of_speech_id INTEGER REFERENCES part_of_speech(pos_id),
-    word_en TEXT,
+	frequency_id INTEGER PRIMARY KEY UNIQUE NOT NULL,
+	word_es TEXT,
+	part_of_speech_id INTEGER REFERENCES part_of_speech(pos_id),
+	word_en TEXT,
 	is_cognate BOOLEAN,
-    phrase_es TEXT,
-    phrase_en TEXT
+	phrase_es TEXT,
+	phrase_en TEXT
 );
 
 CREATE TABLE users (

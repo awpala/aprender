@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { logOutUser } from '../../reducers/user';
 import Profile from './Profile';
 
 const mapStateToProps = (state) => ({
@@ -6,4 +7,8 @@ const mapStateToProps = (state) => ({
   firstName: state.user.firstName,
 });
 
-export default connect(mapStateToProps)(Profile);
+const mapDispatchToProps = (dispatch) => ({
+  logOutUser: () => dispatch(logOutUser()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

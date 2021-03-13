@@ -3,12 +3,11 @@ import axios from 'axios';
 import ProfileTable from './ProfileTable';
 import ProfileChart from './ProfileChart';
 
-const Profile = ({ userId, firstName }) => {
+const Profile = ({ history, userId, firstName, logOutUser }) => {
   const [isChartView, setIsChartView] = useState(false);
   const [isAdminView, setIsAdminView] = useState(false);
   const [words, setWords] = useState(null);
   const [adminMode, setAdminMode] = useState(0);
-
 
   const fetchData = async () => {
     const wordsData = await axios.get(`/api/profile/${userId}`);
@@ -32,7 +31,7 @@ const Profile = ({ userId, firstName }) => {
     : filteredWords.filter(word => word.frequency_id <= threshold && !word.is_cognate && word.is_familiar).length
   );
   
-  // assign user stats variables
+  // assign user stats variables -- guard in IF to ensure words is loaded/populated prior to performing array methods
   if (words) {
     filteredWords =  words.filter((word) => word.encounters > 0); // filter for encountered words
     totalEncounters = filteredWords.reduce((acc, encounteredWord) => acc + encounteredWord.encounters, 0);
@@ -72,28 +71,23 @@ const Profile = ({ userId, firstName }) => {
 
   //--- profile administration actions
 
-  const resetProfile = () => {
+  const resetProfile = async () => {
     // console.log('accessed reset');
-
-    // axios.put(`/api/profile/${userId}`)
-    // .then(res => {
-    //     actions.setWords(res.data);
-    // })
-    // .catch(err => console.log(err));
+    await axios.post(`/api/profile/${userId}`);
   }
 
-  const deleteProfile = () => {
+  const deleteProfile = async () => {
     // console.log('accessed delete');
-
-    // axios.delete(`/api/profile/${userId}`)
-    // .catch(err => console.log(err));
-
-    // axios.get('/auth/logout')
-    // .then(() => {
-    //     actions.logoutUser();
-    // })
-    // .catch(err => console.log(err));
+    await axios.delete(`/api/profile/${userId}`);
+    await axios.post('/auth/logout');
+    history.push('/');
+    logOutUser();
   }
+
+  useEffect(() => {
+    fetchData();
+  // eslint-disable-next-line
+  }, [resetProfile, deleteProfile])
 
   const handleAdminRequest = (mode) => {
     if((!isAdminView || adminMode !== 0) && mode !== null) {
@@ -188,7 +182,6 @@ const Profile = ({ userId, firstName }) => {
             && (
               <>
                 <ProfileChart
-                  words={words}
                   wordsCognates={wordsCognates}
                   wordsNonCognates={ wordsNonCognates}
                 />

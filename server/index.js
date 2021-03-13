@@ -50,8 +50,8 @@ app.put('/api/vocab/:userId', vocabCtrl.updateWord);
 
 // profile endpoints
 app.get('/api/profile/:userId', profileCtrl.getUserProfile);
-app.put('/api/profile/:id', profileCtrl.resetUserProfile);
-app.delete('/api/profile/:id', profileCtrl.deleteUserProfile);
+app.post('/api/profile/:userId', profileCtrl.resetUserProfile);
+app.delete('/api/profile/:userId', profileCtrl.deleteUserProfile);
 
 // build configuration (client redirect)
 app.get('*', (req, res) => {
