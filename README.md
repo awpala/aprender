@@ -18,7 +18,7 @@ To deploy locally, clone repository and issue terminal command `npm install` fro
 
 ### **Local Setup Instructions**
 
-***N.B.*** All paths referenced in the following sections are relative to the top-level directory (i.e., `aprender`). Furthermore, terminal commands assume a UNIX-based terminal (e.g., bash), running in the top-level directory.
+***N.B.*** All paths referenced in the following sections are relative to the top-level directory (i.e., `aprender`). Furthermore, terminal commands assume a UNIX-based terminal (e.g., `bash`), running in the top-level directory.
 
 #### **Preliminaries**
 
@@ -45,19 +45,19 @@ yarn install
 
 ***N.B.*** `<value>` indicates a value to be substituted.
 
-Create a new file `.env` in the top-level directory, and define the following environment variables (cf. file `./sample.env` for reference):
+Create a new file `.env` in the top-level directory, and define the following environment variables (cf. file `/sample.env` for reference):
 
 `SERVER_PORT`
 ```
 SERVER_PORT=5555
 ```
-* ***N.B.***: To change to a different server port, update `package.json` accordingly (cf. field `"proxy":"http://localhost:<port-goes-here>"`)
+* ***N.B.***: To change to a different server port, update file `/package.json` accordingly (cf. field `"proxy":"http://localhost:<port-goes-here>"`)
 
 `CONNECTION_STRING`
 ```
 CONNECTION_STRING=postgres://<user>:<password>@<location-url>:<port>/<db-name>?ssl=disable
 ```
-  * Above format is for postgres connection ([reference](https://stackoverflow.com/a/20722229))
+  * Above format is for PostgreSQL connection ([reference](https://stackoverflow.com/a/20722229))
 
 `SESSION_SECRET`
 ```
@@ -67,7 +67,7 @@ SESSION_SECRET=<alphanumeric-string>
 
 #### **Launching the Application**
 
-Before proceeding, ensure that the PostgreSQL database is seeded. To accomplish this, run the statements contained in the files of directory `/seed` in the appropriate database (run `seed.sql` first, followed by the other files).
+Before proceeding, ensure that the PostgreSQL database is seeded. To accomplish this, run the statements contained in the files of directory `/db/seed/` in the appropriate database (run `seed.sql` first, followed by the other files).
   * ***N.B.*** The seed data for table `word` is not publicly available.
 
 Run the server application as follows:
@@ -77,7 +77,6 @@ node server
 ```
   * Server starts on port `5555` by default, unless specified otherwise
 
-
 In a ***separate*** terminal, run the client application as follows:
 
 ```bash
@@ -85,7 +84,7 @@ yarn start
 ```
   * Client starts on port `3000` by default
 
-To access the application, use the provided user `guest` (cf. file `/seed/user_data.sql`) via `Log in as guest` button, or otherwise register a new user using the form on the landing page (cf. `/src/components/Landing`).
+To access the application, use the provided user `guest` (cf. file `/db/seed/user_data.sql`) via `Log in as guest` button, or otherwise register a new user using the form on the landing page (cf. `/src/components/Landing`).
 
 ## About ¡Aprender!
 
