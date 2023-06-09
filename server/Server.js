@@ -9,7 +9,6 @@ const Database = require('./services/Database');
 const Session = require('./services/Session');
 const Router = require('./services/Router');
 
-
 class Server {
   constructor() {
     this.app = express();
@@ -24,15 +23,14 @@ class Server {
     this.configureRoutes = this.configureRoutes.bind(this);
     this.configureStaticFiles = this.configureStaticFiles.bind(this);
     this.configureSession = this.configureSession.bind(this);
-    this.configureDatabase = this.configureDatabase.bind(this);
+    this.connectToDatabase = this.connectToDatabase.bind(this);
     this.configureRoutes = this.configureRoutes.bind(this);
   }
 
   async start() {
     try {
-      this.configureTopLevelMiddleware();
+      await this.configureTopLevelMiddleware();
       this.configureRoutes();
-      await this.configureDatabase();
       this.app.listen(SERVER_PORT, () => console.log(`Listening on ${SERVER_PORT}`));
     } catch (err) {
       console.error('Error starting the server:', err);
@@ -41,10 +39,15 @@ class Server {
 
   /* -- CONFIGURATION METHODS -- */
 
-  configureTopLevelMiddleware() {
-    this.app.use(express.json());
-    this.configureStaticFiles();
-    this.configureSession();
+  async configureTopLevelMiddleware() {
+    try {
+      this.app.use(express.json());
+      this.configureStaticFiles();
+      this.configureSession();
+      await this.connectToDatabase();
+    } catch (err) {
+      console.error('Error configuring top-level middleware:', err);
+    }
   }
 
   configureStaticFiles() {
@@ -56,13 +59,12 @@ class Server {
     this.session.configureSession(this.app);
   }
 
-  async configureDatabase() {
+  async connectToDatabase() {
     try {
       await this.db.connect(this.app);
       console.log('db connected');
     } catch (err) {
       console.error('Error configuring the database:', err);
-      throw err;
     }
   }
 
