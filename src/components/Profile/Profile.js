@@ -15,7 +15,7 @@ const Profile = ({ history, userId, firstName, username, logOutUser }) => {
   }
   
   useEffect(() => {
-    if (!words) {
+    if (!words?.length) {
       fetchData();
     }
   // eslint-disable-next-line
@@ -83,11 +83,6 @@ const Profile = ({ history, userId, firstName, username, logOutUser }) => {
     history.push('/');
     logOutUser();
   }
-
-  useEffect(() => {
-    fetchData();
-  // eslint-disable-next-line
-  }, [resetProfile, deleteProfile])
 
   const handleAdminRequest = (mode) => {
     if((!isAdminView || adminMode !== 0) && mode !== null) {
