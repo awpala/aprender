@@ -1,5 +1,4 @@
 require('dotenv').config();
-
 const massive = require('massive');
 
 const { CONNECTION_STRING } = process.env;

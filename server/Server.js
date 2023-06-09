@@ -1,15 +1,14 @@
 require('dotenv').config();
-
 const express = require('express');
+const path = require('path');
+
+const { SERVER_PORT } = process.env;
 
 // services
 const Database = require('./services/Database');
 const Session = require('./services/Session');
 const Router = require('./services/Router');
 
-const path = require('path');
-
-const { SERVER_PORT } = process.env;
 
 class Server {
   constructor() {
