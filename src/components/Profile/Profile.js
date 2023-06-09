@@ -15,7 +15,7 @@ const Profile = ({ history, userId, firstName, username, logOutUser }) => {
   }
   
   useEffect(() => {
-    if (!words?.length) {
+    if (userId && !words) {
       fetchData();
     }
   // eslint-disable-next-line
@@ -74,6 +74,7 @@ const Profile = ({ history, userId, firstName, username, logOutUser }) => {
   const resetProfile = async () => {
     // console.log('accessed reset');
     await axios.post(`/api/profile/${userId}`);
+    window.location.reload();
   }
 
   const deleteProfile = async () => {
