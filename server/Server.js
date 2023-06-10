@@ -17,9 +17,9 @@ class Server {
     this.app = express();
 
     // services
-    this.db = new Database();
-    this.session = new Session();
-    this.router = new Router();
+    this.db = new Database(this.app);
+    this.session = new Session(this.app);
+    this.router = new Router(this.app);
 
     // auxiliary function
     this.start = this.start.bind(this);
@@ -65,14 +65,12 @@ class Server {
   }
 
   configureSession() {
-    const { session, app } = this;
-    session.configure(app);
+    this.session.configure();
   }
 
   async connectToDatabase() {
     try {
-      const { db, app } = this;
-      await db.connect(app);
+      await this.db.connect();
       console.log('db connected');
     } catch (err) {
       console.error('Error configuring the database:', err);
@@ -82,7 +80,7 @@ class Server {
   configureRoutes() {
     const { router, app } = this;
 
-    router.configure(app);
+    router.configure();
 
     // build configuration (client redirect)
     app.get('*', (req, res) => {

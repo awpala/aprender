@@ -5,11 +5,15 @@ const {
 } = require('../routers');
 
 class Router {
-  constructor() {
+  constructor(app) {
+    this.app = app;
+
     this.configure = this.configure.bind(this);
   }
 
-  configure(app) {
+  configure() {
+    const { app } = this;
+
     const authRouter = new AuthRouter();
     const vocabRouter = new VocabRouter();
     const profileRouter = new ProfileRouter();
