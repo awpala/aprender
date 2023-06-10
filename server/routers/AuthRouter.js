@@ -7,11 +7,11 @@ class AuthRouter {
 
   configure(app) {
     const authController = new AuthController();
-    app.post('/register', authController.register);
-    app.post('/login', authController.login);
-    app.post('/guest', authController.loginGuest);
-    app.get('/session', authController.getSession);
-    app.post('/logout', authController.logout);
+    app.post('/auth/register', authController.register);
+    app.post('/auth/login', authController.login);
+    app.post('/auth/guest', authController.loginGuest);
+    app.get('/auth/session', authController.getSession);
+    app.post('/auth/logout', authController.logout);
   }
 }
 
