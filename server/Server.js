@@ -4,10 +4,11 @@ const path = require('path');
 
 const { SERVER_PORT } = process.env;
 
-// services
-const Database = require('./services/Database');
-const Session = require('./services/Session');
-const Router = require('./services/Router');
+const {
+  Database,
+  Session,
+  Router,
+} = require('./services');
 
 class Server {
   constructor() {

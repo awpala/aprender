@@ -1,6 +1,8 @@
-const AuthController = require('../controllers/AuthController');
-const ProfileController = require('../controllers/ProfileController');
-const VocabController = require('../controllers/VocabController');
+const {
+  AuthController,
+  VocabController,
+  ProfileController,
+} = require('../controllers');
 
 class Router {
   constructor() {
