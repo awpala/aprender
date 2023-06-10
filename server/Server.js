@@ -19,6 +19,9 @@ class Server {
     this.session = new Session();
     this.router = new Router();
 
+    // auxiliary function
+    this.start = this.start.bind(this);
+
     // configuration methods
     this.configureTopLevelMiddleware = this.configureTopLevelMiddleware.bind(this);
     this.configureRoutes = this.configureRoutes.bind(this);
