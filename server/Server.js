@@ -35,9 +35,10 @@ class Server {
 
   async start() {
     try {
-      await this.configureTopLevelMiddleware();
-      this.configureRoutes();
-      this.app.listen(SERVER_PORT, () => console.log(`Listening on ${SERVER_PORT}`));
+      const { configureTopLevelMiddleware, configureRoutes, app } = this;
+      await configureTopLevelMiddleware();
+      configureRoutes();
+      app.listen(SERVER_PORT, () => console.log(`Listening on ${SERVER_PORT}`));
     } catch (err) {
       console.error('Error starting the server:', err);
     }
@@ -45,10 +46,14 @@ class Server {
 
   async configureTopLevelMiddleware() {
     try {
-      this.app.use(express.json());
-      this.configureStaticFiles();
-      this.configureSession();
-      await this.connectToDatabase();
+      const {
+        app,
+        configureStaticFiles, configureSession, connectToDatabase,
+      } = this;
+      app.use(express.json());
+      configureStaticFiles();
+      configureSession();
+      await connectToDatabase();
     } catch (err) {
       console.error('Error configuring top-level middleware:', err);
     }
