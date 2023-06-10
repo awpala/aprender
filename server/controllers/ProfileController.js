@@ -12,28 +12,42 @@ class ProfileController {
   }
 
   getProfile (req) {
-    const db = req.app.get(DB).profile; 
+    const {
+      delete_user_profile: deleteUserProfile,
+      get_user_profile: getUserProfile,
+      reset_user_profile: resetUserProfile,
+    } = req.app.get(DB).profile; 
+
+    const db = {
+      deleteUserProfile,
+      getUserProfile,
+      resetUserProfile,
+    };
+
     return db;
   }
 
   async getUserProfile(req, res) {
-    const { userId } = req.params;
-    const db = this.getProfile(req);
-    const userProfile = await db.get_user_profile({ userId: +userId });
+    let { userId } = req.params;
+    userId = +userId;
+    const { getUserProfile } = this.getProfile(req);
+    const userProfile = await getUserProfile({ userId });
     res.status(200).send(userProfile);
   }
 
   async resetUserProfile(req, res) {
-    const { userId } = req.params;
-    const db = this.getProfile(req);
-    await db.reset_user_profile({ userId: +userId });
+    let { userId } = req.params;
+    userId = +userId;
+    const { resetUserProfile } = this.getProfile(req);
+    await resetUserProfile({ userId });
     res.sendStatus(200);
   }
 
   async deleteUserProfile(req, res) {
-    const { userId } = req.params;
-    const db = this.getProfile(req);
-    await db.delete_user_profile({ userId: +userId });
+    let { userId } = req.params;
+    userId = +userId;
+    const { deleteUserProfile } = this.getProfile(req);
+    await deleteUserProfile({ userId });
     res.sendStatus(200);
   }
 }

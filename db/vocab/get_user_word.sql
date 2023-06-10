@@ -38,11 +38,11 @@ WHERE
         SELECT *
         FROM profile
         WHERE user_id = ${userId}
-          AND ${totalUniqueEncounters} >= 1
-          AND ${totalUniqueEncounters} <= 99
+          AND ${encountersCount} >= 1
+          AND ${encountersCount} <= 99
           AND is_familiar
         ) 
-        OR ${totalUniqueEncounters} = 0
+        OR ${encountersCount} = 0
       THEN
         (w.frequency_id BETWEEN 1 AND 100)
         AND (
@@ -63,11 +63,11 @@ WHERE
         SELECT *
         FROM profile
         WHERE user_id = ${userId}
-          AND ${totalUniqueEncounters} >= 101
-          AND ${totalUniqueEncounters} <= 499
+          AND ${encountersCount} >= 101
+          AND ${encountersCount} <= 499
           AND is_familiar
         ) 
-        OR ${totalUniqueEncounters} = 100
+        OR ${encountersCount} = 100
       THEN
         (w.frequency_id BETWEEN 1 AND 500)
         AND (
@@ -88,11 +88,11 @@ WHERE
         SELECT *
         FROM profile
         WHERE user_id = ${userId}
-          AND ${totalUniqueEncounters} >= 501
-          AND ${totalUniqueEncounters} <= 999
+          AND ${encountersCount} >= 501
+          AND ${encountersCount} <= 999
           AND is_familiar
         ) 
-        OR ${totalUniqueEncounters} = 500
+        OR ${encountersCount} = 500
       THEN
         (w.frequency_id BETWEEN 1 AND 1000)
         AND (
@@ -113,11 +113,11 @@ WHERE
         SELECT *
         FROM profile
         WHERE user_id = ${userId}
-          AND ${totalUniqueEncounters} >= 1001
-          AND ${totalUniqueEncounters} <= 4999
+          AND ${encountersCount} >= 1001
+          AND ${encountersCount} <= 4999
           AND is_familiar
         ) 
-        OR ${totalUniqueEncounters} = 1000
+        OR ${encountersCount} = 1000
       THEN
         (w.frequency_id BETWEEN 1 AND 5000)
         AND (

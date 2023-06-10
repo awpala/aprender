@@ -15,7 +15,16 @@ class AuthController {
   }
 
   getUsers(req) {
-    const db = req.app.get(DB).users; 
+    const {
+      check_user: checkUser,
+      register_user: registerUser,
+    } = req.app.get(DB).users;
+
+    const db = {
+      checkUser,
+      registerUser,
+    };
+
     return db;
   }
 
@@ -27,9 +36,9 @@ class AuthController {
       password,
     } = req.body;
 
-    const db = this.getUsers(req);
+    const { checkUser, registerUser } = this.getUsers(req);
 
-    const [foundUser] = await db.check_user({ username });
+    const [foundUser] = await checkUser({ username });
     if (foundUser) {
       return res.status(400).send('Username already in use');
     }
@@ -37,7 +46,7 @@ class AuthController {
     let salt = bcrypt.genSaltSync(10);
     let hashedPassword = bcrypt.hashSync(password, salt);
 
-    const [newUser] = await db.register_user({
+    const [newUser] = await registerUser({
       firstName,
       lastName,
       username,
@@ -49,8 +58,8 @@ class AuthController {
 
   async login(req, res) {
     const { username, password } = req.body;
-    const db = this.getUsers(req);
-    const [foundUser] = await db.check_user({ username });
+    const { checkUser } = this.getUsers(req);
+    const [foundUser] = await checkUser({ username });
     if (!foundUser) {
       return res.status(400).send('Username not found');
     }
@@ -66,8 +75,8 @@ class AuthController {
   }
 
   async loginGuest(req, res) {
-    const db = this.getUsers(req);
-    const [guestUser] = await db.check_user({ username: 'guest' });
+    const { checkUser } = this.getUsers(req);
+    const [guestUser] = await checkUser({ username: 'guest' });
     delete guestUser.password;
     req.session.user = guestUser;
     res.status(202).send(req.session.user);
