@@ -1,5 +1,4 @@
 const { VocabRouter } = require('.')
-const { VocabController } = require('../controllers');
 const {
   routes: { VOCAB },
   urlParams: { userId },
@@ -12,10 +11,8 @@ const mockApp = {
 
 describe('VocabRouter', () => {
   let vocabRouter;
-  let vocabController;
 
   beforeEach(() => {
-    vocabController = new VocabController();
     vocabRouter = new VocabRouter(mockApp);
   });
 

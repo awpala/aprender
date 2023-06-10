@@ -1,5 +1,4 @@
 const { AuthRouter } = require('.')
-const { AuthController } = require('../controllers');
 const {
   routes: { AUTH },
 } = require('../constants');
@@ -10,11 +9,9 @@ const mockApp = {
 };
 
 describe('AuthRouter', () => {
-  let authRouter;
   let authController;
 
   beforeEach(() => {
-    authController = new AuthController();
     authRouter = new AuthRouter(mockApp);
   });
 

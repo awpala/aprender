@@ -1,5 +1,4 @@
 const { ProfileRouter } = require('.')
-const { ProfileController } = require('../controllers');
 const {
   routes: { PROFILE },
   urlParams: { userId },
@@ -13,10 +12,8 @@ const mockApp = {
 
 describe('ProfileRouter', () => {
   let profileRouter;
-  let profileController;
 
   beforeEach(() => {
-    profileController = new ProfileController();
     profileRouter = new ProfileRouter(mockApp);
   });
 
