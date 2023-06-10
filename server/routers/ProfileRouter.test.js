@@ -21,11 +21,6 @@ describe('ProfileRouter', () => {
   });
 
   it('should configure routes', async () => {
-    // Spy on the controller methods
-    jest.spyOn(profileController, 'getUserProfile').mockImplementation();
-    jest.spyOn(profileController, 'resetUserProfile').mockImplementation();
-    jest.spyOn(profileController, 'deleteUserProfile').mockImplementation();
-
     // Act
     profileRouter.configure(mockApp);
 

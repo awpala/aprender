@@ -20,10 +20,6 @@ describe('VocabRouter', () => {
   });
 
   it('should configure routes', async () => {
-    // Spy on the controller methods
-    jest.spyOn(vocabController, 'getUserWord').mockImplementation();
-    jest.spyOn(vocabController, 'updateWord').mockImplementation();
-
     // Act
     vocabRouter.configure(mockApp);
 

@@ -19,13 +19,6 @@ describe('AuthRouter', () => {
   });
 
   it('should configure routes', async () => {
-    // Arrange
-    jest.spyOn(authController, 'register').mockImplementation();
-    jest.spyOn(authController, 'login').mockImplementation();
-    jest.spyOn(authController, 'loginGuest').mockImplementation();
-    jest.spyOn(authController, 'getSession').mockImplementation();
-    jest.spyOn(authController, 'logout').mockImplementation();
-
     // Act
     authRouter.configure(mockApp);
 
