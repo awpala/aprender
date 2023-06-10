@@ -10,9 +10,13 @@ class VocabRouter {
   }
 
   configure(app) {
-    const vocabController = new VocabController();
-    app.get(`${VOCAB}/${userId}`, vocabController.getUserWord);
-    app.put(`${VOCAB}/${userId}`, vocabController.updateWord);
+    const {
+      getUserWord,
+      updateWord,
+    } = new VocabController();
+
+    app.get(`${VOCAB}/${userId}`, getUserWord);
+    app.put(`${VOCAB}/${userId}`, updateWord);
   }
 }
 

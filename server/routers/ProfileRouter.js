@@ -10,10 +10,15 @@ class ProfileRouter {
   }
 
   configure(app) {
-    const profileController = new ProfileController();
-    app.get(`${PROFILE}/${userId}`, profileController.getUserProfile);
-    app.post(`${PROFILE}/${userId}`, profileController.resetUserProfile);
-    app.delete(`${PROFILE}/${userId}`, profileController.deleteUserProfile);
+    const {
+      getUserProfile,
+      resetUserProfile,
+      deleteUserProfile,
+    } = new ProfileController();
+
+    app.get(`${PROFILE}/${userId}`, getUserProfile);
+    app.post(`${PROFILE}/${userId}`, resetUserProfile);
+    app.delete(`${PROFILE}/${userId}`, deleteUserProfile);
   }
 }
 

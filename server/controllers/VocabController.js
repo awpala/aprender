@@ -33,8 +33,7 @@ class VocabController {
   }
 
   async getUserWord(req, res) {
-    let { userId } = req.params;
-    userId = +userId;
+    const userId = +req.params.userId;
 
     const {
       getUserEncounters,
@@ -54,8 +53,7 @@ class VocabController {
   }
 
   async updateWord(req, res) {
-    let { userId } = req.params;
-    userId = +userId;
+    const userId = +req.params.userId;
 
     const { freqId, isCorrect } = req.body;
     const {

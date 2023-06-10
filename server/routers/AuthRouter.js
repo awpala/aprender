@@ -9,12 +9,19 @@ class AuthRouter {
   }
 
   configure(app) {
-    const authController = new AuthController();
-    app.post(`${AUTH}/register`, authController.register);
-    app.post(`${AUTH}/login`, authController.login);
-    app.post(`${AUTH}/guest`, authController.loginGuest);
-    app.get(`${AUTH}/session`, authController.getSession);
-    app.post(`${AUTH}/logout`, authController.logout);
+    const {
+      register,
+      login,
+      loginGuest,
+      getSession,
+      logout,
+    } = new AuthController();
+
+    app.post(`${AUTH}/register`, register);
+    app.post(`${AUTH}/login`, login);
+    app.post(`${AUTH}/guest`, loginGuest);
+    app.get(`${AUTH}/session`, getSession);
+    app.post(`${AUTH}/logout`, logout);
   }
 }
 

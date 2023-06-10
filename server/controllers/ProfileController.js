@@ -28,24 +28,21 @@ class ProfileController {
   }
 
   async getUserProfile(req, res) {
-    let { userId } = req.params;
-    userId = +userId;
+    const userId = +req.params.userId;
     const { getUserProfile } = this.getProfileData(req);
     const userProfile = await getUserProfile({ userId });
     res.status(200).send(userProfile);
   }
 
   async resetUserProfile(req, res) {
-    let { userId } = req.params;
-    userId = +userId;
+    const userId = +req.params.userId;
     const { resetUserProfile } = this.getProfileData(req);
     await resetUserProfile({ userId });
     res.sendStatus(200);
   }
 
   async deleteUserProfile(req, res) {
-    let { userId } = req.params;
-    userId = +userId;
+    const userId = +req.params.userId;
     const { deleteUserProfile } = this.getProfileData(req);
     await deleteUserProfile({ userId });
     res.sendStatus(200);
