@@ -37,8 +37,6 @@ class Server {
     }
   }
 
-  /* -- CONFIGURATION METHODS -- */
-
   async configureTopLevelMiddleware() {
     try {
       this.app.use(express.json());
