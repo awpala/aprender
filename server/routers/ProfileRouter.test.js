@@ -17,7 +17,7 @@ describe('ProfileRouter', () => {
 
   beforeEach(() => {
     profileController = new ProfileController();
-    profileRouter = new ProfileRouter();
+    profileRouter = new ProfileRouter(mockApp);
   });
 
   it('should configure routes', async () => {

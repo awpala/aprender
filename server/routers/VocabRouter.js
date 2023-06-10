@@ -5,11 +5,15 @@ const {
 } = require('../constants');
 
 class VocabRouter {
-  constructor() {
+  constructor(app) {
+    this.app = app;
+
     this.configure = this.configure.bind(this);
   }
 
-  configure(app) {
+  configure() {
+    const { app } = this;
+
     const {
       getUserWord,
       updateWord,

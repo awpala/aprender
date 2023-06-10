@@ -15,7 +15,7 @@ describe('AuthRouter', () => {
 
   beforeEach(() => {
     authController = new AuthController();
-    authRouter = new AuthRouter();
+    authRouter = new AuthRouter(mockApp);
   });
 
   it('should configure routes', async () => {

@@ -16,7 +16,7 @@ describe('VocabRouter', () => {
 
   beforeEach(() => {
     vocabController = new VocabController();
-    vocabRouter = new VocabRouter();
+    vocabRouter = new VocabRouter(mockApp);
   });
 
   it('should configure routes', async () => {

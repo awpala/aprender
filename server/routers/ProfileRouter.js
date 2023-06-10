@@ -5,11 +5,15 @@ const {
 } = require('../constants');
 
 class ProfileRouter {
-  constructor() {
+  constructor(app) {
+    this.app = app;
+
     this.configure = this.configure.bind(this);
   }
 
-  configure(app) {
+  configure() {
+    const { app } = this;
+
     const {
       getUserProfile,
       resetUserProfile,

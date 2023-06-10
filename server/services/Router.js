@@ -14,13 +14,13 @@ class Router {
   configure() {
     const { app } = this;
 
-    const authRouter = new AuthRouter();
-    const vocabRouter = new VocabRouter();
-    const profileRouter = new ProfileRouter();
+    const authRouter = new AuthRouter(app);
+    const vocabRouter = new VocabRouter(app);
+    const profileRouter = new ProfileRouter(app);
 
-    authRouter.configure(app);
-    vocabRouter.configure(app);
-    profileRouter.configure(app);
+    authRouter.configure();
+    vocabRouter.configure();
+    profileRouter.configure();
   }
 }
 
