@@ -9,7 +9,7 @@ const mockApp = {
 };
 
 describe('AuthRouter', () => {
-  let authController;
+  let authRouter;
 
   beforeEach(() => {
     authRouter = new AuthRouter(mockApp);
