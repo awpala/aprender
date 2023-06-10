@@ -3,14 +3,14 @@ const { DB } = require('../constants');
 class VocabController {
   constructor() {
     // auxiliary function
-    this.getVocab = this.getVocab.bind(this);
+    this.getVocabData = this.getVocabData.bind(this);
 
     // controller functions
     this.getUserWord = this.getUserWord.bind(this);
     this.updateWord = this.updateWord.bind(this);
   }
 
-  getVocab(req) {
+  getVocabData(req) {
     const {
       add_new_word: addNewWord,
       check_profile: checkProfile,
@@ -39,7 +39,7 @@ class VocabController {
     const {
       getUserEncounters,
       getUserWord,
-    } = this.getVocab(req);
+    } = this.getVocabData(req);
 
     const [
       { encounters_count: encountersCount }
@@ -63,7 +63,7 @@ class VocabController {
       getUserWordData,
       addNewWord,
       updateWord,
-    } = this.getVocab(req);
+    } = this.getVocabData(req);
 
     const [{ count }] = await checkProfile({ userId, freqId });
     const isEncounteredWord = +count > 0;

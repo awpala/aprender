@@ -4,7 +4,7 @@ const { DB } = require('../constants');
 class AuthController {
   constructor() {
     // auxiliary function
-    this.getUsers = this.getUsers.bind(this);
+    this.getUsersData = this.getUsersData.bind(this);
 
     // controller functions
     this.register = this.register.bind(this);
@@ -14,7 +14,7 @@ class AuthController {
     this.logout = this.logout.bind(this);
   }
 
-  getUsers(req) {
+  getUsersData(req) {
     const {
       check_user: checkUser,
       register_user: registerUser,
@@ -36,7 +36,7 @@ class AuthController {
       password,
     } = req.body;
 
-    const { checkUser, registerUser } = this.getUsers(req);
+    const { checkUser, registerUser } = this.getUsersData(req);
 
     const [foundUser] = await checkUser({ username });
     if (foundUser) {
@@ -58,7 +58,7 @@ class AuthController {
 
   async login(req, res) {
     const { username, password } = req.body;
-    const { checkUser } = this.getUsers(req);
+    const { checkUser } = this.getUsersData(req);
     const [foundUser] = await checkUser({ username });
     if (!foundUser) {
       return res.status(400).send('Username not found');
@@ -75,7 +75,7 @@ class AuthController {
   }
 
   async loginGuest(req, res) {
-    const { checkUser } = this.getUsers(req);
+    const { checkUser } = this.getUsersData(req);
     const [guestUser] = await checkUser({ username: 'guest' });
     delete guestUser.password;
     req.session.user = guestUser;

@@ -3,7 +3,7 @@ const { DB } = require('../constants');
 class ProfileController {
   constructor() {
     // auxiliary function
-    this.getProfile = this.getProfile.bind(this);
+    this.getProfileData = this.getProfileData.bind(this);
 
     // controller functions
     this.getUserProfile = this.getUserProfile.bind(this);
@@ -11,7 +11,7 @@ class ProfileController {
     this.deleteUserProfile = this.deleteUserProfile.bind(this);
   }
 
-  getProfile (req) {
+  getProfileData(req) {
     const {
       delete_user_profile: deleteUserProfile,
       get_user_profile: getUserProfile,
@@ -30,7 +30,7 @@ class ProfileController {
   async getUserProfile(req, res) {
     let { userId } = req.params;
     userId = +userId;
-    const { getUserProfile } = this.getProfile(req);
+    const { getUserProfile } = this.getProfileData(req);
     const userProfile = await getUserProfile({ userId });
     res.status(200).send(userProfile);
   }
@@ -38,7 +38,7 @@ class ProfileController {
   async resetUserProfile(req, res) {
     let { userId } = req.params;
     userId = +userId;
-    const { resetUserProfile } = this.getProfile(req);
+    const { resetUserProfile } = this.getProfileData(req);
     await resetUserProfile({ userId });
     res.sendStatus(200);
   }
@@ -46,7 +46,7 @@ class ProfileController {
   async deleteUserProfile(req, res) {
     let { userId } = req.params;
     userId = +userId;
-    const { deleteUserProfile } = this.getProfile(req);
+    const { deleteUserProfile } = this.getProfileData(req);
     await deleteUserProfile({ userId });
     res.sendStatus(200);
   }
