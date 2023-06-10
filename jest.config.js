@@ -1,5 +1,5 @@
 module.exports = {
-  testEnvironment: 'node',
+  testEnvironment: 'jsdom',
   testMatch: ['<rootDir>/server/**/*.test.js'],
   transform: {
     '^.+\\.(js|jsx)$': 'babel-jest',
@@ -11,5 +11,8 @@ module.exports = {
   watchPathIgnorePatterns: [
     '<rootDir>/node_modules/',
     '<rootDir>/build/',
+    '<rootDir>/db/',
+    '<rootDir>/public/',
+    '<rootDir>/sass/',
   ],
 };
