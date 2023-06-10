@@ -1,4 +1,8 @@
 const { ProfileController } = require('../controllers');
+const {
+  routes: { PROFILE },
+  urlParams: { userId },
+} = require('../constants');
 
 class ProfileRouter {
   constructor() {
@@ -7,9 +11,9 @@ class ProfileRouter {
 
   configure(app) {
     const profileController = new ProfileController();
-    app.get('/api/profile/:userId', profileController.getUserProfile);
-    app.post('/api/profile/:userId', profileController.resetUserProfile);
-    app.delete('/api/profile/:userId', profileController.deleteUserProfile);
+    app.get(`${PROFILE}/${userId}`, profileController.getUserProfile);
+    app.post(`${PROFILE}/${userId}`, profileController.resetUserProfile);
+    app.delete(`${PROFILE}/${userId}`, profileController.deleteUserProfile);
   }
 }
 

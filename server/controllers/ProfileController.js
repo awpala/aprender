@@ -1,3 +1,5 @@
+const { DB } = require('../constants');
+
 class ProfileController {
   constructor() {
     // auxiliary function
@@ -10,7 +12,7 @@ class ProfileController {
   }
 
   getProfile (req) {
-    const db = req.app.get('db').profile; 
+    const db = req.app.get(DB).profile; 
     return db;
   }
 

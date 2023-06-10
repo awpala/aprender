@@ -1,4 +1,7 @@
 const { AuthController } = require('../controllers');
+const {
+  routes: { AUTH },
+} = require('../constants');
 
 class AuthRouter {
   constructor() {
@@ -7,11 +10,11 @@ class AuthRouter {
 
   configure(app) {
     const authController = new AuthController();
-    app.post('/auth/register', authController.register);
-    app.post('/auth/login', authController.login);
-    app.post('/auth/guest', authController.loginGuest);
-    app.get('/auth/session', authController.getSession);
-    app.post('/auth/logout', authController.logout);
+    app.post(`${AUTH}/register`, authController.register);
+    app.post(`${AUTH}/login`, authController.login);
+    app.post(`${AUTH}/guest`, authController.loginGuest);
+    app.get(`${AUTH}/session`, authController.getSession);
+    app.post(`${AUTH}/logout`, authController.logout);
   }
 }
 

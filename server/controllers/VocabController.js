@@ -1,3 +1,5 @@
+const { DB } = require('../constants');
+
 class VocabController {
   constructor() {
     // auxiliary function
@@ -9,7 +11,7 @@ class VocabController {
   }
 
   getVocab(req) {
-    const db = req.app.get('db').vocab; 
+    const db = req.app.get(DB).vocab; 
     return db;
   }
 

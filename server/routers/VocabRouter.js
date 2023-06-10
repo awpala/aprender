@@ -1,4 +1,8 @@
 const { VocabController } = require('../controllers');
+const {
+  routes: { VOCAB },
+  urlParams: { userId },
+} = require('../constants');
 
 class VocabRouter {
   constructor() {
@@ -7,8 +11,8 @@ class VocabRouter {
 
   configure(app) {
     const vocabController = new VocabController();
-    app.get('/api/vocab/:userId', vocabController.getUserWord);
-    app.put('/api/vocab/:userId', vocabController.updateWord);
+    app.get(`${VOCAB}/${userId}`, vocabController.getUserWord);
+    app.put(`${VOCAB}/${userId}`, vocabController.updateWord);
   }
 }
 

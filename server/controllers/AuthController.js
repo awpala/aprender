@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const { DB } = require('../constants');
 
 class AuthController {
   constructor() {
@@ -14,7 +15,7 @@ class AuthController {
   }
 
   getUsers(req) {
-    const db = req.app.get('db').users; 
+    const db = req.app.get(DB).users; 
     return db;
   }
 
