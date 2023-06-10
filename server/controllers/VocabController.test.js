@@ -120,5 +120,37 @@ describe('VocabController', () => {
       expect(mockRes.status).toHaveBeenCalledWith(200);
       expect(mockRes.send).toHaveBeenCalledWith(updatedWord);
     });
+
+    it('should handle an incorrect word and reset the familiarity score', async () => {
+      // Arrange
+      const userId = 1;
+      const freqId = 123;
+      const isCorrect = false;
+      const count = 1;
+      const familiarityScore = 2;
+      const encounters = 3;
+      const updatedWord = { id: 1, word: 'example', translation: 'example translation' };
+      mockReq.params.userId = userId;
+      mockReq.body = { freqId, isCorrect };
+      mockVocabData.check_profile.mockResolvedValueOnce([{ count }]);
+      mockVocabData.get_user_word_data.mockResolvedValueOnce([{ familiarity_score: familiarityScore, encounters }]);
+      mockVocabData.update_word.mockResolvedValueOnce([updatedWord]);
+
+      // Act
+      await vocabController.updateWord(mockReq, mockRes);
+
+      // Assert
+      expect(mockVocabData.check_profile).toHaveBeenCalledWith({ userId, freqId });
+      expect(mockVocabData.get_user_word_data).toHaveBeenCalledWith({ userId, freqId });
+      expect(mockVocabData.update_word).toHaveBeenCalledWith({
+        userId,
+        freqId,
+        isFamiliar: isCorrect,
+        familiarityScore: 0,
+        encounters: encounters + 1,
+      });
+      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.send).toHaveBeenCalledWith(updatedWord);
+    });
   });
 });
