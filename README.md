@@ -59,7 +59,7 @@ SERVER_PORT=5555
 
 `CONNECTION_STRING`
 ```
-CONNECTION_STRING=postgres://<user>:<password>@<location-url>:<port>/<db-name>?sslmode=disable
+CONNECTION_STRING=postgres://<user>:<password>@<location-url-or-hostname>:<port>/<db-name>?sslmode=disable
 ```
   * Above format is for PostgreSQL connection ([reference](https://stackoverflow.com/a/20722229))
 
