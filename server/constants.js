@@ -1,3 +1,5 @@
+const BUILD_DIR = '../build'; // relative to `/server`
+
 const DB = 'db';
 
 const routes = {
@@ -11,6 +13,7 @@ const urlParams = {
 };
 
 module.exports = {
+  BUILD_DIR,
   DB,
   routes,
   urlParams,

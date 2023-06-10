@@ -2,6 +2,8 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 
+const { BUILD_DIR } = require('./constants');
+
 const { SERVER_PORT } = process.env;
 
 const {
@@ -54,7 +56,7 @@ class Server {
 
   configureStaticFiles() {
     // build configuration (client redirect)
-    this.app.use(express.static(`${__dirname}/../build`));
+    this.app.use(express.static(`${__dirname}/${BUILD_DIR}`));
   }
 
   configureSession() {
@@ -75,7 +77,7 @@ class Server {
 
     // build configuration (client redirect)
     this.app.get('*', (req, res) => {
-      res.sendFile(path.join(__dirname, '../build/index.html'));
+      res.sendFile(path.join(__dirname, `${BUILD_DIR}/index.html`));
     });
   }
 }
