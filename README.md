@@ -1,20 +1,24 @@
 # ¡Aprender!
 
-## Dependencies and Usage
+## Overview
 
-To deploy locally, clone repository and issue terminal command `npm install` from root directory to install dependencies. (***N.B.*** Requires `node.js` v.14.x higher and `npm` v.6.x.)
+### Summary
+
+A "flash cards"-style Spanish language vocabulary training app, utilizing the 5000 most frequently occurring Spanish words as ranked/determined via analysis of audio-based and written sources.
 
 **Live version**: [aprender.tech](http://aprender.tech)
 
-## Technologies Used
+### Technologies Used
 
-**Client**: React, Sass/SCSS, HTML
+**Client**: React, Sass/SCSS, HTML/JSX
 
   * ***React***: Hooks for UI components, Redux for state management
 
 **Server**: Node.js, Express
 
 **Database**: PostgreSQL
+
+  * Data mapping via [MassiveJS](https://massivejs.org/)
 
 ## Local Setup Instructions
 
