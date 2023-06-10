@@ -9,62 +9,49 @@ class VocabController {
   }
 
   getVocab(req) {
-    return req.app.get('db').vocab;
+    const db = req.app.get('db').vocab; 
+    return db;
   }
 
   async getUserWord(req, res) {
     const { userId } = req.params;
+    const db = this.getVocab(req);
 
-    const userEncountersData = await this.getVocab(req).get_user_encounters({ userId: +userId });
-    const totalUniqueEncounters = +userEncountersData[0].encounters_count;
+    const [userEncountersData] = await db.get_user_encounters({ userId: +userId });
+    const totalUniqueEncounters = +userEncountersData.encounters_count;
 
-    const wordData = await this.getVocab(req).get_user_word({
+    const [wordData] = await db.get_user_word({
       userId: +userId,
       totalUniqueEncounters,
     });
 
-    res.status(200).send(wordData[0]);
+    res.status(200).send(wordData);
   }
 
   async updateWord(req, res) {
     const { userId } = req.params;
     const { freqId, isCorrect } = req.body;
+    const db = this.getVocab(req);
 
-    const checkProfile = await this.getVocab(req).check_profile({ userId: +userId, freqId });
-    const isEncounteredWord = +checkProfile[0].count > 0;
+    const [checkProfile] = await db.check_profile({ userId: +userId, freqId });
+    const isEncounteredWord = +checkProfile.count > 0;
 
-    let userWordData, familiarityScore, encounters;
+    const [userWordData] = isEncounteredWord
+      ? await db.get_user_word_data({ userId: +userId, freqId })
+      : await db.add_new_word({ userId: +userId, freqId });
 
-    if (!isEncounteredWord) {
-      userWordData = await this.getVocab(req).add_new_word({ userId: +userId, freqId });
-    } else {
-      userWordData = await this.getVocab(req).get_user_word_data({ userId: +userId, freqId });
-    }
+    const familiarityScore = userWordData.familiarity_score + 1;
+    const encounters = userWordData.encounters + 1;
 
-    familiarityScore = userWordData[0].familiarity_score + 1;
-    encounters = userWordData[0].encounters + 1;
+    const [updatedWord] = await db.update_word({
+      userId: +userId,
+      freqId,
+      isFamiliar: isCorrect,
+      familiarityScore: isCorrect ? familiarityScore : 0,
+      encounters,
+    });
 
-    let updatedWord;
-
-    if (isCorrect) {
-      updatedWord = await this.getVocab(req).update_word({
-        userId: +userId,
-        freqId,
-        isFamiliar: true,
-        familiarityScore,
-        encounters,
-      });
-    } else {
-      updatedWord = await this.getVocab(req).update_word({
-        userId: +userId,
-        freqId,
-        isFamiliar: false,
-        familiarityScore: 0,
-        encounters,
-      });
-    }
-
-    res.status(200).send(updatedWord[0]);
+    res.status(200).send(updatedWord);
   }
 }
 

@@ -14,7 +14,8 @@ class AuthController {
   }
 
   getUsers(req) {
-    return req.app.get('db').users;
+    const db = req.app.get('db').users; 
+    return db;
   }
 
   async register(req, res) {
@@ -25,45 +26,49 @@ class AuthController {
       password,
     } = req.body;
 
-    const foundUser = await this.getUsers(req).check_user({ username });
-    if (foundUser[0]) {
+    const db = this.getUsers(req);
+
+    const [foundUser] = await db.check_user({ username });
+    if (foundUser) {
       return res.status(400).send('Username already in use');
     }
 
     let salt = bcrypt.genSaltSync(10);
     let hashedPassword = bcrypt.hashSync(password, salt);
 
-    const newUser = await this.getUsers(req).register_user({
+    const [newUser] = await db.register_user({
       firstName,
       lastName,
       username,
       hashedPassword,
     });
-    req.session.user = newUser[0];
+    req.session.user = newUser;
     res.status(201).send(req.session.user);
   }
 
   async login(req, res) {
     const { username, password } = req.body;
-    const foundUser = await this.getUsers(req).check_user({ username });
-    if (!foundUser[0]) {
+    const db = this.getUsers(req);
+    const [foundUser] = await db.check_user({ username });
+    if (!foundUser) {
       return res.status(400).send('Username not found');
     }
 
-    const isAuthenticated = bcrypt.compareSync(password, foundUser[0].password);
+    const isAuthenticated = bcrypt.compareSync(password, foundUser.password);
     if (!isAuthenticated) {
       return res.status(401).send('Password is incorrect');
     }
 
-    delete foundUser[0].password;
-    req.session.user = foundUser[0];
+    delete foundUser.password;
+    req.session.user = foundUser;
     res.status(202).send(req.session.user);
   }
 
   async loginGuest(req, res) {
-    const guestUser = await this.getUsers(req).check_user({ username: 'guest' });
-    delete guestUser[0].password;
-    req.session.user = guestUser[0];
+    const db = this.getUsers(req);
+    const [guestUser] = await db.check_user({ username: 'guest' });
+    delete guestUser.password;
+    req.session.user = guestUser;
     res.status(202).send(req.session.user);
   }
 

@@ -10,24 +10,28 @@ class ProfileController {
   }
 
   getProfile (req) {
-    return req.app.get('db').profile;
+    const db = req.app.get('db').profile; 
+    return db;
   }
 
   async getUserProfile(req, res) {
     const { userId } = req.params;
-    const userProfile = await this.getProfile(req).get_user_profile({ userId: +userId });
+    const db = this.getProfile(req);
+    const userProfile = await db.get_user_profile({ userId: +userId });
     res.status(200).send(userProfile);
   }
 
   async resetUserProfile(req, res) {
     const { userId } = req.params;
-    await this.getProfile(req).reset_user_profile({ userId });
+    const db = this.getProfile(req);
+    await db.reset_user_profile({ userId: +userId });
     res.sendStatus(200);
   }
 
   async deleteUserProfile(req, res) {
     const { userId } = req.params;
-    await this.getProfile(req).delete_user_profile({ userId });
+    const db = this.getProfile(req);
+    await db.delete_user_profile({ userId: +userId });
     res.sendStatus(200);
   }
 }
