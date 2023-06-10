@@ -60,12 +60,14 @@ class Server {
   }
 
   configureSession() {
-    this.session.configure(this.app);
+    const { session, app } = this;
+    session.configure(app);
   }
 
   async connectToDatabase() {
     try {
-      await this.db.connect(this.app);
+      const { db, app } = this;
+      await db.connect(app);
       console.log('db connected');
     } catch (err) {
       console.error('Error configuring the database:', err);
@@ -73,10 +75,12 @@ class Server {
   }
 
   configureRoutes() {
-    this.router.configure(this.app);
+    const { router, app } = this;
+
+    router.configure(app);
 
     // build configuration (client redirect)
-    this.app.get('*', (req, res) => {
+    app.get('*', (req, res) => {
       res.sendFile(path.join(__dirname, `${BUILD_DIR}/index.html`));
     });
   }
