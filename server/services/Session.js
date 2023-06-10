@@ -5,10 +5,10 @@ const { SESSION_SECRET } = process.env;
 
 class Session {
   constructor() {
-    this.configureSession = this.configureSession.bind(this);
+    this.configure = this.configure.bind(this);
   }
 
-  configureSession(app) {
+  configure(app) {
     const config = {
       resave: false,
       saveUninitialized: true,

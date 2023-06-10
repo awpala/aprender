@@ -56,7 +56,7 @@ class Server {
   }
 
   configureSession() {
-    this.session.configureSession(this.app);
+    this.session.configure(this.app);
   }
 
   async connectToDatabase() {
@@ -69,7 +69,7 @@ class Server {
   }
 
   configureRoutes() {
-    this.router.configureRoutes(this.app);
+    this.router.configure(this.app);
 
     // build configuration (client redirect)
     this.app.get('*', (req, res) => {

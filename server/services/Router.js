@@ -4,10 +4,10 @@ const VocabController = require('../controllers/VocabController');
 
 class Router {
   constructor() {
-    this.configureRoutes = this.configureRoutes.bind(this);
+    this.configure = this.configure.bind(this);
   }
 
-  configureRoutes(app) {
+  configure(app) {
     // auth endpoints
     const authController = new AuthController();
     app.post('/auth/register', authController.register);
