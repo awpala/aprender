@@ -16,11 +16,11 @@ To deploy locally, clone repository and issue terminal command `npm install` fro
 
 **Database**: PostgreSQL
 
-### **Local Setup Instructions**
+## Local Setup Instructions
 
 ***N.B.*** All paths referenced in the following sections are relative to the top-level directory (i.e., `aprender`). Furthermore, terminal commands assume a UNIX-based terminal (e.g., `bash`), running in the top-level directory.
 
-#### **Preliminaries**
+### **Preliminaries**
 
 Before proceeding, ensure you have local dependencies as follows:
 * Node v.14.x
@@ -41,7 +41,7 @@ Install dependencies as follows:
 yarn install
 ```
 
-#### **Environment Variables**
+### **Environment Variables**
 
 ***N.B.*** `<value>` indicates a value to be substituted.
 
@@ -65,7 +65,7 @@ SESSION_SECRET=<alphanumeric-string>
 ```
   * Create a custom alphanumeric-string secret (a strong-password generator is advised)
 
-#### **Launching the Application**
+### **Launching the Application**
 
 Before proceeding, ensure that the PostgreSQL database is seeded. To accomplish this, run the statements contained in the files of directory `/db/seed/` in the appropriate database (run `seed.sql` first, followed by the other files).
   * ***N.B.*** The seed data for table `word` is not publicly available.
