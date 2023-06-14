@@ -1,2 +1,2 @@
 #!/bin/bash
-echo $HOME
+echo "User's Home directory: $HOME"
