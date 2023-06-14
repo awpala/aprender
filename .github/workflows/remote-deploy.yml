@@ -32,4 +32,4 @@ jobs:
 
       - name: Deploy to remote server
         run: |
-          ssh ${{ secrets.REMOTE_SERVER_ADDRESS }} 'cd ${{ secrets.PATH_TO_PROJECT }} && ./deploy.sh'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.REMOTE_SERVER_ADDRESS }} 'cd ${{ secrets.PATH_TO_PROJECT }} && ./deploy.sh'
