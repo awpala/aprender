@@ -27,7 +27,7 @@ jobs:
         run: yarn install
 
       - name: Run unit tests for server app
-        run: yarn test-server
+        run: yarn test-server-deploy
 
       - name: Deploy to remote server
         run: |
