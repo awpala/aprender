@@ -33,9 +33,9 @@ jobs:
       - name: Run unit tests for server app
         run: yarn test-server-deploy
 
-      - name: Deploy to remote server
-        run: |
-          ssh-keyscan -t ed25519 ${{ secrets.REMOTE_SERVER_IP_ADDR }} >> $HOME/.ssh/known_hosts
-          ssh_output=$(ssh -o StrictHostKeyChecking=no -l ${{ secrets.REMOTE_SERVER_USER }} ${{ secrets.REMOTE_SERVER_IP_ADDR }} "sudo BASH_ENV=\$HOME/.bashrc bash -l -c 'echo \"User's Home directory: \$HOME\"'")
-          home_path=$(echo "$ssh_output" | grep "User's Home directory" | awk '{print $NF}')
-          echo "Home path: $home_path"
+  - name: Deploy to remote server
+    run: |
+      ssh-keyscan -t ed25519 ${{ secrets.REMOTE_SERVER_IP_ADDR }} >> $HOME/.ssh/known_hosts
+      ssh_output=$(ssh -o StrictHostKeyChecking=no -l ${{ secrets.REMOTE_SERVER_USER }} ${{ secrets.REMOTE_SERVER_IP_ADDR }} "sudo BASH_ENV=\$HOME/.bashrc bash -l -c \"echo 'User\'s Home directory: \$HOME'\"")
+      home_path=$(echo "$ssh_output" | grep "User's Home directory" | awk '{print $NF}')
+      echo "Home path: $home_path"
