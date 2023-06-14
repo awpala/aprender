@@ -36,4 +36,4 @@ jobs:
       - name: Deploy to remote server
         run: |
           ssh-keyscan -t ed25519 ${{ secrets.REMOTE_SERVER_IP_ADDR }} >> $HOME/.ssh/known_hosts
-          ssh -o StrictHostKeyChecking=no -l ${{ secrets.REMOTE_SERVER_USER }} ${{ secrets.REMOTE_SERVER_IP_ADDR }} "sudo bash -l -c 'source ${{ secrets.HOME_PATH }}/.bash_profile && source ${{ secrets.HOME_PATH }}/.bashrc && echo \$HOME && cd ${{ secrets.PATH_TO_PROJECT }} && ./deploy.sh'" -t "sudo su - ${{ secrets.REMOTE_SERVER_USER }} -c 'cd ${{ secrets.HOME_PATH }} && \$SHELL'"
+          ssh -o StrictHostKeyChecking=no -l ${{ secrets.REMOTE_SERVER_USER }} ${{ secrets.REMOTE_SERVER_IP_ADDR }} "sudo bash -l -c 'source \$HOME/.bash_profile && source \$HOME/.bashrc && echo \$HOME && cd ${{ secrets.PATH_TO_PROJECT }} && ./deploy.sh'" -t "sudo su - ${{ secrets.REMOTE_SERVER_USER }} -c 'cd ${{ secrets.HOME_PATH }} && \$SHELL'"
