@@ -36,6 +36,6 @@ jobs:
       - name: Deploy to remote server
         run: |
           ssh-keyscan -t ed25519 ${{ secrets.REMOTE_SERVER_IP_ADDR }} >> $HOME/.ssh/known_hosts
-          ssh_output=$(ssh -o StrictHostKeyChecking=no -l ${{ secrets.REMOTE_SERVER_USER }} ${{ secrets.REMOTE_SERVER_IP_ADDR }} "sudo BASH_ENV=\$HOME/.bashrc bash -l -c './print_home.sh'")
-          home_path=$(echo "$ssh_output" | grep "User's Home directory" | awk '{print $NF}')
+          ssh_output=$(ssh -o StrictHostKeyChecking=no -l ${{ secrets.REMOTE_SERVER_USER }} ${{ secrets.REMOTE_SERVER_IP_ADDR }} "sudo BASH_ENV=\$HOME/.bashrc bash -l -c 'echo \$HOME'")
+          home_path=$(echo "$ssh_output" | tail -n 1)
           echo "Home path: $home_path"
