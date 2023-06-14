@@ -36,5 +36,8 @@ jobs:
       - name: Deploy to remote server
         run: |
           ssh-keyscan -t ed25519 ${{ secrets.REMOTE_SERVER_IP_ADDR }} >> $HOME/.ssh/known_hosts
-          echo $HOME
-          ssh -o StrictHostKeyChecking=no -l ${{ secrets.REMOTE_SERVER_USER }} ${{ secrets.REMOTE_SERVER_IP_ADDR }} "sudo bash -l -c 'cd ${{ secrets.PATH_TO_PROJECT }} && ./print_home.sh && source \$HOME/.bash_profile && source \$HOME/.bashrc && cd ${{ secrets.PATH_TO_PROJECT }} && ./deploy.sh'" -t "sudo su - ${{ secrets.REMOTE_SERVER_USER }} -c 'cd ${{ secrets.HOME_PATH }} && \$SHELL'"
+          ssh_output=$(ssh -o StrictHostKeyChecking=no -l ${{ secrets.REMOTE_SERVER_USER }} ${{ secrets.REMOTE_SERVER_IP_ADDR }} "sudo bash -l -c 'cd ${{ secrets.PATH_TO_PROJECT }} && ./print_home.sh && source \$HOME/.bash_profile && source \$HOME/.bashrc && cd ${{ secrets.PATH_TO_PROJECT }} && ./deploy.sh'" -t "sudo su - ${{ secrets.REMOTE_SERVER_USER }} -c 'cd ${{ secrets.HOME_PATH }} && \$SHELL'")
+          home_path=$(echo "$ssh_output" | tail -n 2 | head -n 1)
+          echo "Home path: $home_path"
+          deploy_output=$(echo "$ssh_output" | tail -n 1)
+          echo "Deployment output: $deploy_output"
