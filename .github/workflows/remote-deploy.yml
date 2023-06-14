@@ -35,5 +35,5 @@ jobs:
 
       - name: Deploy to remote server
         run: |
-          ssh-keyscan -t ed25519 ${{ secrets.REMOTE_SERVER_ADDRESS }} >> $HOME/.ssh/known_hosts
-          ssh -o StrictHostKeyChecking=yes ${{ secrets.REMOTE_SERVER_ADDRESS }} 'cd ${{ secrets.PATH_TO_PROJECT }} && ./deploy.sh'
+          ssh-keyscan -t ed25519 ${{ secrets.REMOTE_SERVER_IP_ADDR }} >> $HOME/.ssh/known_hosts
+          ssh -o StrictHostKeyChecking=yes ${{ secrets.REMOTE_SERVER_IP_ADDR }} 'cd /path/to/project && ./deploy.sh'
