@@ -32,4 +32,5 @@ jobs:
 
       - name: Deploy to remote server
         run: |
-          ssh -v ${{ secrets.REMOTE_SERVER_ADDRESS }} 'cd ${{ secrets.PATH_TO_PROJECT }} && ./deploy.sh'
+          echo "${{ secrets.REMOTE_SERVER_KNOWN_HOST }}" >> $HOME/.ssh/known_hosts
+          ssh -o StrictHostKeyChecking=yes ${{ secrets.REMOTE_SERVER_ADDRESS }} 'cd ${{ secrets.PATH_TO_PROJECT }} && ./deploy.sh'
