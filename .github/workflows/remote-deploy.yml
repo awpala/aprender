@@ -26,8 +26,8 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Run unit tests
-        run: yarn test
+      - name: Run unit tests for server app
+        run: yarn test-server
 
       - name: Deploy to remote server
         run: |
