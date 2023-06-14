@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo $HOME
 git switch master --force
 git pull
 nvm use 14 # client app requires Node v.14
