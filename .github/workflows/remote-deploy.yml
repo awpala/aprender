@@ -36,6 +36,6 @@ jobs:
       - name: Deploy to remote server
         run: |
           ssh-keyscan -t ed25519 ${{ secrets.REMOTE_SERVER_IP_ADDR }} >> $HOME/.ssh/known_hosts
-          ssh_output=$(ssh -o StrictHostKeyChecking=no -l ${{ secrets.REMOTE_SERVER_USER }} -t ${{ secrets.REMOTE_SERVER_IP_ADDR }} "sudo su - ${{ secrets.REMOTE_SERVER_USER }} -c 'BASH_ENV=\$HOME/.bashrc bash -l -c \"cd ${{ secrets.PATH_TO_PROJECT }} && ./deploy.sh\"'")
+          ssh_output=$(ssh -o StrictHostKeyChecking=no -l ${{ secrets.REMOTE_SERVER_USER }} -t ${{ secrets.REMOTE_SERVER_IP_ADDR }} "sudo su - ${{ secrets.REMOTE_SERVER_USER }} -c 'source \$HOME/.bash_profile && source \$HOME/.bashrc && cd ${{ secrets.PATH_TO_PROJECT }} && ./deploy.sh'")
           home_path=$(echo "$ssh_output" | tail -n 1)
           echo "Home path: $home_path"
