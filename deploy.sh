@@ -3,7 +3,7 @@
 echo "User's Home directory: $HOME"
 git switch master --force
 git pull
-source $HOME/.bash_profile
+source $HOME/.profile
 source $HOME/.bashrc
 nvm use 14 # client app requires Node v.14
 yarn install
