@@ -31,7 +31,7 @@ jobs:
         run: |
           sudo chown -R ${{ secrets.USER_NAME }}:${{ secrets.USER_NAME }} ${{ secrets.PATH_TO_PROJECT }}
           sudo chown -R ${{ secrets.USER_NAME }}:${{ secrets.USER_NAME }} ${{ secrets.HOME_PATH }}/.profile
-          sudo chown -R ${{ secrets.USER_NAME }}:${{ secrets.USER_NAME }} /root/.bashrc
+          sudo chown -R ${{ secrets.USER_NAME }}:${{ secrets.USER_NAME }} ${{ secrets.HOME_PATH }}/.bashrc
           sudo chmod 644 ${{ secrets.HOME_PATH }}/.profile
           sudo chmod 644 ${{ secrets.HOME_PATH }}/.bashrc
 
