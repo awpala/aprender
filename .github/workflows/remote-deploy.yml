@@ -33,24 +33,20 @@ jobs:
       - name: Run unit tests for server app
         run: yarn test-server-deploy
 
-      - name: Create deploy script on remote server
-        run: |
-          echo "#!/bin/bash" > deploy.sh
-          echo "echo \"User's Home directory: \$HOME\"" >> deploy.sh
-          echo "git switch master --force" >> deploy.sh
-          echo "git pull" >> deploy.sh
-          echo "source \$HOME/.profile" >> deploy.sh
-          echo "source \$HOME/.bashrc" >> deploy.sh
-          echo "nvm use 14" >> deploy.sh
-          echo "yarn install" >> deploy.sh
-          echo "yarn build" >> deploy.sh
-          echo "aprender-republish" >> deploy.sh
-          chmod +x deploy.sh
-
-      - name: Copy deploy script to remote server
-        run: scp -o StrictHostKeyChecking=no deploy.sh ${{ secrets.REMOTE_SERVER_USER }}@${{ secrets.REMOTE_SERVER_IP_ADDR }}:~/deploy.sh
-
-      - name: Execute deploy script on remote server
-        run: |
-          ssh-keyscan -t ed25519 ${{ secrets.REMOTE_SERVER_IP_ADDR }} >> $HOME/.ssh/known_hosts
-          ssh ${{ secrets.REMOTE_SERVER_USER }}@${{ secrets.REMOTE_SERVER_IP_ADDR }} 'bash -l -c "~/deploy.sh"'
+      - name: Deploy to remote server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_SERVER_IP_ADDR }}
+          username: runner
+          key: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}
+          script: |
+            cd ${{ secrets.HOME_PATH }}/aprender
+            echo "User's Home directory: $HOME"
+            git switch master --force
+            git pull
+            source ${{ secrets.HOME_PATH }}/.profile
+            source ${{ secrets.HOME_PATH }}/.bashrc
+            nvm use 14
+            yarn install
+            yarn build
+            aprender-republish # cf. aliases on server per command `alias`
