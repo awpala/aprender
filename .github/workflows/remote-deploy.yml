@@ -33,9 +33,24 @@ jobs:
       - name: Run unit tests for server app
         run: yarn test-server-deploy
 
-      - name: Deploy to remote server
+      - name: Create deploy script on remote server
+        run: |
+          echo "#!/bin/bash" > deploy.sh
+          echo "echo \"User's Home directory: \$HOME\"" >> deploy.sh
+          echo "git switch master --force" >> deploy.sh
+          echo "git pull" >> deploy.sh
+          echo "source \$HOME/.profile" >> deploy.sh
+          echo "source \$HOME/.bashrc" >> deploy.sh
+          echo "nvm use 14" >> deploy.sh
+          echo "yarn install" >> deploy.sh
+          echo "yarn build" >> deploy.sh
+          echo "aprender-republish" >> deploy.sh
+          chmod +x deploy.sh
+
+      - name: Copy deploy script to remote server
+        run: scp -o StrictHostKeyChecking=no deploy.sh ${{ secrets.REMOTE_SERVER_USER }}@${{ secrets.REMOTE_SERVER_IP_ADDR }}:~/deploy.sh
+
+      - name: Execute deploy script on remote server
         run: |
           ssh-keyscan -t ed25519 ${{ secrets.REMOTE_SERVER_IP_ADDR }} >> $HOME/.ssh/known_hosts
-          ssh_output=$(ssh -o StrictHostKeyChecking=no -l ${{ secrets.REMOTE_SERVER_USER }} -t ${{ secrets.REMOTE_SERVER_IP_ADDR }} "source \$HOME/.profile && source \$HOME/.bashrc && cd ${{ secrets.PATH_TO_PROJECT }} && ./deploy.sh'")
-          home_path=$(echo "$ssh_output" | tail -n 1)
-          echo "Home path: $home_path"
+          ssh ${{ secrets.REMOTE_SERVER_USER }}@${{ secrets.REMOTE_SERVER_IP_ADDR }} 'bash -l -c "~/deploy.sh"'
