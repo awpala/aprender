@@ -33,9 +33,44 @@ jobs:
       - name: Run unit tests for server app
         run: yarn test-server-deploy
 
+name: Remote Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up SSH key
+        uses: webfactory/ssh-agent@v0.5.0
+        with:
+          ssh-private-key: ${{ secrets.SERVER_SSH_PRIVATE_KEY }}
+          ssh-public-key: ${{ secrets.SERVER_SSH_PUBLIC_KEY }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Install OpenSSH client
+        run: sudo apt-get update && sudo apt-get install -y openssh-client
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run unit tests for server app
+        run: yarn test-server-deploy
+
       - name: Deploy to remote server
         run: |
           ssh-keyscan -t ed25519 ${{ secrets.REMOTE_SERVER_IP_ADDR }} >> $HOME/.ssh/known_hosts
-          ssh_output=$(ssh -o StrictHostKeyChecking=no -l ${{ secrets.REMOTE_SERVER_USER }} ${{ secrets.REMOTE_SERVER_IP_ADDR }} "sudo BASH_ENV=${{ secrets.HOME_PATH }}/.bashrc bash -l -c 'cd ${{ secrets.PATH_TO_PROJECT }} && ${{ secrets.PATH_TO_PROJECT }}/deploy.sh'")
+          ssh_output=$(ssh -o StrictHostKeyChecking=no -l ${{ secrets.REMOTE_SERVER_USER }} -t ${{ secrets.REMOTE_SERVER_IP_ADDR }} "sudo su - ${{ secrets.REMOTE_SERVER_USER }} -c 'BASH_ENV=\$HOME/.bashrc bash -l -c \"cd ${{ secrets.PATH_TO_PROJECT }} && ./deploy.sh\"'")
           home_path=$(echo "$ssh_output" | tail -n 1)
           echo "Home path: $home_path"
