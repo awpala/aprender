@@ -46,8 +46,8 @@ jobs:
             echo $HOME
             git switch master --force
             git pull
-            source ${{ secrets.HOME_PATH }}/.profile
-            source ${{ secrets.HOME_PATH }}/.bashrc
+            source $HOME/.profile
+            source $HOME/.bashrc
             nvm use 14
             yarn install
             yarn build
