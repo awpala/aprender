@@ -35,20 +35,21 @@ jobs:
           sudo chmod 644 ${{ secrets.HOME_PATH }}/.profile
           sudo chmod 644 ${{ secrets.HOME_PATH }}/.bashrc
 
-      - name: Deploy to remote server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.REMOTE_SERVER_IP_ADDR }}
-          username: ${{ secrets.USER_NAME }}
-          password: ${{ secrets.USER_PASSWORD }}
-          script: |
-            cd ${{ secrets.PATH_TO_PROJECT }}
-            echo $HOME
-            git switch master --force
-            git pull
-            source $HOME/.profile
-            source $HOME/.bashrc
-            nvm use 14
-            yarn install
-            yarn build
-            aprender-republish # cf. aliases on server per command `alias`
+      # TODO: FIX DEPLOYMENT TASK
+      # - name: Deploy to remote server
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.REMOTE_SERVER_IP_ADDR }}
+      #     username: ${{ secrets.USER_NAME }}
+      #     password: ${{ secrets.USER_PASSWORD }}
+      #     script: |
+      #       cd ${{ secrets.PATH_TO_PROJECT }}
+      #       echo $HOME
+      #       git switch master --force
+      #       git pull
+      #       source $HOME/.profile
+      #       source $HOME/.bashrc
+      #       nvm use 14
+      #       yarn install
+      #       yarn build
+      #       aprender-republish # cf. aliases on server per command `alias`
