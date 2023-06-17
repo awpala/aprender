@@ -55,7 +55,7 @@ Create a new file `.env` in the top-level directory, and define the following en
 ```
 SERVER_PORT=5555
 ```
-* ***N.B.***: To change to a different server port, update file `/package.json` accordingly (cf. field `"proxy":"http://localhost:<port-goes-here>"`)
+* ***N.B.***: This is correspondingly reflected in `/package.json` accordingly via dependency `cross-env` (cf. fields `"proxy":"http://localhost:$SERVER_PORT"` and `"scripts"` with prefixes `cross-env $(cat .env) ...`).
 
 `CONNECTION_STRING`
 ```
