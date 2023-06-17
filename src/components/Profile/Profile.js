@@ -7,7 +7,7 @@ const Profile = ({ history, userId, firstName, username, logOutUser }) => {
   const [isChartView, setIsChartView] = useState(false);
   const [isAdminView, setIsAdminView] = useState(false);
   const [view, setView] = useState(null);
-  const [words, setWords] = useState([]);
+  const [words, setWords] = useState(null);
 
   const views = {
     RESET: 'RESET',
