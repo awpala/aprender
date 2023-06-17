@@ -6,8 +6,18 @@ import ProfileChart from './ProfileChart';
 const Profile = ({ history, userId, firstName, username, logOutUser }) => {
   const [isChartView, setIsChartView] = useState(false);
   const [isAdminView, setIsAdminView] = useState(false);
-  const [words, setWords] = useState(null);
-  const [adminMode, setAdminMode] = useState(0);
+  const [view, setView] = useState(null);
+  const [words, setWords] = useState([]);
+
+  const views = {
+    RESET: 'RESET',
+    DELETE: 'DELETE',
+  };
+
+  const actions = {
+    PROCEED: 'PROCEED',
+    CANCEL: 'CANCEL',
+  };
 
   const fetchData = async () => {
     const wordsData = await axios.get(`/api/profile/${userId}`);
@@ -71,9 +81,15 @@ const Profile = ({ history, userId, firstName, username, logOutUser }) => {
 
   //--- profile administration actions
 
+  const clearState = () => {
+    setView(null);
+    setIsAdminView(false);
+  }
+
   const resetProfile = async () => {
     // console.log('accessed reset');
     await axios.post(`/api/profile/${userId}`);
+    clearState();
     window.location.reload();
   }
 
@@ -81,43 +97,31 @@ const Profile = ({ history, userId, firstName, username, logOutUser }) => {
     // console.log('accessed delete');
     await axios.delete(`/api/profile/${userId}`);
     await axios.post('/auth/logout');
+    clearState();
     history.push('/');
     logOutUser();
   }
 
-  const handleAdminRequest = (mode) => {
-    if((!isAdminView || adminMode !== 0) && mode !== null) {
-      switch (mode) {
-        case 1:
-          setIsAdminView(true);
-          setAdminMode(1);
-          break;
-        case 2:
-          setIsAdminView(true);
-          setAdminMode(2);
-          break;
-        default:
-          setIsAdminView(false);
-          setAdminMode(0);
-          break;
+  const handleIsAdminView = (newView) => {
+    setView(newView);
+
+    const { RESET, DELETE } = views;
+    const isView = newView === RESET || newView === DELETE;
+    setIsAdminView(isView);
+  }
+
+  const handleAdminAction = (action) => {
+    const { RESET, DELETE } = views;
+    const { PROCEED, CANCEL } = actions;
+
+    switch (action) {
+      case PROCEED: {
+        if (view === RESET) resetProfile();
+        if (view === DELETE) deleteProfile();
+        break;
       }
-    } else if (isAdminView && adminMode !== 0 && mode === null) {
-      switch (adminMode) {
-        case 1:
-          setIsAdminView(false);
-          setAdminMode(0);
-          resetProfile();
-          break;
-        case 2:
-          setIsAdminView(false);
-          setAdminMode(0);
-          deleteProfile();
-          break;
-        default:
-          setIsAdminView(false);
-          setAdminMode(0);
-          break;
-      }
+      case CANCEL: clearState(null); break;
+      default: break;
     }
   }
 
@@ -191,7 +195,7 @@ const Profile = ({ history, userId, firstName, username, logOutUser }) => {
         <div>
           <button
             className="profile-btn administration"
-            onClick={() => handleAdminRequest(1)}
+            onClick={() => handleIsAdminView(views.RESET)}
           >
             Reset<br/>Profile
           </button>
@@ -199,7 +203,7 @@ const Profile = ({ history, userId, firstName, username, logOutUser }) => {
             && (
               <button
                 className="profile-btn administration"
-                onClick={() => handleAdminRequest(2)}
+                onClick={() => handleIsAdminView(views.DELETE)}
               >
                 Delete User<br/>Account
               </button>
@@ -211,19 +215,19 @@ const Profile = ({ history, userId, firstName, username, logOutUser }) => {
             <div>
               <p>
                 Okay to proceed? <span className="warning">WARNING: </span>
-                {adminMode === 1 ? 'reset' : 'delete'} action is
+                {view === views.RESET ? 'reset' : 'delete'} action is
                 <span className="warning"> NOT</span> reversible!
               </p>
               <div>
                 <button
                   className="profile-btn admin-affirm"
-                  onClick={() => handleAdminRequest(null)}
+                  onClick={() => handleAdminAction(actions.PROCEED)}
                 >
                   Proceed
                 </button>
                 <button
                   className="profile-btn admin-negate"
-                  onClick={() => handleAdminRequest(0)}
+                  onClick={() => handleAdminAction(actions.CANCEL)}
                 >
                   Cancel Action
                 </button>
