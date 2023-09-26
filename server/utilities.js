@@ -1,4 +1,4 @@
-const { DB } = require("./constants");
+const { DB } = require('./constants');
 
 /**
   * Helper function to extract database mappers via [MassiveJS](https://massivejs.org/)
