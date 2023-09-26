@@ -48,7 +48,7 @@ const getMockRes = () => ({
   status: jest.fn().mockReturnThis(),
   send: jest.fn().mockReturnThis(),
   sendStatus: jest.fn().mockReturnThis(),
-})
+});
 
 module.exports = {
   mockDB,
