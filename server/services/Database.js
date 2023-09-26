@@ -1,5 +1,6 @@
 require('dotenv').config();
 const massive = require('massive');
+const { DB } = require('../constants');
 
 const { CONNECTION_STRING } = process.env;
 
@@ -19,7 +20,7 @@ class Database {
     try {
       const { config, app } = this;
       const db = await massive(config);
-      app.set('db', db);
+      app.set(DB, db);
     } catch (err) {
       console.error('Error connecting to the database:', err);
     }
