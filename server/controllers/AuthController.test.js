@@ -1,6 +1,17 @@
 const bcrypt = require('bcryptjs');
 const AuthController = require('./AuthController');
 
+const {
+  httpStatusCodes: {
+    OK,
+    CREATED,
+    ACCEPTED,
+    BAD_REQUEST,
+    UNAUTHORIZED,
+    NOT_FOUND,
+  },
+} = require('../constants');
+
 // Mock users data
 const mockUsersData = {
   check_user: jest.fn(),
@@ -55,7 +66,7 @@ describe('AuthController', () => {
 
       // Assert
       expect(mockUsersData.check_user).toHaveBeenCalledWith({ username: newUser.username });
-      expect(mockRes.status).toHaveBeenCalledWith(201);
+      expect(mockRes.status).toHaveBeenCalledWith(CREATED);
       expect(mockRes.send).toHaveBeenCalledWith(newUser);
       expect(mockReq.session.user).toEqual(newUser);
     });
@@ -77,7 +88,7 @@ describe('AuthController', () => {
 
       // Assert
       expect(mockUsersData.check_user).toHaveBeenCalledWith({ username: foundUser.username });
-      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.status).toHaveBeenCalledWith(BAD_REQUEST);
       expect(mockRes.send).toHaveBeenCalledWith('Username already in use');
       expect(mockReq.session.user).toBeUndefined();
     });
@@ -101,7 +112,7 @@ describe('AuthController', () => {
       // Assert
       expect(mockUsersData.check_user).toHaveBeenCalledWith({ username: foundUser.username });
       expect(bcrypt.compareSync).toHaveBeenCalledWith('password', 'hashedPassword');
-      expect(mockRes.status).toHaveBeenCalledWith(202);
+      expect(mockRes.status).toHaveBeenCalledWith(ACCEPTED);
       expect(mockRes.send).toHaveBeenCalledWith(foundUser);
       expect(mockReq.session.user).toEqual(foundUser);
     });
@@ -121,7 +132,7 @@ describe('AuthController', () => {
 
       // Assert
       expect(mockUsersData.check_user).toHaveBeenCalledWith({ username });
-      expect(mockRes.status).toHaveBeenCalledWith(400);
+      expect(mockRes.status).toHaveBeenCalledWith(BAD_REQUEST);
       expect(mockRes.send).toHaveBeenCalledWith('Username not found');
       expect(mockReq.session.user).toBeUndefined();
     });
@@ -144,7 +155,7 @@ describe('AuthController', () => {
       // Assert
       expect(mockUsersData.check_user).toHaveBeenCalledWith({ username });
       expect(bcrypt.compareSync).toHaveBeenCalledWith(password, foundUser.password);
-      expect(mockRes.status).toHaveBeenCalledWith(401);
+      expect(mockRes.status).toHaveBeenCalledWith(UNAUTHORIZED);
       expect(mockRes.send).toHaveBeenCalledWith('Password is incorrect');
       expect(mockReq.session.user).toBeUndefined();
     });
@@ -161,7 +172,7 @@ describe('AuthController', () => {
 
       // Assert
       expect(mockUsersData.check_user).toHaveBeenCalledWith({ username: 'guest' });
-      expect(mockRes.status).toHaveBeenCalledWith(202);
+      expect(mockRes.status).toHaveBeenCalledWith(ACCEPTED);
       expect(mockRes.send).toHaveBeenCalledWith(guestUser);
       expect(mockReq.session.user).toEqual(guestUser);
     });
@@ -177,11 +188,11 @@ describe('AuthController', () => {
       authController.getSession(mockReq, mockRes);
 
       // Assert
-      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.status).toHaveBeenCalledWith(OK);
       expect(mockRes.send).toHaveBeenCalledWith(sessionUser);
     });
 
-    it('should return 404 if the session user does not exist', () => {
+    it('should return NOT_FOUND if the session user does not exist', () => {
       // Arrange
       mockReq.session.user = undefined;
 
@@ -189,18 +200,18 @@ describe('AuthController', () => {
       authController.getSession(mockReq, mockRes);
 
       // Assert
-      expect(mockRes.sendStatus).toHaveBeenCalledWith(404);
+      expect(mockRes.sendStatus).toHaveBeenCalledWith(NOT_FOUND);
     });
   });
 
   describe('logout', () => {
-    it('should destroy the session and return 200', () => {
+    it('should destroy the session and return OK', () => {
       // Act
       authController.logout(mockReq, mockRes);
 
       // Assert
       expect(mockReq.session.destroy).toHaveBeenCalled();
-      expect(mockRes.sendStatus).toHaveBeenCalledWith(200);
+      expect(mockRes.sendStatus).toHaveBeenCalledWith(OK);
     });
   });
 });

@@ -1,5 +1,11 @@
 const ProfileController = require('./ProfileController');
 
+const {
+  httpStatusCodes: {
+    OK,
+  },
+} = require('../constants');
+
 // Mock profile data
 const mockProfileData = {
   delete_user_profile: jest.fn(),
@@ -45,13 +51,13 @@ describe('ProfileController', () => {
 
       // Assert
       expect(mockProfileData.get_user_profile).toHaveBeenCalledWith({ userId });
-      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.status).toHaveBeenCalledWith(OK);
       expect(mockRes.send).toHaveBeenCalledWith(userProfile);
     });
   });
 
   describe('resetUserProfile', () => {
-    it('should reset the user profile and return 200', async () => {
+    it('should reset the user profile and return OK', async () => {
       // Arrange
       const userId = 1;
       mockReq.params.userId = userId;
@@ -61,12 +67,12 @@ describe('ProfileController', () => {
 
       // Assert
       expect(mockProfileData.reset_user_profile).toHaveBeenCalledWith({ userId });
-      expect(mockRes.sendStatus).toHaveBeenCalledWith(200);
+      expect(mockRes.sendStatus).toHaveBeenCalledWith(OK);
     });
   });
 
   describe('deleteUserProfile', () => {
-    it('should delete the user profile and return 200', async () => {
+    it('should delete the user profile and return OK', async () => {
       // Arrange
       const userId = 1;
       mockReq.params.userId = userId;
@@ -76,7 +82,7 @@ describe('ProfileController', () => {
 
       // Assert
       expect(mockProfileData.delete_user_profile).toHaveBeenCalledWith({ userId });
-      expect(mockRes.sendStatus).toHaveBeenCalledWith(200);
+      expect(mockRes.sendStatus).toHaveBeenCalledWith(OK);
     });
   });
 });

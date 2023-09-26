@@ -1,5 +1,11 @@
 const VocabController = require('./VocabController');
 
+const {
+  httpStatusCodes: {
+    OK,
+  },
+} = require('../constants');
+
 // Mock vocab data
 const mockVocabData = {
   add_new_word: jest.fn(),
@@ -51,7 +57,7 @@ describe('VocabController', () => {
       // Assert
       expect(mockVocabData.get_user_encounters).toHaveBeenCalledWith({ userId });
       expect(mockVocabData.get_user_word).toHaveBeenCalledWith({ userId, encountersCount });
-      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.status).toHaveBeenCalledWith(OK);
       expect(mockRes.send).toHaveBeenCalledWith(wordData);
     });
   });
@@ -85,7 +91,7 @@ describe('VocabController', () => {
         familiarityScore: familiarityScore + 1,
         encounters: encounters + 1,
       });
-      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.status).toHaveBeenCalledWith(OK);
       expect(mockRes.send).toHaveBeenCalledWith(updatedWord);
     });
 
@@ -117,7 +123,7 @@ describe('VocabController', () => {
         familiarityScore: familiarityScore + 1,
         encounters: encounters + 1,
       });
-      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.status).toHaveBeenCalledWith(OK);
       expect(mockRes.send).toHaveBeenCalledWith(updatedWord);
     });
 
@@ -149,7 +155,7 @@ describe('VocabController', () => {
         familiarityScore: 0,
         encounters: encounters + 1,
       });
-      expect(mockRes.status).toHaveBeenCalledWith(200);
+      expect(mockRes.status).toHaveBeenCalledWith(OK);
       expect(mockRes.send).toHaveBeenCalledWith(updatedWord);
     });
   });

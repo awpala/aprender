@@ -4,6 +4,7 @@ const {
   httpStatusCodes: {
     OK,
     CREATED,
+    ACCEPTED,
     BAD_REQUEST,
     UNAUTHORIZED,
     NOT_FOUND,
