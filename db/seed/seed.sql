@@ -33,3 +33,7 @@ CREATE TABLE profile (
 	PRIMARY KEY(user_id, frequency_id) -- composite primary key
 );
 
+-- indexes
+CREATE INDEX idx_word_part_of_speech ON word(part_of_speech_id);
+CREATE INDEX idx_profile_users ON profile(user_id);
+CREATE INDEX idx_profile_word ON profile(frequency_id);
