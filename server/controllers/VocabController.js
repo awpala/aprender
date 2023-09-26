@@ -1,48 +1,18 @@
 const {
-  DB,
   httpStatusCodes: {
     OK,
   },
 } = require('../constants');
+
+const { getMappers } = require('../utilities');
 
 /**
  * Controller for entity `vocab`
  */
 class VocabController {
   constructor() {
-    // auxiliary function
-    this.getVocabData = this.getVocabData.bind(this);
-
-    // controller functions
     this.getUserWord = this.getUserWord.bind(this);
     this.updateWord = this.updateWord.bind(this);
-  }
-
-  /**
-   * Helper function to extract database mappers for entity `vocab`
-   * @param {*} req Express request object
-   * @returns Database mappers for entity `vocab`
-   */
-  getVocabData(req) {
-    const {
-      add_new_word: addNewWord,
-      check_profile: checkProfile,
-      get_user_encounters: getUserEncounters,
-      get_user_word_data: getUserWordData,
-      get_user_word: getUserWord,
-      update_word: updateWord,
-    } = req.app.get(DB).vocab;
-
-    const db = {
-      addNewWord,
-      checkProfile,
-      getUserEncounters,
-      getUserWordData,
-      getUserWord,
-      updateWord,
-    };
-
-    return db;
   }
 
   /**
@@ -57,7 +27,7 @@ class VocabController {
     const {
       getUserEncounters,
       getUserWord,
-    } = this.getVocabData(req);
+    } = getMappers(req).vocab;
 
     const [
       { encounters_count: encountersCount }
@@ -86,7 +56,7 @@ class VocabController {
       getUserWordData,
       addNewWord,
       updateWord,
-    } = this.getVocabData(req);
+    } = getMappers(req).vocab;
 
     const [{ count }] = await checkProfile({ userId, freqId });
     const isEncounteredWord = +count > 0;

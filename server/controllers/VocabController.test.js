@@ -6,29 +6,16 @@ const {
   },
 } = require('../constants');
 
-// Mock vocab data
-const mockVocabData = {
-  add_new_word: jest.fn(),
-  check_profile: jest.fn(),
-  get_user_encounters: jest.fn(),
-  get_user_word_data: jest.fn(),
-  get_user_word: jest.fn(),
-  update_word: jest.fn(),
-};
+const {
+  mockDB: { vocab },
+  getMockReq,
+  getMockRes,
+} = require('../testUtilities');
 
-// Mock Express request and response objects
-const mockReq = {
-  app: {
-    get: jest.fn().mockReturnValue({ vocab: mockVocabData }),
-  },
-  params: {},
-  body: {},
-};
-
-const mockRes = {
-  status: jest.fn().mockReturnThis(),
-  send: jest.fn().mockReturnThis(),
-};
+// Mocks
+const mockVocabDB = vocab;
+const mockReq = getMockReq();
+const mockRes = getMockRes();
 
 describe('VocabController', () => {
   let vocabController;
@@ -48,15 +35,15 @@ describe('VocabController', () => {
       const encountersCount = 5;
       const wordData = { id: 1, word: 'example', translation: 'example translation' };
       mockReq.params.userId = userId;
-      mockVocabData.get_user_encounters.mockResolvedValueOnce([{ encounters_count: encountersCount }]);
-      mockVocabData.get_user_word.mockResolvedValueOnce([wordData]);
+      mockVocabDB.get_user_encounters.mockResolvedValueOnce([{ encounters_count: encountersCount }]);
+      mockVocabDB.get_user_word.mockResolvedValueOnce([wordData]);
 
       // Act
       await vocabController.getUserWord(mockReq, mockRes);
 
       // Assert
-      expect(mockVocabData.get_user_encounters).toHaveBeenCalledWith({ userId });
-      expect(mockVocabData.get_user_word).toHaveBeenCalledWith({ userId, encountersCount });
+      expect(mockVocabDB.get_user_encounters).toHaveBeenCalledWith({ userId });
+      expect(mockVocabDB.get_user_word).toHaveBeenCalledWith({ userId, encountersCount });
       expect(mockRes.status).toHaveBeenCalledWith(OK);
       expect(mockRes.send).toHaveBeenCalledWith(wordData);
     });
@@ -74,17 +61,17 @@ describe('VocabController', () => {
       const updatedWord = { id: 1, word: 'example', translation: 'example translation' };
       mockReq.params.userId = userId;
       mockReq.body = { freqId, isCorrect };
-      mockVocabData.check_profile.mockResolvedValueOnce([{ count }]);
-      mockVocabData.add_new_word.mockResolvedValueOnce([{ familiarity_score: familiarityScore, encounters }]);
-      mockVocabData.update_word.mockResolvedValueOnce([updatedWord]);
+      mockVocabDB.check_profile.mockResolvedValueOnce([{ count }]);
+      mockVocabDB.add_new_word.mockResolvedValueOnce([{ familiarity_score: familiarityScore, encounters }]);
+      mockVocabDB.update_word.mockResolvedValueOnce([updatedWord]);
 
       // Act
       await vocabController.updateWord(mockReq, mockRes);
 
       // Assert
-      expect(mockVocabData.check_profile).toHaveBeenCalledWith({ userId, freqId });
-      expect(mockVocabData.add_new_word).toHaveBeenCalledWith({ userId, freqId });
-      expect(mockVocabData.update_word).toHaveBeenCalledWith({
+      expect(mockVocabDB.check_profile).toHaveBeenCalledWith({ userId, freqId });
+      expect(mockVocabDB.add_new_word).toHaveBeenCalledWith({ userId, freqId });
+      expect(mockVocabDB.update_word).toHaveBeenCalledWith({
         userId,
         freqId,
         isFamiliar: isCorrect,
@@ -106,17 +93,17 @@ describe('VocabController', () => {
       const updatedWord = { id: 1, word: 'example', translation: 'example translation' };
       mockReq.params.userId = userId;
       mockReq.body = { freqId, isCorrect };
-      mockVocabData.check_profile.mockResolvedValueOnce([{ count }]);
-      mockVocabData.get_user_word_data.mockResolvedValueOnce([{ familiarity_score: familiarityScore, encounters }]);
-      mockVocabData.update_word.mockResolvedValueOnce([updatedWord]);
+      mockVocabDB.check_profile.mockResolvedValueOnce([{ count }]);
+      mockVocabDB.get_user_word_data.mockResolvedValueOnce([{ familiarity_score: familiarityScore, encounters }]);
+      mockVocabDB.update_word.mockResolvedValueOnce([updatedWord]);
 
       // Act
       await vocabController.updateWord(mockReq, mockRes);
 
       // Assert
-      expect(mockVocabData.check_profile).toHaveBeenCalledWith({ userId, freqId });
-      expect(mockVocabData.get_user_word_data).toHaveBeenCalledWith({ userId, freqId });
-      expect(mockVocabData.update_word).toHaveBeenCalledWith({
+      expect(mockVocabDB.check_profile).toHaveBeenCalledWith({ userId, freqId });
+      expect(mockVocabDB.get_user_word_data).toHaveBeenCalledWith({ userId, freqId });
+      expect(mockVocabDB.update_word).toHaveBeenCalledWith({
         userId,
         freqId,
         isFamiliar: isCorrect,
@@ -138,17 +125,17 @@ describe('VocabController', () => {
       const updatedWord = { id: 1, word: 'example', translation: 'example translation' };
       mockReq.params.userId = userId;
       mockReq.body = { freqId, isCorrect };
-      mockVocabData.check_profile.mockResolvedValueOnce([{ count }]);
-      mockVocabData.get_user_word_data.mockResolvedValueOnce([{ familiarity_score: familiarityScore, encounters }]);
-      mockVocabData.update_word.mockResolvedValueOnce([updatedWord]);
+      mockVocabDB.check_profile.mockResolvedValueOnce([{ count }]);
+      mockVocabDB.get_user_word_data.mockResolvedValueOnce([{ familiarity_score: familiarityScore, encounters }]);
+      mockVocabDB.update_word.mockResolvedValueOnce([updatedWord]);
 
       // Act
       await vocabController.updateWord(mockReq, mockRes);
 
       // Assert
-      expect(mockVocabData.check_profile).toHaveBeenCalledWith({ userId, freqId });
-      expect(mockVocabData.get_user_word_data).toHaveBeenCalledWith({ userId, freqId });
-      expect(mockVocabData.update_word).toHaveBeenCalledWith({
+      expect(mockVocabDB.check_profile).toHaveBeenCalledWith({ userId, freqId });
+      expect(mockVocabDB.get_user_word_data).toHaveBeenCalledWith({ userId, freqId });
+      expect(mockVocabDB.update_word).toHaveBeenCalledWith({
         userId,
         freqId,
         isFamiliar: isCorrect,

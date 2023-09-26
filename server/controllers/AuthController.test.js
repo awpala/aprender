@@ -12,28 +12,16 @@ const {
   },
 } = require('../constants');
 
-// Mock users data
-const mockUsersData = {
-  check_user: jest.fn(),
-  register_user: jest.fn(),
-};
+const {
+  mockDB: { users },
+  getMockReq,
+  getMockRes,
+} = require('../testUtilities');
 
-// Mock Express request and response objects
-const mockReq = {
-  app: {
-    get: jest.fn().mockReturnValue({ users: mockUsersData }),
-  },
-  body: {},
-  session: {
-    destroy: jest.fn(),
-  },
-};
-
-const mockRes = {
-  status: jest.fn().mockReturnThis(),
-  send: jest.fn().mockReturnThis(),
-  sendStatus: jest.fn().mockReturnThis(),
-};
+// Mocks
+const mockUsersDB = users;
+const mockReq = getMockReq();
+const mockRes = getMockRes();
 
 describe('AuthController', () => {
   let authController;
@@ -58,14 +46,14 @@ describe('AuthController', () => {
         username: newUser.username,
         password,
       };
-      mockUsersData.check_user.mockResolvedValueOnce([]);
-      mockUsersData.register_user.mockResolvedValueOnce([newUser]);
+      mockUsersDB.check_user.mockResolvedValueOnce([]);
+      mockUsersDB.register_user.mockResolvedValueOnce([newUser]);
 
       // Act
       await authController.register(mockReq, mockRes);
 
       // Assert
-      expect(mockUsersData.check_user).toHaveBeenCalledWith({ username: newUser.username });
+      expect(mockUsersDB.check_user).toHaveBeenCalledWith({ username: newUser.username });
       expect(mockRes.status).toHaveBeenCalledWith(CREATED);
       expect(mockRes.send).toHaveBeenCalledWith(newUser);
       expect(mockReq.session.user).toEqual(newUser);
@@ -81,13 +69,13 @@ describe('AuthController', () => {
         username: foundUser.username,
         password,
       };
-      mockUsersData.check_user.mockResolvedValueOnce([foundUser]);
+      mockUsersDB.check_user.mockResolvedValueOnce([foundUser]);
 
       // Act
       await authController.register(mockReq, mockRes);
 
       // Assert
-      expect(mockUsersData.check_user).toHaveBeenCalledWith({ username: foundUser.username });
+      expect(mockUsersDB.check_user).toHaveBeenCalledWith({ username: foundUser.username });
       expect(mockRes.status).toHaveBeenCalledWith(BAD_REQUEST);
       expect(mockRes.send).toHaveBeenCalledWith('Username already in use');
       expect(mockReq.session.user).toBeUndefined();
@@ -103,14 +91,14 @@ describe('AuthController', () => {
         username: foundUser.username,
         password,
       };
-      mockUsersData.check_user.mockResolvedValueOnce([foundUser]);
+      mockUsersDB.check_user.mockResolvedValueOnce([foundUser]);
       bcrypt.compareSync = jest.fn().mockReturnValue(true);
 
       // Act
       await authController.login(mockReq, mockRes);
 
       // Assert
-      expect(mockUsersData.check_user).toHaveBeenCalledWith({ username: foundUser.username });
+      expect(mockUsersDB.check_user).toHaveBeenCalledWith({ username: foundUser.username });
       expect(bcrypt.compareSync).toHaveBeenCalledWith('password', 'hashedPassword');
       expect(mockRes.status).toHaveBeenCalledWith(ACCEPTED);
       expect(mockRes.send).toHaveBeenCalledWith(foundUser);
@@ -125,13 +113,13 @@ describe('AuthController', () => {
         username,
         password,
       };
-      mockUsersData.check_user.mockResolvedValueOnce([]);
+      mockUsersDB.check_user.mockResolvedValueOnce([]);
 
       // Act
       await authController.login(mockReq, mockRes);
 
       // Assert
-      expect(mockUsersData.check_user).toHaveBeenCalledWith({ username });
+      expect(mockUsersDB.check_user).toHaveBeenCalledWith({ username });
       expect(mockRes.status).toHaveBeenCalledWith(BAD_REQUEST);
       expect(mockRes.send).toHaveBeenCalledWith('Username not found');
       expect(mockReq.session.user).toBeUndefined();
@@ -146,14 +134,14 @@ describe('AuthController', () => {
         username,
         password,
       };
-      mockUsersData.check_user.mockResolvedValueOnce([foundUser]);
+      mockUsersDB.check_user.mockResolvedValueOnce([foundUser]);
       bcrypt.compareSync = jest.fn().mockReturnValue(false);
 
       // Act
       await authController.login(mockReq, mockRes);
 
       // Assert
-      expect(mockUsersData.check_user).toHaveBeenCalledWith({ username });
+      expect(mockUsersDB.check_user).toHaveBeenCalledWith({ username });
       expect(bcrypt.compareSync).toHaveBeenCalledWith(password, foundUser.password);
       expect(mockRes.status).toHaveBeenCalledWith(UNAUTHORIZED);
       expect(mockRes.send).toHaveBeenCalledWith('Password is incorrect');
@@ -165,13 +153,13 @@ describe('AuthController', () => {
     it('should log in as a guest user and set the session', async () => {
       // Arrange
       const guestUser = { id: 1, firstName: 'Guest', lastName: 'User', username: 'guest', password: 'hashedPassword' };
-      mockUsersData.check_user.mockResolvedValueOnce([guestUser]);
+      mockUsersDB.check_user.mockResolvedValueOnce([guestUser]);
 
       // Act
       await authController.loginGuest(mockReq, mockRes);
 
       // Assert
-      expect(mockUsersData.check_user).toHaveBeenCalledWith({ username: 'guest' });
+      expect(mockUsersDB.check_user).toHaveBeenCalledWith({ username: 'guest' });
       expect(mockRes.status).toHaveBeenCalledWith(ACCEPTED);
       expect(mockRes.send).toHaveBeenCalledWith(guestUser);
       expect(mockReq.session.user).toEqual(guestUser);

@@ -5,39 +5,16 @@ const {
   },
 } = require('../constants');
 
+const { getMappers } = require('../utilities');
+
 /**
  * Controller for entity `profile`
  */
 class ProfileController {
   constructor() {
-    // auxiliary function
-    this.getProfileData = this.getProfileData.bind(this);
-
-    // controller functions
     this.getUserProfile = this.getUserProfile.bind(this);
     this.resetUserProfile = this.resetUserProfile.bind(this);
     this.deleteUserProfile = this.deleteUserProfile.bind(this);
-  }
-
-  /**
-   * Helper function to extract database mappers for entity `profile`
-   * @param {*} req Express request object
-   * @returns Database mappers for entity `profile`
-   */
-  getProfileData(req) {
-    const {
-      delete_user_profile: deleteUserProfile,
-      get_user_profile: getUserProfile,
-      reset_user_profile: resetUserProfile,
-    } = req.app.get(DB).profile; 
-
-    const db = {
-      deleteUserProfile,
-      getUserProfile,
-      resetUserProfile,
-    };
-
-    return db;
   }
 
   /**
@@ -48,7 +25,7 @@ class ProfileController {
    */
   async getUserProfile(req, res) {
     const userId = +req.params.userId;
-    const { getUserProfile } = this.getProfileData(req);
+    const { getUserProfile } = getMappers(req).profile;
     const userProfile = await getUserProfile({ userId });
     res.status(OK).send(userProfile);
   }
@@ -61,7 +38,7 @@ class ProfileController {
    */
   async resetUserProfile(req, res) {
     const userId = +req.params.userId;
-    const { resetUserProfile } = this.getProfileData(req);
+    const { resetUserProfile } = getMappers(req).profile;
     await resetUserProfile({ userId });
     res.sendStatus(OK);
   }
@@ -74,7 +51,7 @@ class ProfileController {
    */
   async deleteUserProfile(req, res) {
     const userId = +req.params.userId;
-    const { deleteUserProfile } = this.getProfileData(req);
+    const { deleteUserProfile } = getMappers(req).profile;
     await deleteUserProfile({ userId });
     res.sendStatus(OK);
   }

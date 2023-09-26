@@ -11,39 +11,18 @@ const {
   },
 } = require('../constants');
 
+const { getMappers } = require('../utilities');
+
 /**
  * Controller for entity `users`
  */
 class AuthController {
   constructor() {
-    // auxiliary function
-    this.getUsersData = this.getUsersData.bind(this);
-
-    // controller functions
     this.register = this.register.bind(this);
     this.login = this.login.bind(this);
     this.loginGuest = this.loginGuest.bind(this);
     this.getSession = this.getSession.bind(this);
     this.logout = this.logout.bind(this);
-  }
-
-  /**
-   * Helper function to extract database mappers for entity `users`
-   * @param {*} req Express request object
-   * @returns Database mappers for entity `users`
-   */
-  getUsersData(req) {
-    const {
-      check_user: checkUser,
-      register_user: registerUser,
-    } = req.app.get(DB).users;
-
-    const db = {
-      checkUser,
-      registerUser,
-    };
-
-    return db;
   }
 
   /**
@@ -61,7 +40,7 @@ class AuthController {
       password,
     } = req.body;
 
-    const { checkUser, registerUser } = this.getUsersData(req);
+    const { checkUser, registerUser } = getMappers(req).users;
 
     const [foundUser] = await checkUser({ username });
     if (foundUser) {
@@ -89,7 +68,7 @@ class AuthController {
    */
   async login(req, res) {
     const { username, password } = req.body;
-    const { checkUser } = this.getUsersData(req);
+    const { checkUser } = getMappers(req).users;
     const [foundUser] = await checkUser({ username });
     if (!foundUser) {
       return res.status(BAD_REQUEST).send('Username not found');
@@ -112,7 +91,7 @@ class AuthController {
    * @returns HTTP status code and message
    */
   async loginGuest(req, res) {
-    const { checkUser } = this.getUsersData(req);
+    const { checkUser } = getMappers(req).users;
     const [guestUser] = await checkUser({ username: 'guest' });
     delete guestUser.password;
     req.session.user = guestUser;

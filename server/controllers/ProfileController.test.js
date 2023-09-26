@@ -6,26 +6,17 @@ const {
   },
 } = require('../constants');
 
-// Mock profile data
-const mockProfileData = {
-  delete_user_profile: jest.fn(),
-  get_user_profile: jest.fn(),
-  reset_user_profile: jest.fn(),
-};
+const {
+  mockDB: { profile },
+  getMockReq,
+  getMockRes,
+} = require('../testUtilities');
 
-// Mock Express request and response objects
-const mockReq = {
-  app: {
-    get: jest.fn().mockReturnValue({ profile: mockProfileData }),
-  },
-  params: {},
-};
 
-const mockRes = {
-  status: jest.fn().mockReturnThis(),
-  send: jest.fn().mockReturnThis(),
-  sendStatus: jest.fn().mockReturnThis(),
-};
+// Mocks
+const mockProfileDB = profile;
+const mockReq = getMockReq();
+const mockRes = getMockRes();
 
 describe('ProfileController', () => {
   let profileController;
@@ -44,13 +35,13 @@ describe('ProfileController', () => {
       const userId = 1;
       const userProfile = { id: 1, name: 'John Doe', email: 'john@example.com' };
       mockReq.params.userId = userId;
-      mockProfileData.get_user_profile.mockResolvedValueOnce(userProfile);
+      mockProfileDB.get_user_profile.mockResolvedValueOnce(userProfile);
 
       // Act
       await profileController.getUserProfile(mockReq, mockRes);
 
       // Assert
-      expect(mockProfileData.get_user_profile).toHaveBeenCalledWith({ userId });
+      expect(mockProfileDB.get_user_profile).toHaveBeenCalledWith({ userId });
       expect(mockRes.status).toHaveBeenCalledWith(OK);
       expect(mockRes.send).toHaveBeenCalledWith(userProfile);
     });
@@ -66,7 +57,7 @@ describe('ProfileController', () => {
       await profileController.resetUserProfile(mockReq, mockRes);
 
       // Assert
-      expect(mockProfileData.reset_user_profile).toHaveBeenCalledWith({ userId });
+      expect(mockProfileDB.reset_user_profile).toHaveBeenCalledWith({ userId });
       expect(mockRes.sendStatus).toHaveBeenCalledWith(OK);
     });
   });
@@ -81,7 +72,7 @@ describe('ProfileController', () => {
       await profileController.deleteUserProfile(mockReq, mockRes);
 
       // Assert
-      expect(mockProfileData.delete_user_profile).toHaveBeenCalledWith({ userId });
+      expect(mockProfileDB.delete_user_profile).toHaveBeenCalledWith({ userId });
       expect(mockRes.sendStatus).toHaveBeenCalledWith(OK);
     });
   });
