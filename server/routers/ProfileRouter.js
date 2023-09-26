@@ -4,6 +4,9 @@ const {
   urlParams: { userId },
 } = require('../constants');
 
+/**
+ * Router for entity `profile`
+ */
 class ProfileRouter {
   constructor(app) {
     this.app = app;
@@ -11,6 +14,9 @@ class ProfileRouter {
     this.configure = this.configure.bind(this);
   }
 
+  /**
+   * Configure routes for entity `profile`
+   */
   configure() {
     const { app } = this;
 

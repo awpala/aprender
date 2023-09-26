@@ -4,6 +4,9 @@ const { DB } = require('../constants');
 
 const { CONNECTION_STRING } = process.env;
 
+/**
+ * `Database` service
+ */
 class Database {
   constructor(app) {
     this.config = {
@@ -16,6 +19,9 @@ class Database {
     this.connect = this.connect.bind(this);
   }
 
+  /**
+   * Connect to the postgres database via data mapper MassiveJS
+   */
   async connect() {
     try {
       const { config, app } = this;

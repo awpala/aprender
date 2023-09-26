@@ -4,6 +4,9 @@ const {
   ProfileRouter,
 } = require('../routers');
 
+/**
+ * `Router` service
+ */
 class Router {
   constructor(app) {
     this.app = app;
@@ -11,6 +14,9 @@ class Router {
     this.configure = this.configure.bind(this);
   }
 
+  /**
+   * Configure routers for all routes
+   */
   configure() {
     const { app } = this;
 

@@ -4,6 +4,9 @@ const {
   urlParams: { userId },
 } = require('../constants');
 
+/**
+ * Router for entity `vocab`
+ */
 class VocabRouter {
   constructor(app) {
     this.app = app;
@@ -11,6 +14,9 @@ class VocabRouter {
     this.configure = this.configure.bind(this);
   }
 
+  /**
+   * Configure routes for entity `vocab`
+   */
   configure() {
     const { app } = this;
 

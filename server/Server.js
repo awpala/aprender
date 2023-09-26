@@ -12,6 +12,9 @@ const {
   Router,
 } = require('./services');
 
+/**
+ * The Express server app
+ */
 class Server {
   constructor() {
     this.app = express();
@@ -33,6 +36,9 @@ class Server {
     this.configureRoutes = this.configureRoutes.bind(this);
   }
 
+  /**
+   * Configure middleware, launch services, and then launch the Express server app
+   */
   async start() {
     try {
       const { configureTopLevelMiddleware, configureRoutes, app } = this;
@@ -44,6 +50,9 @@ class Server {
     }
   }
 
+  /**
+   * Configure top-level middleware via corresponding services
+   */
   async configureTopLevelMiddleware() {
     try {
       const {
@@ -59,15 +68,24 @@ class Server {
     }
   }
 
+  /**
+   * Configure serving of static build files generated via client app
+   */
   configureStaticFiles() {
     // build configuration (client redirect)
     this.app.use(express.static(`${__dirname}/${BUILD_DIR}`));
   }
 
+  /**
+   * Configure session via service `Session`
+   */
   configureSession() {
     this.session.configure();
   }
 
+  /**
+   * Connect to postgres database via service `Database`
+   */
   async connectToDatabase() {
     try {
       await this.db.connect();
@@ -77,6 +95,10 @@ class Server {
     }
   }
 
+  /**
+   * Configure route-level middleware, including serving static files
+   * of the client app via wildcard route `'*'`
+   */
   configureRoutes() {
     const { router, app } = this;
 

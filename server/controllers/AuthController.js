@@ -1,6 +1,9 @@
 const bcrypt = require('bcryptjs');
 const { DB } = require('../constants');
 
+/**
+ * Controller for entity `users`
+ */
 class AuthController {
   constructor() {
     // auxiliary function
@@ -14,6 +17,11 @@ class AuthController {
     this.logout = this.logout.bind(this);
   }
 
+  /**
+   * Helper function to extract database mappers for entity `users`
+   * @param {*} req Express request object
+   * @returns Database mappers for entity `users`
+   */
   getUsersData(req) {
     const {
       check_user: checkUser,
@@ -28,6 +36,13 @@ class AuthController {
     return db;
   }
 
+  /**
+   * Register a new user, including hashing the user-provided
+   * password
+   * @param {*} req Express request object
+   * @param {*} res Express response object
+   * @returns HTTP status code and message
+   */
   async register(req, res) {
     const {
       firstName,
@@ -56,6 +71,12 @@ class AuthController {
     res.status(201).send(req.session.user);
   }
 
+  /**
+   * Log in with an existing user
+   * @param {*} req Express request object
+   * @param {*} res Express response object
+   * @returns HTTP status code and message
+   */
   async login(req, res) {
     const { username, password } = req.body;
     const { checkUser } = this.getUsersData(req);
@@ -74,6 +95,12 @@ class AuthController {
     res.status(202).send(req.session.user);
   }
 
+  /**
+   * Log in as user `guest`
+   * @param {*} req Express request object
+   * @param {*} res Express response object
+   * @returns HTTP status code and message
+   */
   async loginGuest(req, res) {
     const { checkUser } = this.getUsersData(req);
     const [guestUser] = await checkUser({ username: 'guest' });
@@ -82,12 +109,24 @@ class AuthController {
     res.status(202).send(req.session.user);
   }
 
+  /**
+   * Get active session via service `Session`
+   * @param {*} req Express request object
+   * @param {*} res Express response object
+   * @returns HTTP status code
+   */
   getSession(req, res) {
     req.session.user
       ? res.status(200).send(req.session.user)
       : res.sendStatus(404);
   }
 
+  /**
+   * Destroy active session and log out user
+   * @param {*} req Express request object
+   * @param {*} res Express response object
+   * @returns HTTP status code
+   */
   logout(req, res) {
     req.session.destroy();
     res.sendStatus(200);

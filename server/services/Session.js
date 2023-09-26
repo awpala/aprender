@@ -3,6 +3,9 @@ const session = require('express-session');
 
 const { SESSION_SECRET } = process.env;
 
+/**
+ * `Session` service
+ */
 class Session {
   constructor(app) {
     this.config = {
@@ -17,6 +20,9 @@ class Session {
     this.configure = this.configure.bind(this);
   }
 
+  /**
+   * Configure `Session` service as top-level middleware
+   */
   configure() {
     const { app, config } = this;
     app.use(session(config));

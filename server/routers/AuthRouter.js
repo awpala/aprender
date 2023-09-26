@@ -3,6 +3,9 @@ const {
   routes: { AUTH },
 } = require('../constants');
 
+/**
+ * Router for entity `users`
+ */
 class AuthRouter {
   constructor(app) {
     this.app = app;
@@ -10,6 +13,9 @@ class AuthRouter {
     this.configure = this.configure.bind(this);
   }
 
+  /**
+   * Configure routes for entity `users`
+   */
   configure() {
     const { app } = this;
 

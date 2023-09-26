@@ -1,5 +1,8 @@
 const { DB } = require('../constants');
 
+/**
+ * Controller for entity `vocab`
+ */
 class VocabController {
   constructor() {
     // auxiliary function
@@ -10,6 +13,11 @@ class VocabController {
     this.updateWord = this.updateWord.bind(this);
   }
 
+  /**
+   * Helper function to extract database mappers for entity `vocab`
+   * @param {*} req Express request object
+   * @returns Database mappers for entity `vocab`
+   */
   getVocabData(req) {
     const {
       add_new_word: addNewWord,
@@ -32,6 +40,12 @@ class VocabController {
     return db;
   }
 
+  /**
+   * Get entity `word` for user provided via param `:userId`
+   * @param {*} req Express request object
+   * @param {*} res Express response object
+   * @returns HTTP status code and `word` data payload
+   */
   async getUserWord(req, res) {
     const userId = +req.params.userId;
 
@@ -52,6 +66,12 @@ class VocabController {
     res.status(200).send(wordData);
   }
 
+  /**
+   * Update entity `word` for user provided via param `:userId`
+   * @param {*} req Express request object
+   * @param {*} res Express response object
+   * @returns HTTP status code and updated `word` data payload
+   */
   async updateWord(req, res) {
     const userId = +req.params.userId;
 
