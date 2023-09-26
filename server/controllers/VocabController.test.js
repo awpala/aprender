@@ -6,16 +6,12 @@ const {
   },
 } = require('../constants');
 
-const {
-  mockDB: { vocab },
-  getMockReq,
-  getMockRes,
-} = require('../testUtilities');
-
 // Mocks
-const mockVocabDB = vocab;
-const mockReq = getMockReq();
-const mockRes = getMockRes();
+const {
+  mockDB: { vocab: mockVocabDB },
+  mockReq,
+  mockRes,
+} = require('../testUtilities');
 
 describe('VocabController', () => {
   let vocabController;

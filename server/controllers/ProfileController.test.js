@@ -6,17 +6,12 @@ const {
   },
 } = require('../constants');
 
-const {
-  mockDB: { profile },
-  getMockReq,
-  getMockRes,
-} = require('../testUtilities');
-
-
 // Mocks
-const mockProfileDB = profile;
-const mockReq = getMockReq();
-const mockRes = getMockRes();
+const {
+  mockDB: { profile: mockProfileDB },
+  mockReq,
+  mockRes,
+} = require('../testUtilities');
 
 describe('ProfileController', () => {
   let profileController;

@@ -12,16 +12,12 @@ const {
   },
 } = require('../constants');
 
-const {
-  mockDB: { users },
-  getMockReq,
-  getMockRes,
-} = require('../testUtilities');
-
 // Mocks
-const mockUsersDB = users;
-const mockReq = getMockReq();
-const mockRes = getMockRes();
+const {
+  mockDB: { users: mockUsersDB },
+  mockReq,
+  mockRes,
+} = require('../testUtilities');
 
 describe('AuthController', () => {
   let authController;

@@ -52,6 +52,6 @@ const getMockRes = () => ({
 
 module.exports = {
   mockDB,
-  getMockReq,
-  getMockRes,
+  mockReq: getMockReq(),
+  mockRes: getMockRes(),
 };
