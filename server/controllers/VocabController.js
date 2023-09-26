@@ -1,4 +1,9 @@
-const { DB } = require('../constants');
+const {
+  DB,
+  httpStatusCodes: {
+    OK,
+  },
+} = require('../constants');
 
 /**
  * Controller for entity `vocab`
@@ -63,7 +68,7 @@ class VocabController {
       encountersCount: +encountersCount,
     });
 
-    res.status(200).send(wordData);
+    res.status(OK).send(wordData);
   }
 
   /**
@@ -103,7 +108,7 @@ class VocabController {
       encounters,
     });
 
-    res.status(200).send(updatedWord);
+    res.status(OK).send(updatedWord);
   }
 }
 

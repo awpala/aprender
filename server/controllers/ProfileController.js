@@ -1,4 +1,9 @@
-const { DB } = require('../constants');
+const {
+  DB,
+  httpStatusCodes: {
+    OK,
+  },
+} = require('../constants');
 
 /**
  * Controller for entity `profile`
@@ -45,7 +50,7 @@ class ProfileController {
     const userId = +req.params.userId;
     const { getUserProfile } = this.getProfileData(req);
     const userProfile = await getUserProfile({ userId });
-    res.status(200).send(userProfile);
+    res.status(OK).send(userProfile);
   }
 
   /**
@@ -58,7 +63,7 @@ class ProfileController {
     const userId = +req.params.userId;
     const { resetUserProfile } = this.getProfileData(req);
     await resetUserProfile({ userId });
-    res.sendStatus(200);
+    res.sendStatus(OK);
   }
 
   /**
@@ -71,7 +76,7 @@ class ProfileController {
     const userId = +req.params.userId;
     const { deleteUserProfile } = this.getProfileData(req);
     await deleteUserProfile({ userId });
-    res.sendStatus(200);
+    res.sendStatus(OK);
   }
 }
 

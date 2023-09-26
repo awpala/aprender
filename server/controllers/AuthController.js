@@ -1,5 +1,14 @@
 const bcrypt = require('bcryptjs');
-const { DB } = require('../constants');
+const {
+  DB,
+  httpStatusCodes: {
+    OK,
+    CREATED,
+    BAD_REQUEST,
+    UNAUTHORIZED,
+    NOT_FOUND,
+  },
+} = require('../constants');
 
 /**
  * Controller for entity `users`
@@ -55,7 +64,7 @@ class AuthController {
 
     const [foundUser] = await checkUser({ username });
     if (foundUser) {
-      return res.status(400).send('Username already in use');
+      return res.status(BAD_REQUEST).send('Username already in use');
     }
 
     let salt = bcrypt.genSaltSync(10);
@@ -68,7 +77,7 @@ class AuthController {
       hashedPassword,
     });
     req.session.user = newUser;
-    res.status(201).send(req.session.user);
+    res.status(CREATED).send(req.session.user);
   }
 
   /**
@@ -82,17 +91,17 @@ class AuthController {
     const { checkUser } = this.getUsersData(req);
     const [foundUser] = await checkUser({ username });
     if (!foundUser) {
-      return res.status(400).send('Username not found');
+      return res.status(BAD_REQUEST).send('Username not found');
     }
 
     const isAuthenticated = bcrypt.compareSync(password, foundUser.password);
     if (!isAuthenticated) {
-      return res.status(401).send('Password is incorrect');
+      return res.status(UNAUTHORIZED).send('Password is incorrect');
     }
 
     delete foundUser.password;
     req.session.user = foundUser;
-    res.status(202).send(req.session.user);
+    res.status(ACCEPTED).send(req.session.user);
   }
 
   /**
@@ -106,7 +115,7 @@ class AuthController {
     const [guestUser] = await checkUser({ username: 'guest' });
     delete guestUser.password;
     req.session.user = guestUser;
-    res.status(202).send(req.session.user);
+    res.status(ACCEPTED).send(req.session.user);
   }
 
   /**
@@ -117,8 +126,8 @@ class AuthController {
    */
   getSession(req, res) {
     req.session.user
-      ? res.status(200).send(req.session.user)
-      : res.sendStatus(404);
+      ? res.status(OK).send(req.session.user)
+      : res.sendStatus(NOT_FOUND);
   }
 
   /**
@@ -129,7 +138,7 @@ class AuthController {
    */
   logout(req, res) {
     req.session.destroy();
-    res.sendStatus(200);
+    res.sendStatus(OK);
   }
 }
 
