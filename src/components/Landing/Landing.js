@@ -104,7 +104,7 @@ const Landing = ({ history, getUser }) => {
                   type='text'
                   name='firstName'
                   placeholder='First name'
-                  onChange={e => setFirstName(e.target.value)}
+                  onChange={({ target: { value } }) => setFirstName(value)}
                 />
                 <p className="landing-fieldname">Last Name</p>
                 <input
@@ -113,7 +113,7 @@ const Landing = ({ history, getUser }) => {
                   type='text'
                   name='lastName'
                   placeholder='Last name'
-                  onChange={e => setLastName(e.target.value)}
+                  onChange={({ target: { value } }) => setLastName(value)}
                 />
               </>
             )
@@ -125,7 +125,7 @@ const Landing = ({ history, getUser }) => {
             type='text'
             name='username'
             placeholder='Username'
-            onChange={e => setUsername(e.target.value)}
+            onChange={({ target: { value } }) => setUsername(value)}
           />
           <p className="landing-fieldname">Password</p>
           <input
@@ -134,7 +134,7 @@ const Landing = ({ history, getUser }) => {
             type='password'
             name='password'
             placeholder='Password'
-            onChange={e => setPassword(e.target.value)}
+            onChange={({ target: { value } }) => setPassword(value)}
           />
           {!isRegistered
             && (
@@ -146,7 +146,7 @@ const Landing = ({ history, getUser }) => {
                   type='password'
                   name='verPass'
                   placeholder='Verify Password'
-                  onChange={e => setVerifiedPass(e.target.value)}
+                  onChange={({ target: { value } }) => setVerifiedPass(value)}
                 />
               </>
             )
