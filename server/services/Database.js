@@ -20,7 +20,7 @@ class Database {
   }
 
   /**
-   * Connect to the postgres database via data mapper MassiveJS
+   * Connect to the postgres database via data mapper [MassiveJS](https://massivejs.org/)
    */
   async connect() {
     try {
