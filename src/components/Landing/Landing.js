@@ -77,7 +77,7 @@ const Landing = ({ history, getUser }) => {
                 <strong
                   onClick={() => setIsRegistered(true)}
                 >
-                  Log in here
+                  &nbsp;Log in here
                 </strong>
               </p>
             </div>
@@ -86,8 +86,8 @@ const Landing = ({ history, getUser }) => {
             <div className="landing-heading">
                 <h2>Log in below</h2>
                 <p className="landing-view">Don't have an account?
-                    <strong
-                      onClick={() => setIsRegistered(false)}> Register here
+                    <strong onClick={() => setIsRegistered(false)}>
+                      &nbsp;Register here
                     </strong>
                 </p>
             </div>
