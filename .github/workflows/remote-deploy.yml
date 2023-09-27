@@ -40,6 +40,9 @@ jobs:
           username: ${{ secrets.USER_NAME }}
           password: ${{ secrets.USER_PASSWORD }}
           script: |
+            source ~/.profile
+            source ~/.bashrc
+            source ~/.bash_aliases
             cd ${{ secrets.PATH_TO_PROJECT }}
             git switch master --force
             git pull
