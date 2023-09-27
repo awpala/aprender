@@ -40,9 +40,8 @@ jobs:
           username: ${{ secrets.USER_NAME }}
           password: ${{ secrets.USER_PASSWORD }}
           script: |
-            source ~/.profile
             source ~/.bashrc
-            source ~/.bash_aliases
+            echo: "current user: $(whoami)" # debug
             echo "PATH: $PATH" # debug
             cd ${{ secrets.PATH_TO_PROJECT }}
             git switch master --force
