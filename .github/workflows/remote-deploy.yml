@@ -43,6 +43,7 @@ jobs:
             source ~/.profile
             source ~/.bashrc
             source ~/.bash_aliases
+            echo "PATH: $PATH" # debug
             cd ${{ secrets.PATH_TO_PROJECT }}
             git switch master --force
             git pull
