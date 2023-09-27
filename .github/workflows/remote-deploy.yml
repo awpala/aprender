@@ -28,7 +28,7 @@ jobs:
         run: yarn test-server-deploy
 
       - name: Set up SSH key for deployment
-        uses: webfactory/ssh-agent@v0.5
+        uses: webfactory/ssh-agent@v0.8.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
