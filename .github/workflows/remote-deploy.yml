@@ -33,23 +33,24 @@ jobs:
       #   with:
       #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Deploy to remote server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.REMOTE_SERVER_IP }}
-          username: ${{ secrets.USER_NAME }}
-          password: ${{ secrets.USER_PASSWORD }}
-          script: |
-            #!/bin/bash
-            source ~/.bashrc
-            echo "home: $HOME" # debug
-            echo "current user: $(whoami)" # debug
-            echo "PATH: $PATH" # debug
-            echo "yarn location: $(which yarn)" # debug
-            cd ${{ secrets.PATH_TO_PROJECT }}
-            git switch master --force
-            git pull
-            # nvm use 14
-            yarn install
-            yarn build
-            aprender-republish # cf. aliases on server per command `alias`
+      # TODO: fix this task
+      # - name: Deploy to remote server
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.REMOTE_SERVER_IP }}
+      #     username: ${{ secrets.USER_NAME }}
+      #     password: ${{ secrets.USER_PASSWORD }}
+      #     script: |
+      #       #!/bin/bash
+      #       source ~/.bashrc
+      #       echo "home: $HOME" # debug
+      #       echo "current user: $(whoami)" # debug
+      #       echo "PATH: $PATH" # debug
+      #       echo "yarn location: $(which yarn)" # debug
+      #       cd ${{ secrets.PATH_TO_PROJECT }}
+      #       git switch master --force
+      #       git pull
+      #       # nvm use 14
+      #       yarn install
+      #       yarn build
+      #       aprender-republish # cf. aliases on server per command `alias`
