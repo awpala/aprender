@@ -47,8 +47,8 @@ class AuthController {
       return res.status(BAD_REQUEST).send('Username already in use');
     }
 
-    let salt = bcrypt.genSaltSync(10);
-    let hashedPassword = bcrypt.hashSync(password, salt);
+    const salt = bcrypt.genSaltSync(10);
+    const hashedPassword = bcrypt.hashSync(password, salt);
 
     const [newUser] = await registerUser({
       firstName,
