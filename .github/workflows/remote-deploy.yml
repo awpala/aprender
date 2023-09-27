@@ -42,7 +42,7 @@ jobs:
           script: |
             #!/bin/bash
             source ~/.bashrc
-            echo: "current user: $(whoami)" # debug
+            echo "current user: $(whoami)" # debug
             echo "PATH: $PATH" # debug
             cd ${{ secrets.PATH_TO_PROJECT }}
             git switch master --force
