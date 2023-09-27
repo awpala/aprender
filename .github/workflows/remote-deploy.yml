@@ -42,12 +42,14 @@ jobs:
           script: |
             #!/bin/bash
             source ~/.bashrc
+            echo "home: $HOME" # debug
             echo "current user: $(whoami)" # debug
             echo "PATH: $PATH" # debug
+            echo "yarn location: $(which yarn)" # debug
             cd ${{ secrets.PATH_TO_PROJECT }}
             git switch master --force
             git pull
-            nvm use 14
+            # nvm use 14
             yarn install
             yarn build
             aprender-republish # cf. aliases on server per command `alias`
