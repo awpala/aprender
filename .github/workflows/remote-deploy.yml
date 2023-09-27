@@ -27,29 +27,21 @@ jobs:
       - name: Run unit tests for server app
         run: yarn test-server-deploy
 
-      # TODO: FIX DEPLOYMENT TASKS
-      # - name: Set permissions on files and directories
-      #   run: |
-      #     sudo chown -R ${{ secrets.USER_NAME }}:${{ secrets.USER_NAME }} ${{ secrets.PATH_TO_PROJECT }}
-      #     sudo chown -R ${{ secrets.USER_NAME }}:${{ secrets.USER_NAME }} ${{ secrets.HOME_PATH }}/.profile
-      #     sudo chown -R ${{ secrets.USER_NAME }}:${{ secrets.USER_NAME }} ${{ secrets.HOME_PATH }}/.bashrc
-      #     sudo chmod 644 ${{ secrets.HOME_PATH }}/.profile
-      #     sudo chmod 644 ${{ secrets.HOME_PATH }}/.bashrc
+      - name: Set up SSH key for deployment
+        uses: webfactory/ssh-agent@v0.5
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      # - name: Deploy to remote server
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.REMOTE_SERVER_IP_ADDR }}
-      #     username: ${{ secrets.USER_NAME }}
-      #     password: ${{ secrets.USER_PASSWORD }}
-      #     script: |
-      #       cd ${{ secrets.PATH_TO_PROJECT }}
-      #       echo $HOME
-      #       git switch master --force
-      #       git pull
-      #       source $HOME/.profile
-      #       source $HOME/.bashrc
-      #       nvm use 14
-      #       yarn install
-      #       yarn build
-      #       aprender-republish # cf. aliases on server per command `alias`
+      - name: Deploy to remote server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_SERVER_IP }}
+          username: ${{ secrets.USER_NAME }}
+          script: |
+            cd ${{ secrets.PATH_TO_PROJECT }}
+            git switch master --force
+            git pull
+            nvm use 14
+            yarn install
+            yarn build
+            aprender-republish # cf. aliases on server per command `alias`
