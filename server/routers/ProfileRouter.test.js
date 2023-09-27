@@ -4,11 +4,7 @@ const {
   urlParams: { userId },
 } = require('../constants');
 
-const mockApp = {
-  get: jest.fn(),
-  post: jest.fn(),
-  delete: jest.fn(),
-};
+const { mockApp } = require('../testUtilities');
 
 describe('ProfileRouter', () => {
   let profileRouter;

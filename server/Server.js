@@ -17,12 +17,13 @@ const {
  */
 class Server {
   constructor() {
-    this.app = express();
+    const app = express();
+    this.app = app;
 
     // services
-    this.db = new Database(this.app);
-    this.session = new Session(this.app);
-    this.router = new Router(this.app);
+    this.db = new Database(app);
+    this.session = new Session(app);
+    this.router = new Router(app);
 
     // auxiliary function
     this.start = this.start.bind(this);

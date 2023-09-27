@@ -32,8 +32,8 @@
     "build": "cross-env $(cat .env) react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "test-server": "yarn jest --watch",
-    "test-server-deploy": "yarn jest --all"
+    "test-server": "yarn jest --watch --verbose",
+    "test-server-deploy": "yarn jest --all --verbose"
   },
   "eslintConfig": {
     "extends": "react-app"

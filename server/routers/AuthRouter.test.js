@@ -3,10 +3,7 @@ const {
   routes: { AUTH },
 } = require('../constants');
 
-const mockApp = {
-  post: jest.fn(),
-  get: jest.fn(),
-};
+const { mockApp } = require('../testUtilities');
 
 describe('AuthRouter', () => {
   let authRouter;

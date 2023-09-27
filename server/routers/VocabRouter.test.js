@@ -4,10 +4,7 @@ const {
   urlParams: { userId },
 } = require('../constants');
 
-const mockApp = {
-  get: jest.fn(),
-  put: jest.fn(),
-};
+const { mockApp } = require('../testUtilities');
 
 describe('VocabRouter', () => {
   let vocabRouter;
