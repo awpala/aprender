@@ -27,16 +27,18 @@ jobs:
       - name: Run unit tests for server app
         run: yarn test-server-deploy
 
-      - name: Set up SSH key for deployment
-        uses: webfactory/ssh-agent@v0.8.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      # TODO: Fix SSH authentication, using password instead for now
+      # - name: Set up SSH key for deployment
+      #   uses: webfactory/ssh-agent@v0.8.0
+      #   with:
+      #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Deploy to remote server
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.REMOTE_SERVER_IP }}
           username: ${{ secrets.USER_NAME }}
+          password: ${{ secrets.USER_PASSWORD }}
           script: |
             cd ${{ secrets.PATH_TO_PROJECT }}
             git switch master --force
